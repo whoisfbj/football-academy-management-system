@@ -28,7 +28,8 @@ import NewProgressReportPage from "../pages/admin/development/NewProgressReportP
 import NewScoutingReportPage from "../pages/admin/development/NewScoutingReportPage";
 import ProgressReportDetailPage from "../pages/admin/development/ProgressReportDetailPage";
 import ScoutingReportDetailPage from "../pages/admin/development/ScoutingReportDetailPage";
-
+import FinancePage from "../pages/admin/finance/FinancePage";
+import RecordPaymentPage from "../pages/admin/finance/RecordPaymentPage";
 
 
 function AppRouter() {
@@ -162,11 +163,14 @@ function AppRouter() {
 />
 
     <Route
-      path="finance"
-      element={
-        <PlaceholderPage title="Finance" />
-      }
-    />
+  path="finance"
+  element={<FinancePage />}
+/>
+
+<Route
+  path="finance/payment/new"
+  element={<RecordPaymentPage />}
+/>
 
     <Route
       path="communication"
