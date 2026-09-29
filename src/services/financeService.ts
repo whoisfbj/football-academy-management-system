@@ -219,6 +219,17 @@ export function getInvoiceById(
   );
 }
 
+export function getPaymentById(
+  id: string,
+): Payment | undefined {
+  return getPayments().find(
+    (payment) =>
+      payment.id === id,
+  );
+}
+
+
+
 export function addPayment(
   payment: Payment,
 ) {
@@ -299,6 +310,124 @@ export function generateReceiptNumber() {
   return `REC-${year}-${String(
     sequence,
   ).padStart(4, "0")}`;
+}
+
+export function addInvoice(
+  invoice: PlayerInvoice,
+) {
+  const invoices =
+    getInvoices();
+
+  localStorage.setItem(
+    INVOICES_KEY,
+    JSON.stringify([
+      ...invoices,
+      invoice,
+    ]),
+  );
+}
+
+export function generateInvoiceNumber() {
+  const year =
+    new Date().getFullYear();
+
+  const invoices =
+    getInvoices();
+
+  const currentYearInvoices =
+    invoices.filter(
+      (invoice) =>
+        invoice.invoiceNumber.startsWith(
+          `INV-${year}-`,
+        ),
+    );
+
+  const sequences =
+    currentYearInvoices
+      .map((invoice) => {
+        const parts =
+          invoice.invoiceNumber.split(
+            "-",
+          );
+
+        return Number(
+          parts[2],
+        );
+      })
+      .filter(
+        (value) =>
+          !Number.isNaN(
+            value,
+          ),
+      );
+
+  const nextSequence =
+    sequences.length > 0
+      ? Math.max(
+          ...sequences,
+        ) + 1
+      : 1;
+
+  return `INV-${year}-${String(
+    nextSequence,
+  ).padStart(4, "0")}`;
+}
+
+export function getPaymentsByInvoice(
+  invoiceId: string,
+) {
+  return getPayments().filter(
+    (payment) =>
+      payment.invoiceId === invoiceId,
+  );
+}
+
+export function addExpense(
+  expense: Expense,
+) {
+  localStorage.setItem(
+    EXPENSES_KEY,
+    JSON.stringify([
+      ...getExpenses(),
+      expense,
+    ]),
+  );
+}
+
+export function addSponsorship(
+  sponsorship: Sponsorship,
+) {
+  localStorage.setItem(
+    SPONSORSHIPS_KEY,
+    JSON.stringify([
+      ...getSponsorships(),
+      sponsorship,
+    ]),
+  );
+}
+
+export function addStaffPayment(
+  payment: StaffPayment,
+) {
+  localStorage.setItem(
+    STAFF_PAYMENTS_KEY,
+    JSON.stringify([
+      ...getStaffPayments(),
+      payment,
+    ]),
+  );
+}
+
+export function addDiscount(
+  discount: Discount,
+) {
+  localStorage.setItem(
+    DISCOUNTS_KEY,
+    JSON.stringify([
+      ...getDiscounts(),
+      discount,
+    ]),
+  );
 }
 
 export function getInvoiceBalance(

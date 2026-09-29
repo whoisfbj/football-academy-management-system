@@ -101,13 +101,25 @@ function FinancePage() {
           </p>
         </div>
 
-        <Link
-          to="/admin/finance/payment/new"
-          className="inline-flex items-center justify-center gap-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700"
-        >
-          <Plus size={18} />
-          Record Payment
-        </Link>
+       <div className="flex flex-wrap gap-3">
+  <Link
+    to="/admin/finance/invoice/new"
+    className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+  >
+    <Plus size={18} />
+
+    New Invoice
+  </Link>
+
+  <Link
+    to="/admin/finance/payment/new"
+    className="inline-flex items-center justify-center gap-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-green-700"
+  >
+    <Plus size={18} />
+
+    Record Payment
+  </Link>
+</div>
       </div>
 
       <div className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -230,13 +242,12 @@ function FinancePage() {
                         }
                         className="hover:bg-slate-50"
                       >
-                        <td className="px-5 py-4">
-                          <p className="font-semibold text-slate-800">
-                            {
-                              invoice.invoiceNumber
-                            }
-                          </p>
-                        </td>
+                       <Link
+  to={`/admin/finance/invoice/${invoice.id}`}
+  className="font-semibold text-green-600 hover:underline"
+>
+  {invoice.invoiceNumber}
+</Link>
 
                         <td className="px-5 py-4">
                           <p className="font-semibold text-slate-700">
@@ -350,11 +361,14 @@ function FinancePage() {
                                 "Unknown Player"}
                             </p>
 
-                            <p className="mt-1 text-xs text-slate-400">
-                              {
-                                payment.receiptNumber
-                              }
-                            </p>
+                           <Link
+  to={`/admin/finance/receipt/${payment.id}`}
+  className="mt-1 inline-block text-xs font-semibold text-green-600 hover:underline"
+>
+  {
+    payment.receiptNumber
+  }
+</Link>
                           </div>
 
                           <p className="text-sm font-bold text-green-600">

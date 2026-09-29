@@ -1532,14 +1532,16 @@ function PlayerProfilePage() {
                         }
                         className="hover:bg-slate-50"
                       >
-                        <td className="px-5 py-4">
-                          <span className="font-semibold text-green-600">
-                            {
-                              payment.receiptNumber
-                            }
-                          </span>
-                        </td>
-
+                       <td className="px-5 py-4">
+  <Link
+    to={`/admin/finance/receipt/${payment.id}`}
+    className="font-semibold text-green-600 hover:text-green-700 hover:underline"
+  >
+    {
+      payment.receiptNumber
+    }
+  </Link>
+</td>
                         <td className="px-5 py-4 text-sm text-slate-600">
                           {
                             payment.paymentNumber

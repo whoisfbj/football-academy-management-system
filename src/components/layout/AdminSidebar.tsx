@@ -13,6 +13,7 @@ import {
   UserRoundCog,
   Users,
   UsersRound,
+  WalletCards,
 } from "lucide-react";
 
 import {
@@ -68,6 +69,11 @@ const menuItems = [
     path: "/admin/finance",
     icon: CreditCard,
   },
+  {
+  label: "Finance Records",
+  path: "/admin/finance/records",
+  icon: WalletCards,
+},
   {
     label: "Communication",
     path: "/admin/communication",
