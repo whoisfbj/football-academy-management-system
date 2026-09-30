@@ -2,25 +2,35 @@ export type TeamStatus =
   | "Active"
   | "Inactive";
 
+export type TeamGenderCategory =
+  | "Boys"
+  | "Girls"
+  | "Mixed";
+
 export interface AcademyTeam {
   id: string;
 
   name: string;
 
-  ageCategory: string;
+  ageCategory:
+    | "U7"
+    | "U9"
+    | "U11"
+    | "U13"
+    | "U15"
+    | "U17"
+    | "U19";
 
-  genderCategory:
-    | "Boys"
-    | "Girls"
-    | "Mixed";
+  genderCategory: TeamGenderCategory;
 
   program: string;
 
-  academyBranch: string;
+  branch: string;
 
-  trainingCentre: string;
+  centre: string;
 
   headCoachId?: string;
+
   assistantCoachId?: string;
 
   status: TeamStatus;
