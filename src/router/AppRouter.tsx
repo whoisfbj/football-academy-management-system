@@ -65,6 +65,14 @@ import AcademySettingsPage from "../pages/admin/settings/AcademySettingsPage";
 
 /* PARENT PORTAL */
 import ParentDashboardPage from "../pages/parent/ParentDashboardPage";
+import ParentPlayerPage from "../pages/parent/ParentPlayerPage";
+import ParentLayout from "../layouts/ParentLayout";
+import ParentAttendancePage from "../pages/parent/ParentAttendancePage";
+import ParentSchedulePage from "../pages/parent/ParentSchedulePage";
+import ParentPaymentsPage from "../pages/parent/ParentPaymentsPage";
+import ParentReceiptsPage from "../pages/parent/ParentReceiptsPage";
+import ParentAnnouncementsPage from "../pages/parent/ParentAnnouncementsPage";
+import ParentReportsPage from "../pages/parent/ParentReportsPage";
 
 /*LANDING PAGE*/
 import LandingPage from "../pages/LandingPage";
@@ -455,6 +463,62 @@ function AppRouter() {
             }
           />
         </Route>
+
+        <Route
+  path="/parent"
+  element={<ParentLayout />}
+>
+  <Route
+    index
+    element={
+      <Navigate
+        to="/parent/dashboard"
+        replace
+      />
+    }
+  />
+
+  <Route
+    path="dashboard"
+    element={<ParentDashboardPage />}
+  />
+
+  <Route
+    path="player"
+    element={<ParentPlayerPage />}
+  />
+</Route>
+
+<Route
+  path="attendance"
+  element={<ParentAttendancePage />}
+/>
+
+<Route
+  path="schedule"
+  element={<ParentSchedulePage />}
+/>
+
+<Route
+  path="payments"
+  element={<ParentPaymentsPage />}
+/>
+
+<Route
+  path="receipts"
+  element={<ParentReceiptsPage />}
+/>
+<Route
+  path="announcements"
+  element={<ParentAnnouncementsPage />}
+/>
+
+<Route
+  path="reports"
+  element={<ParentReportsPage />}
+/>
+
+
 
         {/* ========================= */}
         {/* UNKNOWN ROUTES */}

@@ -43,7 +43,7 @@ function TeamsPage() {
             team.ageCategory
               .toLowerCase()
               .includes(search) ||
-            team.trainingCentre
+            team.centre
               .toLowerCase()
               .includes(search)
           );
@@ -219,7 +219,7 @@ function TeamsPage() {
                       />
 
                       {
-                        team.trainingCentre
+                        team.centre
                       }
                     </div>
                   </div>

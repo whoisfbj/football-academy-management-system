@@ -129,7 +129,7 @@ function TeamProfilePage() {
           }
           title="Training Centre"
           value={
-            team.trainingCentre
+            team.centre
           }
         />
       </div>
@@ -254,7 +254,7 @@ function TeamProfilePage() {
               <Detail
                 label="Academy Branch"
                 value={
-                  team.academyBranch
+                  team.branch
                 }
               />
 
