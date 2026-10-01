@@ -73,18 +73,50 @@ import ParentPaymentsPage from "../pages/parent/ParentPaymentsPage";
 import ParentReceiptsPage from "../pages/parent/ParentReceiptsPage";
 import ParentAnnouncementsPage from "../pages/parent/ParentAnnouncementsPage";
 import ParentReportsPage from "../pages/parent/ParentReportsPage";
+import ParentTournamentsPage from "../pages/parent/ParentTournamentsPage";
+import ParentContactPage from "../pages/parent/ParentContactPage";
+
+
 
 /*LANDING PAGE*/
 import LandingPage from "../pages/LandingPage";
 
 
 /* OTHER ROLE DASHBOARDS */
-import {
-  CoachDashboard,
-  SportsDirectorDashboard,
-  TechnicalDirectorDashboard,
-} from "../pages/roles/RoleDashboards";
+import CoachLayout from "../layouts/CoachLayout";
 
+import TechnicalDirectorLayout from "../layouts/TechnicalDirectorLayout";
+
+import SportsDirectorLayout from "../layouts/SportsDirectorLayout";
+
+import {
+  CoachAnnouncementsPage,
+  CoachAttendancePage,
+  CoachDashboardPage,
+  CoachDevelopmentPage,
+  CoachPlayersPage,
+  CoachSessionsPage,
+  CoachTeamPage,
+} from "../pages/coach/CoachPages";
+
+import {
+  TechnicalDirectorCoachesPage,
+  TechnicalDirectorDashboardPage,
+  TechnicalDirectorDevelopmentPage,
+  TechnicalDirectorReportsPage,
+  TechnicalDirectorSessionsPage,
+  TechnicalDirectorTeamsPage,
+} from "../pages/technical-director/TechnicalDirectorPages";
+
+import {
+  SportsDirectorAnnouncementsPage,
+  SportsDirectorDashboardPage,
+  SportsDirectorFinancePage,
+  SportsDirectorProgramsPage,
+  SportsDirectorReportsPage,
+  SportsDirectorTeamsPage,
+  SportsDirectorTournamentsPage,
+} from "../pages/sports-director/SportsDirectorPages";
 function AppRouter() {
   return (
     <BrowserRouter>
@@ -380,145 +412,358 @@ function AppRouter() {
           </Route>
         </Route>
 
-        {/* ========================= */}
-        {/* TECHNICAL DIRECTOR */}
-        {/* ========================= */}
+       {/* ========================= */}
+{/* TECHNICAL DIRECTOR */}
+{/* ========================= */}
 
-        <Route
-          element={
-            <ProtectedRoute
-              allowedRoles={[
-                "technical-director",
-              ]}
-            />
-          }
-        >
-          <Route
-            path="/technical-director"
-            element={
-              <TechnicalDirectorDashboard />
-            }
-          />
-        </Route>
-
-        {/* ========================= */}
-        {/* SPORTS DIRECTOR */}
-        {/* ========================= */}
-
-        <Route
-          element={
-            <ProtectedRoute
-              allowedRoles={[
-                "sports-director",
-              ]}
-            />
-          }
-        >
-          <Route
-            path="/sports-director"
-            element={
-              <SportsDirectorDashboard />
-            }
-          />
-        </Route>
-
-        {/* ========================= */}
-        {/* COACH */}
-        {/* ========================= */}
-
-        <Route
-          element={
-            <ProtectedRoute
-              allowedRoles={[
-                "coach",
-              ]}
-            />
-          }
-        >
-          <Route
-            path="/coach"
-            element={
-              <CoachDashboard />
-            }
-          />
-        </Route>
-
-        {/* ========================= */}
-        {/* PARENT / GUARDIAN */}
-        {/* ========================= */}
-
-        <Route
-          element={
-            <ProtectedRoute
-              allowedRoles={[
-                "parent",
-              ]}
-            />
-          }
-        >
-          <Route
-            path="/parent"
-            element={
-              <ParentDashboardPage />
-            }
-          />
-        </Route>
-
-        <Route
-  path="/parent"
-  element={<ParentLayout />}
+<Route
+  element={
+    <ProtectedRoute
+      allowedRoles={[
+        "technical-director",
+      ]}
+    />
+  }
 >
   <Route
-    index
+    path="/technical-director"
     element={
-      <Navigate
-        to="/parent/dashboard"
-        replace
-      />
+      <TechnicalDirectorLayout />
     }
-  />
+  >
+    <Route
+      index
+      element={
+        <Navigate
+          to="/technical-director/dashboard"
+          replace
+        />
+      }
+    />
 
-  <Route
-    path="dashboard"
-    element={<ParentDashboardPage />}
-  />
+    <Route
+      path="dashboard"
+      element={
+        <TechnicalDirectorDashboardPage />
+      }
+    />
 
-  <Route
-    path="player"
-    element={<ParentPlayerPage />}
-  />
+    <Route
+      path="teams"
+      element={
+        <TechnicalDirectorTeamsPage />
+      }
+    />
+
+    <Route
+      path="coaches"
+      element={
+        <TechnicalDirectorCoachesPage />
+      }
+    />
+
+    <Route
+      path="sessions"
+      element={
+        <TechnicalDirectorSessionsPage />
+      }
+    />
+
+    <Route
+      path="development"
+      element={
+        <TechnicalDirectorDevelopmentPage />
+      }
+    />
+
+    <Route
+      path="reports"
+      element={
+        <TechnicalDirectorReportsPage />
+      }
+    />
+  </Route>
 </Route>
 
-<Route
-  path="attendance"
-  element={<ParentAttendancePage />}
-/>
+{/* ========================= */}
+{/* SPORTS DIRECTOR */}
+{/* ========================= */}
 
 <Route
-  path="schedule"
-  element={<ParentSchedulePage />}
-/>
+  element={
+    <ProtectedRoute
+      allowedRoles={[
+        "sports-director",
+      ]}
+    />
+  }
+>
+  <Route
+    path="/sports-director"
+    element={
+      <SportsDirectorLayout />
+    }
+  >
+    <Route
+      index
+      element={
+        <Navigate
+          to="/sports-director/dashboard"
+          replace
+        />
+      }
+    />
+
+    <Route
+      path="dashboard"
+      element={
+        <SportsDirectorDashboardPage />
+      }
+    />
+
+    <Route
+      path="programs"
+      element={
+        <SportsDirectorProgramsPage />
+      }
+    />
+
+    <Route
+      path="teams"
+      element={
+        <SportsDirectorTeamsPage />
+      }
+    />
+
+    <Route
+      path="tournaments"
+      element={
+        <SportsDirectorTournamentsPage />
+      }
+    />
+
+    <Route
+      path="finance"
+      element={
+        <SportsDirectorFinancePage />
+      }
+    />
+
+    <Route
+      path="announcements"
+      element={
+        <SportsDirectorAnnouncementsPage />
+      }
+    />
+
+    <Route
+      path="reports"
+      element={
+        <SportsDirectorReportsPage />
+      }
+    />
+  </Route>
+</Route>
+
+{/* ========================= */}
+{/* COACH */}
+{/* ========================= */}
 
 <Route
-  path="payments"
-  element={<ParentPaymentsPage />}
-/>
+  element={
+    <ProtectedRoute
+      allowedRoles={[
+        "coach",
+      ]}
+    />
+  }
+>
+  <Route
+    path="/coach"
+    element={
+      <CoachLayout />
+    }
+  >
+    <Route
+      index
+      element={
+        <Navigate
+          to="/coach/dashboard"
+          replace
+        />
+      }
+    />
+
+    <Route
+      path="dashboard"
+      element={
+        <CoachDashboardPage />
+      }
+    />
+
+    <Route
+      path="teams"
+      element={
+        <CoachTeamPage />
+      }
+    />
+
+    <Route
+      path="players"
+      element={
+        <CoachPlayersPage />
+      }
+    />
+
+    <Route
+      path="sessions"
+      element={
+        <CoachSessionsPage />
+      }
+    />
+
+    <Route
+      path="attendance"
+      element={
+        <CoachAttendancePage />
+      }
+    />
+
+    <Route
+      path="development"
+      element={
+        <CoachDevelopmentPage />
+      }
+    />
+
+    <Route
+      path="announcements"
+      element={
+        <CoachAnnouncementsPage />
+      }
+    />
+  </Route>
+</Route>
+      {/* ========================= */}
+{/* PARENT / GUARDIAN */}
+{/* ========================= */}
 
 <Route
-  path="receipts"
-  element={<ParentReceiptsPage />}
-/>
-<Route
-  path="announcements"
-  element={<ParentAnnouncementsPage />}
-/>
+  element={
+    <ProtectedRoute
+      allowedRoles={[
+        "parent",
+      ]}
+    />
+  }
+>
+  <Route
+    path="/parent"
+    element={<ParentLayout />}
+  >
+    {/* PARENT DEFAULT */}
 
-<Route
-  path="reports"
-  element={<ParentReportsPage />}
-/>
+    <Route
+      index
+      element={
+        <Navigate
+          to="/parent/dashboard"
+          replace
+        />
+      }
+    />
 
+    {/* DASHBOARD */}
 
+    <Route
+      path="dashboard"
+      element={
+        <ParentDashboardPage />
+      }
+    />
+
+    {/* MY PLAYER */}
+
+    <Route
+      path="player"
+      element={
+        <ParentPlayerPage />
+      }
+    />
+
+    {/* ATTENDANCE */}
+
+    <Route
+      path="attendance"
+      element={
+        <ParentAttendancePage />
+      }
+    />
+
+    {/* TRAINING SCHEDULE */}
+
+    <Route
+      path="schedule"
+      element={
+        <ParentSchedulePage />
+      }
+    />
+
+    {/* PAYMENTS */}
+
+    <Route
+      path="payments"
+      element={
+        <ParentPaymentsPage />
+      }
+    />
+
+    {/* RECEIPTS */}
+
+    <Route
+      path="receipts"
+      element={
+        <ParentReceiptsPage />
+      }
+    />
+
+    {/* ANNOUNCEMENTS */}
+
+    <Route
+      path="announcements"
+      element={
+        <ParentAnnouncementsPage />
+      }
+    />
+
+    {/* PLAYER REPORTS */}
+
+    <Route
+      path="reports"
+      element={
+        <ParentReportsPage />
+      }
+    />
+
+    {/* TOURNAMENTS */}
+
+    <Route
+      path="tournaments"
+      element={
+        <ParentTournamentsPage />
+      }
+    />
+
+    {/* CONTACT ACADEMY */}
+
+    <Route
+      path="contact"
+      element={
+        <ParentContactPage />
+      }
+    />
+  </Route>
+</Route>
 
         {/* ========================= */}
         {/* UNKNOWN ROUTES */}

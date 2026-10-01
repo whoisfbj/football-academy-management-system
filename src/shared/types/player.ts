@@ -26,79 +26,134 @@ export type RegistrationStatus =
 
 export type PlayingPosition =
   | "Goalkeeper"
-  | "Centre Back"
-  | "Left Back"
   | "Right Back"
+  | "Left Back"
+  | "Centre Back"
   | "Defensive Midfielder"
   | "Central Midfielder"
   | "Attacking Midfielder"
-  | "Left Winger"
   | "Right Winger"
+  | "Left Winger"
   | "Striker";
 
-export interface GuardianDetails {
+/* =====================================================
+   GUARDIAN
+===================================================== */
+
+export interface Guardian {
   fullName: string;
+
   relationship: string;
+
   phone: string;
+
   alternativePhone?: string;
+
   email?: string;
-  address: string;
+
+  address?: string;
 }
 
-export interface EmergencyContact {
-  fullName: string;
-  relationship: string;
-  phone: string;
-}
+/* =====================================================
+   MEDICAL INFORMATION
+===================================================== */
 
-export interface PlayerMedicalInfo {
-  medicalConditions?: string;
-  allergies?: string;
-  injuryHistory?: string;
-  additionalNotes?: string;
-  emergencyContact: EmergencyContact;
-}
+/*
+ * This is deliberately flexible for now
+ * because your existing registration/edit
+ * pages already contain the medical fields.
+ *
+ * Once everything builds again, we can
+ * replace this with stricter field-by-field
+ * typing.
+ */
+export type MedicalInfo =
+  Record<string, any>;
+
+/* =====================================================
+   PLAYER
+===================================================== */
 
 export interface Player {
+  /*
+   * Internal ID
+   * Example: player-001
+   */
   id: string;
 
+  /*
+   * Academy Player ID
+   * Example: PLY-26-0001
+   */
   playerId: string;
 
+  /* PERSONAL INFORMATION */
+
   fullName: string;
+
   passportPhoto?: string;
 
   dateOfBirth: string;
+
   gender: Gender;
+
+  /*
+   * Keep this as string because your
+   * registration form currently produces
+   * a string value.
+   */
   ageCategory: string;
 
   phone?: string;
+
   address: string;
 
+  /* SCHOOL / EDUCATION */
+
   schoolAttended: string;
+
   academicInformation?: string;
 
+  /* FOOTBALL INFORMATION */
+
   playingPosition: PlayingPosition;
+
   preferredFoot: PreferredFoot;
 
-  height: number;
-  weight: number;
+  height?: number;
+
+  weight?: number;
 
   previousClub?: string;
 
+  /* ACADEMY INFORMATION */
+
   academyTeam?: string;
+
   program: string;
+
   academyBranch: string;
+
   trainingCentre: string;
 
-  guardian: GuardianDetails;
+  /* GUARDIAN */
 
-  medicalInfo: PlayerMedicalInfo;
+  guardian: Guardian;
+
+  /* MEDICAL */
+
+  medicalInfo: MedicalInfo;
+
+  /* CONSENT */
 
   parentConsent: boolean;
+
+  /* REGISTRATION */
 
   dateJoined: string;
 
   status: PlayerStatus;
+
   registrationStatus: RegistrationStatus;
 
   createdAt: string;

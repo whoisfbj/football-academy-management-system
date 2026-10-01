@@ -1,211 +1,199 @@
 import type { ReactNode } from "react";
+
 import { Link } from "react-router";
 
 import {
-  ArrowRight,
   Bell,
   CalendarDays,
-  CheckCircle2,
   ClipboardCheck,
   CreditCard,
   FileText,
-  MapPin,
-  ReceiptText,
   Trophy,
   UserRound,
-  WalletCards,
 } from "lucide-react";
 
 import {
   calculatePlayerAttendancePercentage,
-  getAttendanceByPlayer,
 } from "../../services/attendanceService";
 
-import { getMessages } from "../../services/communicationService";
+import {
+  getMessages,
+} from "../../services/communicationService";
 
-import { getProgressReportsByPlayer } from "../../services/developmentService";
+import {
+  getProgressReportsByPlayer,
+} from "../../services/developmentService";
 
 import {
   getInvoiceBalance,
   getInvoicesByPlayer,
-  getPaymentsByPlayer,
 } from "../../services/financeService";
 
-import { getPlayerById } from "../../services/playerService";
+import {
+  getPrimaryLinkedPlayer,
+} from "../../services/parentService";
 
-import { getSessions } from "../../services/sessionService";
+import {
+  getSessions,
+} from "../../services/sessionService";
 
-import { getTeams } from "../../services/teamService";
+import {
+  getTeams,
+} from "../../services/teamService";
+
+import {
+  getTournamentsByTeam,
+} from "../../services/tournamentService";
 
 function ParentDashboardPage() {
-  /*
-   * PROTOTYPE LINK
-   *
-   * The demo parent account is currently linked
-   * to John Adeyemi.
-   *
-   * Later we can replace this with a proper
-   * parent -> player relationship.
-   */
-  const player = getPlayerById("player-001");
+  const linkedPlayer =
+    getPrimaryLinkedPlayer();
 
-  if (!player) {
+  if (!linkedPlayer) {
     return (
       <div className="p-5 lg:p-8">
         <div className="mx-auto max-w-7xl">
           <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center shadow-sm">
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 text-slate-400">
-              <UserRound size={28} />
-            </div>
+            <UserRound
+              size={38}
+              className="mx-auto text-slate-300"
+            />
 
-            <h1 className="mt-5 text-xl font-bold text-slate-900">
+            <h1 className="mt-4 text-xl font-bold text-slate-900">
               No Player Linked
             </h1>
 
             <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
-              There is currently no player linked to this parent or guardian
-              account.
+              No player is currently linked to this parent or guardian account.
             </p>
-
-            <Link
-              to="/parent/contact"
-              className="mt-6 inline-flex items-center gap-2 rounded-lg bg-green-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-green-700"
-            >
-              Contact Academy
-              <ArrowRight size={16} />
-            </Link>
           </div>
         </div>
       </div>
     );
   }
 
-  /* =====================================================
-     ATTENDANCE
-  ===================================================== */
+  const playerId =
+    linkedPlayer.id;
 
-  const attendanceRecords = getAttendanceByPlayer(player.id);
+  const playerName =
+    linkedPlayer.fullName;
 
-  const attendanceRate =
-    calculatePlayerAttendancePercentage(player.id);
+  const teamName =
+    linkedPlayer.academyTeam;
 
-  const presentCount = attendanceRecords.filter(
-    (record) => record.status === "Present",
-  ).length;
-
-  const lateCount = attendanceRecords.filter(
-    (record) => record.status === "Late Arrival",
-  ).length;
-
-  const absentCount = attendanceRecords.filter(
-    (record) => record.status === "Absent",
-  ).length;
-
-  const excusedCount = attendanceRecords.filter(
-    (record) => record.status === "Excused Absence",
-  ).length;
-
-  /* =====================================================
-     FINANCE
-  ===================================================== */
-
-  const invoices = getInvoicesByPlayer(player.id);
-
-  const payments = getPaymentsByPlayer(player.id)
-    .slice()
-    .sort((a, b) =>
-      b.paymentDate.localeCompare(a.paymentDate),
+  const attendancePercentage =
+    calculatePlayerAttendancePercentage(
+      playerId,
     );
 
-  const outstandingBalance = invoices.reduce(
-    (total, invoice) =>
-      total + getInvoiceBalance(invoice),
-    0,
-  );
+  const invoices =
+    getInvoicesByPlayer(
+      playerId,
+    );
 
-  const totalPaid = payments.reduce(
-    (total, payment) =>
-      total + payment.amount,
-    0,
-  );
+  const outstandingBalance =
+    invoices.reduce(
+      (total, invoice) =>
+        total +
+        getInvoiceBalance(
+          invoice,
+        ),
+      0,
+    );
 
-  const unpaidInvoices = invoices.filter(
-    (invoice) =>
-      getInvoiceBalance(invoice) > 0,
-  );
-
-  /* =====================================================
-     PLAYER REPORTS
-  ===================================================== */
-
-  const progressReports =
-    getProgressReportsByPlayer(player.id)
+  const reports =
+    getProgressReportsByPlayer(
+      playerId,
+    )
       .slice()
-      .sort((a, b) =>
-        b.date.localeCompare(a.date),
+      .sort(
+        (a, b) =>
+          b.date.localeCompare(
+            a.date,
+          ),
       );
 
   const latestReport =
-    progressReports[0];
+    reports[0];
 
-  /* =====================================================
-     ANNOUNCEMENTS
-  ===================================================== */
-
-  const announcements = getMessages()
-    .filter(
-      (message) =>
-        message.audience === "All" ||
-        message.audience === "Parents",
-    )
-    .slice()
-    .reverse();
+  const announcements =
+    getMessages()
+      .filter(
+        (message) =>
+          message.audience ===
+            "Parents" ||
+          message.audience ===
+            "All",
+      )
+      .slice()
+      .reverse();
 
   const latestAnnouncement =
     announcements[0];
 
-  /* =====================================================
-     TEAM + TRAINING SCHEDULE
-  ===================================================== */
+  const teams =
+    getTeams();
 
-  const teams = getTeams();
+  const playerTeam =
+    teams.find(
+      (team) =>
+        team.name ===
+        teamName,
+    );
 
-  const playerTeam = player.academyTeam
-    ? teams.find(
-        (team) =>
-          team.name === player.academyTeam,
+  const sessions =
+    getSessions()
+      .filter(
+        (session) =>
+          playerTeam &&
+          session.teamId ===
+            playerTeam.id,
       )
-    : undefined;
+      .slice()
+      .sort(
+        (a, b) =>
+          a.date.localeCompare(
+            b.date,
+          ),
+      );
 
-  const upcomingSessions = getSessions()
-    .filter((session) => {
-      if (session.status !== "Scheduled") {
-        return false;
-      }
-
-      if (!playerTeam) {
-        return true;
-      }
-
-      return session.teamId === playerTeam.id;
-    })
-    .sort((a, b) =>
-      `${a.date}-${a.startTime}`.localeCompare(
-        `${b.date}-${b.startTime}`,
-      ),
+  const upcomingSessions =
+    sessions.filter(
+      (session) =>
+        session.status ===
+        "Scheduled",
     );
 
   const nextSession =
     upcomingSessions[0];
 
+  const tournaments =
+    teamName
+      ? getTournamentsByTeam(
+          teamName,
+        )
+      : [];
+
+  const nextTournament =
+    tournaments
+      .filter(
+        (tournament) =>
+          tournament.status ===
+          "Upcoming",
+      )
+      .sort(
+        (a, b) =>
+          a.startDate.localeCompare(
+            b.startDate,
+          ),
+      )[0];
+
   return (
     <div className="p-5 lg:p-8">
       <div className="mx-auto max-w-7xl">
-        {/* =================================================
-            PAGE HEADING
-        ================================================= */}
+        {/* HEADER */}
 
-        <div className="mb-6">
+        <div>
           <p className="text-sm font-semibold text-green-600">
             Parent / Guardian Portal
           </p>
@@ -215,87 +203,60 @@ function ParentDashboardPage() {
           </h1>
 
           <p className="mt-2 text-sm text-slate-500">
-            Follow your player's academy activities,
-            development, attendance and payments.
+            Follow {playerName}'s
+            academy activity,
+            development, attendance and
+            payments.
           </p>
         </div>
 
-        {/* =================================================
-            PLAYER HERO CARD
-        ================================================= */}
+        {/* PLAYER HERO */}
 
-        <section className="relative overflow-hidden rounded-2xl bg-slate-950 p-6 text-white shadow-sm lg:p-8">
-          <div className="absolute -right-16 -top-16 h-52 w-52 rounded-full bg-green-500/10 blur-3xl" />
+        <section className="mt-6 rounded-2xl bg-slate-950 p-6 text-white shadow-sm">
+          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-center">
+            <div>
+              <p className="text-sm text-slate-400">
+                Linked Player
+              </p>
 
-          <div className="relative flex flex-col justify-between gap-6 lg:flex-row lg:items-center">
-            <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
-              {player.passportPhoto ? (
-                <img
-                  src={player.passportPhoto}
-                  alt={player.fullName}
-                  className="h-24 w-24 rounded-2xl object-cover ring-4 ring-white/10"
-                />
-              ) : (
-                <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-white">
-                  <UserRound size={38} />
-                </div>
-              )}
+              <h2 className="mt-1 text-2xl font-bold">
+                {playerName}
+              </h2>
 
-              <div>
-                <p className="text-sm font-semibold text-green-400">
-                  My Player
-                </p>
-
-                <h2 className="mt-1 text-2xl font-bold sm:text-3xl">
-                  {player.fullName}
-                </h2>
-
-                <p className="mt-2 font-medium text-green-400">
-                  {player.playerId}
-                </p>
-
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <PlayerTag text={player.ageCategory} />
-
-                  <PlayerTag
-                    text={player.playingPosition}
-                  />
-
-                  <PlayerTag
-                    text={
-                      player.academyTeam ??
-                      "No Team Assigned"
-                    }
-                  />
-
-                  <PlayerTag text={player.status} />
-                </div>
-              </div>
+              <p className="mt-2 text-sm font-semibold text-green-400">
+                {
+                  linkedPlayer.playerId
+                }{" "}
+                •{" "}
+                {
+                  linkedPlayer.ageCategory
+                }{" "}
+                •{" "}
+                {teamName ??
+                  "No Team Assigned"}
+              </p>
             </div>
 
             <Link
               to="/parent/player"
-              className="inline-flex w-fit items-center gap-2 rounded-lg bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
+              className="inline-flex items-center justify-center rounded-lg bg-green-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-green-700"
             >
               View Player Profile
-              <ArrowRight size={16} />
             </Link>
           </div>
         </section>
 
-        {/* =================================================
-            SUMMARY CARDS
-        ================================================= */}
+        {/* SUMMARY */}
 
         <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <SummaryCard
             title="Attendance"
-            value={`${attendanceRate}%`}
-            description={`${presentCount} present records`}
+            value={`${attendancePercentage}%`}
             icon={
-              <ClipboardCheck size={21} />
+              <ClipboardCheck
+                size={20}
+              />
             }
-            link="/parent/attendance"
           />
 
           <SummaryCard
@@ -303,252 +264,150 @@ function ParentDashboardPage() {
             value={formatCurrency(
               outstandingBalance,
             )}
-            description={
-              unpaidInvoices.length > 0
-                ? `${unpaidInvoices.length} unpaid invoice${
-                    unpaidInvoices.length === 1
-                      ? ""
-                      : "s"
-                  }`
-                : "No outstanding fees"
+            icon={
+              <CreditCard
+                size={20}
+              />
             }
-            icon={<CreditCard size={21} />}
-            link="/parent/payments"
           />
 
           <SummaryCard
-            title="Player Reports"
-            value={`${progressReports.length}`}
-            description="Progress reports available"
-            icon={<FileText size={21} />}
-            link="/parent/reports"
+            title="Progress Reports"
+            value={`${reports.length}`}
+            icon={
+              <FileText
+                size={20}
+              />
+            }
           />
 
           <SummaryCard
-            title="Announcements"
-            value={`${announcements.length}`}
-            description="Academy notices available"
-            icon={<Bell size={21} />}
-            link="/parent/announcements"
+            title="Upcoming Training"
+            value={`${upcomingSessions.length}`}
+            icon={
+              <CalendarDays
+                size={20}
+              />
+            }
           />
         </div>
 
-        {/* =================================================
-            MAIN DASHBOARD
-        ================================================= */}
+        {/* INFORMATION GRID */}
 
-        <div className="mt-6 grid gap-6 xl:grid-cols-3">
+        <div className="mt-6 grid gap-6 xl:grid-cols-2">
           {/* NEXT TRAINING */}
 
-          <div className="xl:col-span-2">
-            <DashboardSection
-              title="Next Training Session"
-              subtitle="Upcoming academy training"
-              icon={<CalendarDays size={20} />}
-              actionLabel="View Schedule"
-              actionLink="/parent/schedule"
-            >
-              {nextSession ? (
-                <div className="rounded-xl border border-slate-200 bg-slate-50 p-5">
-                  <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-start">
-                    <div>
-                      <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
-                        {nextSession.sessionType}
-                      </span>
-
-                      <h3 className="mt-4 text-lg font-bold text-slate-900">
-                        {nextSession.title}
-                      </h3>
-
-                      <div className="mt-4 space-y-2">
-                        <SessionDetail
-                          icon={
-                            <CalendarDays
-                              size={16}
-                            />
-                          }
-                          text={`${formatDate(
-                            nextSession.date,
-                          )} • ${
-                            nextSession.startTime
-                          } – ${
-                            nextSession.endTime
-                          }`}
-                        />
-
-                        <SessionDetail
-                          icon={
-                            <MapPin size={16} />
-                          }
-                          text={
-                            nextSession.trainingCentre
-                          }
-                        />
-                      </div>
-                    </div>
-
-                    <div className="rounded-xl bg-white p-4 text-center shadow-sm">
-                      <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-                        Team
-                      </p>
-
-                      <p className="mt-2 text-sm font-bold text-slate-800">
-                        {player.academyTeam ??
-                          "Not Assigned"}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <EmptyState
-                  icon={
-                    <CalendarDays size={25} />
-                  }
-                  title="No upcoming sessions"
-                  description="There are currently no scheduled training sessions for this player."
-                />
-              )}
-            </DashboardSection>
-          </div>
-
-          {/* ATTENDANCE SUMMARY */}
-
           <DashboardSection
-            title="Attendance"
-            subtitle="Current attendance record"
+            title="Next Training Session"
             icon={
-              <ClipboardCheck size={20} />
+              <CalendarDays
+                size={20}
+              />
             }
-            actionLabel="View Attendance"
-            actionLink="/parent/attendance"
+            link="/parent/schedule"
+            linkText="View Schedule"
           >
-            <div className="text-center">
-              <div className="mx-auto flex h-28 w-28 items-center justify-center rounded-full border-8 border-green-100">
-                <span className="text-2xl font-bold text-slate-950">
-                  {attendanceRate}%
+            {nextSession ? (
+              <div>
+                <h3 className="font-bold text-slate-900">
+                  {
+                    nextSession.title
+                  }
+                </h3>
+
+                <p className="mt-2 text-sm text-slate-500">
+                  {formatDate(
+                    nextSession.date,
+                  )}
+                </p>
+
+                <p className="mt-1 text-sm text-slate-500">
+                  {
+                    nextSession.startTime
+                  }{" "}
+                  –{" "}
+                  {
+                    nextSession.endTime
+                  }
+                </p>
+
+                <span className="mt-4 inline-flex rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-700">
+                  {
+                    nextSession.sessionType
+                  }
                 </span>
               </div>
-
-              <p className="mt-3 text-sm text-slate-500">
-                Overall attendance
-              </p>
-            </div>
-
-            <div className="mt-6 grid grid-cols-2 gap-3">
-              <AttendanceStat
-                label="Present"
-                value={presentCount}
-              />
-
-              <AttendanceStat
-                label="Late"
-                value={lateCount}
-              />
-
-              <AttendanceStat
-                label="Absent"
-                value={absentCount}
-              />
-
-              <AttendanceStat
-                label="Excused"
-                value={excusedCount}
-              />
-            </div>
+            ) : (
+              <EmptyText text="No upcoming training sessions." />
+            )}
           </DashboardSection>
 
-          {/* PAYMENT STATUS */}
+          {/* PAYMENT */}
 
           <DashboardSection
             title="Payment Status"
-            subtitle="Academy fees and payments"
-            icon={<WalletCards size={20} />}
-            actionLabel="View Payments"
-            actionLink="/parent/payments"
+            icon={
+              <CreditCard
+                size={20}
+              />
+            }
+            link="/parent/payments"
+            linkText="View Payments"
           >
-            <div className="grid gap-3 sm:grid-cols-2">
-              <FinanceStat
-                label="Total Paid"
-                value={formatCurrency(totalPaid)}
-              />
+            <p className="text-sm text-slate-500">
+              Current outstanding
+              balance
+            </p>
 
-              <FinanceStat
-                label="Outstanding"
-                value={formatCurrency(
-                  outstandingBalance,
-                )}
-              />
-            </div>
+            <p className="mt-2 text-2xl font-bold text-slate-950">
+              {formatCurrency(
+                outstandingBalance,
+              )}
+            </p>
 
-            {outstandingBalance > 0 ? (
-              <Link
-                to="/parent/payments"
-                className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg bg-green-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-green-700"
-              >
-                Make Payment
-                <ArrowRight size={16} />
-              </Link>
-            ) : (
-              <div className="mt-5 flex items-center gap-3 rounded-lg bg-green-50 p-4 text-sm font-medium text-green-700">
-                <CheckCircle2 size={19} />
-                No outstanding fees
-              </div>
-            )}
-
-            {payments.length > 0 && (
-              <Link
-                to="/parent/receipts"
-                className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
-              >
-                <ReceiptText size={16} />
-                View Receipts
-              </Link>
-            )}
+            <p className="mt-3 text-sm text-slate-500">
+              {invoices.length} invoice
+              {invoices.length === 1
+                ? ""
+                : "s"}{" "}
+              on this player account.
+            </p>
           </DashboardSection>
 
-          {/* LATEST PLAYER REPORT */}
+          {/* REPORT */}
 
           <DashboardSection
             title="Latest Player Report"
-            subtitle="Player development update"
-            icon={<FileText size={20} />}
-            actionLabel="View Reports"
-            actionLink="/parent/reports"
+            icon={
+              <FileText
+                size={20}
+              />
+            }
+            link="/parent/reports"
+            linkText="View Reports"
           >
             {latestReport ? (
-              <div className="rounded-xl border border-slate-200 p-5">
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <p className="font-bold text-slate-900">
-                      {
-                        latestReport.reportingPeriod
-                      }
-                    </p>
+              <>
+                <h3 className="font-bold text-slate-900">
+                  {
+                    latestReport.reportingPeriod
+                  }
+                </h3>
 
-                    <p className="mt-1 text-xs text-slate-400">
-                      {formatDate(
-                        latestReport.date,
-                      )}
-                    </p>
-                  </div>
-
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-50 text-green-600">
-                    <FileText size={19} />
-                  </div>
-                </div>
-
-                <p className="mt-4 line-clamp-4 text-sm leading-6 text-slate-600">
-                  {latestReport.comments ||
-                    latestReport.recommendations ||
-                    "A new progress report is available for this player."}
+                <p className="mt-2 text-sm text-slate-500">
+                  {formatDate(
+                    latestReport.date,
+                  )}
                 </p>
-              </div>
+
+                <p className="mt-4 line-clamp-3 text-sm leading-6 text-slate-600">
+                  {
+                    latestReport.comments
+                  }
+                </p>
+              </>
             ) : (
-              <EmptyState
-                icon={<FileText size={25} />}
-                title="No reports yet"
-                description="No player progress reports have been published yet."
-              />
+              <EmptyText text="No player reports available." />
             )}
           </DashboardSection>
 
@@ -556,397 +415,203 @@ function ParentDashboardPage() {
 
           <DashboardSection
             title="Latest Announcement"
-            subtitle="News from the academy"
             icon={<Bell size={20} />}
-            actionLabel="View All"
-            actionLink="/parent/announcements"
+            link="/parent/announcements"
+            linkText="View Announcements"
           >
             {latestAnnouncement ? (
-              <div className="rounded-xl border border-slate-200 p-5">
-                <div className="flex items-start gap-4">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-amber-50 text-amber-600">
-                    <Bell size={19} />
-                  </div>
+              <>
+                <h3 className="font-bold text-slate-900">
+                  {
+                    latestAnnouncement.title
+                  }
+                </h3>
 
-                  <div>
-                    <h3 className="font-bold text-slate-900">
-                      {
-                        latestAnnouncement.title
-                      }
-                    </h3>
-
-                    <p className="mt-2 line-clamp-4 text-sm leading-6 text-slate-600">
-                      {
-                        latestAnnouncement.message
-                      }
-                    </p>
-
-                    <div className="mt-3 flex gap-2">
-                      <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-500">
-                        {
-                          latestAnnouncement.channel
-                        }
-                      </span>
-
-                      <span className="rounded-full bg-green-50 px-2.5 py-1 text-xs font-medium text-green-600">
-                        {
-                          latestAnnouncement.audience
-                        }
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                <p className="mt-3 line-clamp-4 text-sm leading-6 text-slate-600">
+                  {
+                    latestAnnouncement.message
+                  }
+                </p>
+              </>
             ) : (
-              <EmptyState
-                icon={<Bell size={25} />}
-                title="No announcements"
-                description="There are currently no academy announcements."
-              />
+              <EmptyText text="No announcements available." />
             )}
           </DashboardSection>
-        </div>
 
-        {/* =================================================
-            TOURNAMENT INFORMATION
-        ================================================= */}
+          {/* TOURNAMENT */}
 
-        <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-            <div className="flex items-start gap-3">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-green-50 text-green-600">
-                <Trophy size={21} />
-              </div>
+          <DashboardSection
+            title="Tournament Information"
+            icon={
+              <Trophy size={20} />
+            }
+            link="/parent/tournaments"
+            linkText="View Tournaments"
+          >
+            {nextTournament ? (
+              <>
+                <h3 className="font-bold text-slate-900">
+                  {
+                    nextTournament.name
+                  }
+                </h3>
 
-              <div>
-                <h2 className="font-bold text-slate-900">
-                  Tournament Information
-                </h2>
+                <p className="mt-2 text-sm text-slate-500">
+                  {formatDate(
+                    nextTournament.startDate,
+                  )}
+                </p>
 
                 <p className="mt-1 text-sm text-slate-500">
-                  Upcoming competitions and academy
-                  tournament updates.
+                  {
+                    nextTournament.venue
+                  }
+                  ,{" "}
+                  {
+                    nextTournament.city
+                  }
                 </p>
-              </div>
+              </>
+            ) : (
+              <EmptyText text="No upcoming tournament information." />
+            )}
+          </DashboardSection>
+
+          {/* QUICK ACTIONS */}
+
+          <DashboardSection
+            title="Quick Actions"
+            icon={
+              <UserRound
+                size={20}
+              />
+            }
+          >
+            <div className="grid gap-2 sm:grid-cols-2">
+              <QuickLink
+                to="/parent/attendance"
+                text="Attendance"
+              />
+
+              <QuickLink
+                to="/parent/receipts"
+                text="Receipts"
+              />
+
+              <QuickLink
+                to="/parent/player"
+                text="Player Profile"
+              />
+
+              <QuickLink
+                to="/parent/contact"
+                text="Contact Academy"
+              />
             </div>
-
-            <Link
-              to="/parent/tournaments"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-green-600 hover:text-green-700"
-            >
-              View Tournaments
-              <ArrowRight size={15} />
-            </Link>
-          </div>
-
-          <div className="mt-6 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-7 text-center">
-            <Trophy
-              size={28}
-              className="mx-auto text-slate-300"
-            />
-
-            <p className="mt-3 font-semibold text-slate-700">
-              Tournament information will appear here
-            </p>
-
-            <p className="mx-auto mt-1 max-w-md text-sm leading-6 text-slate-500">
-              Parents will be able to receive tournament
-              dates, venues, participating teams and other
-              competition information.
-            </p>
-          </div>
-        </section>
-
-        {/* =================================================
-            QUICK LINKS
-        ================================================= */}
-
-        <section className="mt-6">
-          <h2 className="text-lg font-bold text-slate-900">
-            Quick Actions
-          </h2>
-
-          <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <QuickAction
-              icon={<UserRound size={21} />}
-              title="Player Profile"
-              description="View complete player information."
-              link="/parent/player"
-            />
-
-            <QuickAction
-              icon={<CreditCard size={21} />}
-              title="Make Payment"
-              description="View fees and make academy payments."
-              link="/parent/payments"
-            />
-
-            <QuickAction
-              icon={<ReceiptText size={21} />}
-              title="Receipts"
-              description="View and download payment receipts."
-              link="/parent/receipts"
-            />
-
-            <QuickAction
-              icon={<Bell size={21} />}
-              title="Announcements"
-              description="Read the latest academy notices."
-              link="/parent/announcements"
-            />
-          </div>
-        </section>
+          </DashboardSection>
+        </div>
       </div>
     </div>
-  );
-}
-
-/* =====================================================
-   COMPONENTS
-===================================================== */
-
-function PlayerTag({
-  text,
-}: {
-  text: string;
-}) {
-  return (
-    <span className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs font-medium text-slate-200">
-      {text}
-    </span>
   );
 }
 
 function SummaryCard({
   title,
   value,
-  description,
   icon,
-  link,
 }: {
   title: string;
   value: string;
-  description: string;
   icon: ReactNode;
-  link: string;
 }) {
   return (
-    <Link
-      to={link}
-      className="group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-green-200 hover:shadow-md"
-    >
-      <div className="flex items-start justify-between">
-        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-green-50 text-green-600">
-          {icon}
-        </div>
-
-        <ArrowRight
-          size={17}
-          className="text-slate-300 transition group-hover:translate-x-1 group-hover:text-green-600"
-        />
+    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-50 text-green-600">
+        {icon}
       </div>
 
-      <p className="mt-5 text-sm text-slate-500">
+      <p className="mt-4 text-sm text-slate-500">
         {title}
       </p>
 
-      <p className="mt-1 text-2xl font-bold text-slate-950">
+      <p className="mt-1 break-words text-2xl font-bold text-slate-950">
         {value}
       </p>
-
-      <p className="mt-2 text-xs text-slate-400">
-        {description}
-      </p>
-    </Link>
+    </div>
   );
 }
 
 function DashboardSection({
   title,
-  subtitle,
   icon,
-  actionLabel,
-  actionLink,
   children,
+  link,
+  linkText,
 }: {
   title: string;
-  subtitle: string;
   icon: ReactNode;
-  actionLabel?: string;
-  actionLink?: string;
   children: ReactNode;
+  link?: string;
+  linkText?: string;
 }) {
   return (
     <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex items-start gap-3">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-green-50 text-green-600">
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-50 text-green-600">
             {icon}
           </div>
 
-          <div>
-            <h2 className="font-bold text-slate-900">
-              {title}
-            </h2>
-
-            <p className="mt-1 text-sm text-slate-500">
-              {subtitle}
-            </p>
-          </div>
+          <h2 className="font-bold text-slate-900">
+            {title}
+          </h2>
         </div>
 
-        {actionLabel && actionLink && (
+        {link && linkText && (
           <Link
-            to={actionLink}
-            className="hidden items-center gap-1 text-xs font-semibold text-green-600 hover:text-green-700 sm:flex"
+            to={link}
+            className="text-sm font-semibold text-green-600 hover:text-green-700"
           >
-            {actionLabel}
-            <ArrowRight size={14} />
+            {linkText}
           </Link>
         )}
       </div>
 
-      <div className="mt-6">{children}</div>
-
-      {actionLabel && actionLink && (
-        <Link
-          to={actionLink}
-          className="mt-5 flex items-center gap-1 text-sm font-semibold text-green-600 sm:hidden"
-        >
-          {actionLabel}
-          <ArrowRight size={14} />
-        </Link>
-      )}
+      <div className="mt-5">
+        {children}
+      </div>
     </section>
   );
 }
 
-function SessionDetail({
-  icon,
+function QuickLink({
+  to,
   text,
 }: {
-  icon: ReactNode;
+  to: string;
   text: string;
 }) {
   return (
-    <div className="flex items-center gap-2 text-sm text-slate-500">
-      <span className="text-green-600">
-        {icon}
-      </span>
-
-      {text}
-    </div>
-  );
-}
-
-function AttendanceStat({
-  label,
-  value,
-}: {
-  label: string;
-  value: number;
-}) {
-  return (
-    <div className="rounded-lg bg-slate-50 p-3 text-center">
-      <p className="text-lg font-bold text-slate-900">
-        {value}
-      </p>
-
-      <p className="mt-1 text-xs text-slate-500">
-        {label}
-      </p>
-    </div>
-  );
-}
-
-function FinanceStat({
-  label,
-  value,
-}: {
-  label: string;
-  value: string;
-}) {
-  return (
-    <div className="rounded-xl bg-slate-50 p-4">
-      <p className="text-xs font-medium text-slate-500">
-        {label}
-      </p>
-
-      <p className="mt-2 text-lg font-bold text-slate-950">
-        {value}
-      </p>
-    </div>
-  );
-}
-
-function QuickAction({
-  icon,
-  title,
-  description,
-  link,
-}: {
-  icon: ReactNode;
-  title: string;
-  description: string;
-  link: string;
-}) {
-  return (
     <Link
-      to={link}
-      className="group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-green-200 hover:shadow-md"
+      to={to}
+      className="rounded-lg border border-slate-200 px-4 py-3 text-center text-sm font-semibold text-slate-700 transition hover:border-green-200 hover:bg-green-50 hover:text-green-700"
     >
-      <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-green-50 text-green-600">
-        {icon}
-      </div>
-
-      <h3 className="mt-4 font-bold text-slate-900">
-        {title}
-      </h3>
-
-      <p className="mt-2 text-sm leading-6 text-slate-500">
-        {description}
-      </p>
-
-      <div className="mt-4 flex items-center gap-1 text-sm font-semibold text-green-600">
-        Open
-        <ArrowRight
-          size={15}
-          className="transition group-hover:translate-x-1"
-        />
-      </div>
+      {text}
     </Link>
   );
 }
 
-function EmptyState({
-  icon,
-  title,
-  description,
+function EmptyText({
+  text,
 }: {
-  icon: ReactNode;
-  title: string;
-  description: string;
+  text: string;
 }) {
   return (
-    <div className="rounded-xl bg-slate-50 p-7 text-center">
-      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-white text-slate-300">
-        {icon}
-      </div>
-
-      <p className="mt-3 font-semibold text-slate-700">
-        {title}
-      </p>
-
-      <p className="mx-auto mt-1 max-w-sm text-sm leading-6 text-slate-500">
-        {description}
-      </p>
-    </div>
+    <p className="text-sm text-slate-500">
+      {text}
+    </p>
   );
 }
-
-/* =====================================================
-   UTILITIES
-===================================================== */
 
 function formatCurrency(
   amount: number,
@@ -974,7 +639,7 @@ function formatDate(
     "en-GB",
     {
       day: "numeric",
-      month: "short",
+      month: "long",
       year: "numeric",
     },
   );

@@ -1,7 +1,6 @@
 import { demoUsers } from "../data/demoUsers";
 import type {
   SessionUser,
-  UserRole,
 } from "../shared/types/auth";
 
 const CURRENT_USER_KEY = "academy_current_user";
@@ -54,22 +53,24 @@ export function getCurrentUser(): SessionUser | null {
   }
 }
 
-export function getHomeRoute(role: UserRole) {
+export function getHomeRoute(
+  role: string,
+): string {
   switch (role) {
     case "administrator":
       return "/admin/dashboard";
 
     case "technical-director":
-      return "/technical-director";
+      return "/technical-director/dashboard";
 
     case "sports-director":
-      return "/sports-director";
+      return "/sports-director/dashboard";
 
     case "coach":
-      return "/coach";
+      return "/coach/dashboard";
 
     case "parent":
-      return "/parent";
+      return "/parent/dashboard";
 
     default:
       return "/login";

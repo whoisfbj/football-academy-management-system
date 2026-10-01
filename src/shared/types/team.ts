@@ -7,21 +7,25 @@ export type TeamGenderCategory =
   | "Girls"
   | "Mixed";
 
+export type TeamAgeCategory =
+  | "U7"
+  | "U9"
+  | "U11"
+  | "U13"
+  | "U15"
+  | "U17"
+  | "U19";
+
 export interface AcademyTeam {
   id: string;
 
   name: string;
 
   ageCategory:
-    | "U7"
-    | "U9"
-    | "U11"
-    | "U13"
-    | "U15"
-    | "U17"
-    | "U19";
+    TeamAgeCategory;
 
-  genderCategory: TeamGenderCategory;
+  genderCategory:
+    TeamGenderCategory;
 
   program: string;
 

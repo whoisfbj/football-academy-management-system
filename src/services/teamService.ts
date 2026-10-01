@@ -1,19 +1,23 @@
-import { demoTeams } from "../data/demoTeams";
+import {
+  demoTeams,
+} from "../data/demoTeams";
 
-import type { AcademyTeam } from "../shared/types/team";
+import type {
+  AcademyTeam,
+} from "../shared/types/team";
 
-const TEAMS_KEY =
+const STORAGE_KEY =
   "academy_teams";
 
 export function initializeTeams() {
   const existing =
     localStorage.getItem(
-      TEAMS_KEY,
+      STORAGE_KEY,
     );
 
   if (!existing) {
     localStorage.setItem(
-      TEAMS_KEY,
+      STORAGE_KEY,
       JSON.stringify(
         demoTeams,
       ),
@@ -21,49 +25,43 @@ export function initializeTeams() {
   }
 }
 
-export function getTeams(): AcademyTeam[] {
+export function getTeams():
+  AcademyTeam[] {
   initializeTeams();
 
-  const saved =
+  return JSON.parse(
     localStorage.getItem(
-      TEAMS_KEY,
-    );
-
-  if (!saved) {
-    return [];
-  }
-
-  try {
-    return JSON.parse(
-      saved,
-    ) as AcademyTeam[];
-  } catch {
-    return [];
-  }
-}
-
-export function getTeamById(
-  id: string,
-): AcademyTeam | undefined {
-  return getTeams().find(
-    (team) => team.id === id,
-  );
+      STORAGE_KEY,
+    ) || "[]",
+  ) as AcademyTeam[];
 }
 
 export function saveTeams(
   teams: AcademyTeam[],
 ) {
   localStorage.setItem(
-    TEAMS_KEY,
+    STORAGE_KEY,
     JSON.stringify(teams),
+  );
+}
+
+export function getTeamById(
+  id: string,
+) {
+  return getTeams().find(
+    (team) =>
+      team.id === id,
   );
 }
 
 export function addTeam(
   team: AcademyTeam,
 ) {
+  const teams =
+    getTeams();
+
   saveTeams([
-    ...getTeams(),
+    ...teams,
     team,
   ]);
 }
@@ -71,7 +69,7 @@ export function addTeam(
 export function updateTeam(
   updatedTeam: AcademyTeam,
 ) {
-  const updated =
+  const teams =
     getTeams().map(
       (team) =>
         team.id ===
@@ -80,5 +78,5 @@ export function updateTeam(
           : team,
     );
 
-  saveTeams(updated);
+  saveTeams(teams);
 }

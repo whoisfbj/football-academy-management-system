@@ -787,7 +787,8 @@ function PlayerProfilePage() {
                   label="Address"
                   value={
                     player.guardian
-                      .address
+                      .address??
+                      "Not provided"
                   }
                 />
               </div>

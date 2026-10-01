@@ -1,4 +1,6 @@
-import type { AcademyTeam } from "../shared/types/team";
+import type {
+  AcademyTeam,
+} from "../shared/types/team";
 
 export const demoTeams: AcademyTeam[] = [
   {
@@ -6,11 +8,14 @@ export const demoTeams: AcademyTeam[] = [
     name: "U7 Academy Team",
     ageCategory: "U7",
     genderCategory: "Mixed",
-    program: "Foundation Development",
+    program:
+      "Foundation Development",
     branch: "Main Branch",
-    centre: "Main Training Centre",
+    centre:
+      "Main Training Centre",
     status: "Active",
-    createdAt: "2026-09-01T09:00:00.000Z",
+    createdAt:
+      "2026-09-01T08:00:00.000Z",
   },
 
   {
@@ -18,11 +23,14 @@ export const demoTeams: AcademyTeam[] = [
     name: "U9 Academy Team",
     ageCategory: "U9",
     genderCategory: "Mixed",
-    program: "Foundation Development",
+    program:
+      "Foundation Development",
     branch: "Main Branch",
-    centre: "Main Training Centre",
+    centre:
+      "Main Training Centre",
     status: "Active",
-    createdAt: "2026-09-01T09:05:00.000Z",
+    createdAt:
+      "2026-09-01T08:10:00.000Z",
   },
 
   {
@@ -30,11 +38,14 @@ export const demoTeams: AcademyTeam[] = [
     name: "U11 Academy Team",
     ageCategory: "U11",
     genderCategory: "Mixed",
-    program: "Youth Development",
+    program:
+      "Youth Development",
     branch: "Main Branch",
-    centre: "Main Training Centre",
+    centre:
+      "Main Training Centre",
     status: "Active",
-    createdAt: "2026-09-01T09:10:00.000Z",
+    createdAt:
+      "2026-09-01T08:20:00.000Z",
   },
 
   {
@@ -42,11 +53,14 @@ export const demoTeams: AcademyTeam[] = [
     name: "U13 Academy Team",
     ageCategory: "U13",
     genderCategory: "Mixed",
-    program: "Youth Development",
+    program:
+      "Youth Development",
     branch: "Main Branch",
-    centre: "Main Training Centre",
+    centre:
+      "Main Training Centre",
     status: "Active",
-    createdAt: "2026-09-01T09:15:00.000Z",
+    createdAt:
+      "2026-09-01T08:30:00.000Z",
   },
 
   {
@@ -54,12 +68,16 @@ export const demoTeams: AcademyTeam[] = [
     name: "U15 Lions",
     ageCategory: "U15",
     genderCategory: "Boys",
-    program: "Elite Development",
+    program:
+      "Elite Development",
     branch: "Main Branch",
-    centre: "Main Training Centre",
-    headCoachId: "coach-001",
+    centre:
+      "Main Training Centre",
+    headCoachId:
+      "coach-001",
     status: "Active",
-    createdAt: "2026-09-01T09:20:00.000Z",
+    createdAt:
+      "2026-09-01T08:40:00.000Z",
   },
 
   {
@@ -67,12 +85,16 @@ export const demoTeams: AcademyTeam[] = [
     name: "U15 Eagles",
     ageCategory: "U15",
     genderCategory: "Boys",
-    program: "Elite Development",
+    program:
+      "Elite Development",
     branch: "Main Branch",
-    centre: "Main Training Centre",
-    headCoachId: "coach-002",
+    centre:
+      "Main Training Centre",
+    headCoachId:
+      "coach-002",
     status: "Active",
-    createdAt: "2026-09-01T09:25:00.000Z",
+    createdAt:
+      "2026-09-01T08:50:00.000Z",
   },
 
   {
@@ -80,12 +102,16 @@ export const demoTeams: AcademyTeam[] = [
     name: "Girls U15",
     ageCategory: "U15",
     genderCategory: "Girls",
-    program: "Girls Development",
+    program:
+      "Girls Development",
     branch: "Main Branch",
-    centre: "Main Training Centre",
-    headCoachId: "coach-004",
+    centre:
+      "Main Training Centre",
+    headCoachId:
+      "coach-004",
     status: "Active",
-    createdAt: "2026-09-01T09:30:00.000Z",
+    createdAt:
+      "2026-09-01T09:00:00.000Z",
   },
 
   {
@@ -93,23 +119,31 @@ export const demoTeams: AcademyTeam[] = [
     name: "U17 Elite",
     ageCategory: "U17",
     genderCategory: "Boys",
-    program: "Elite Development",
+    program:
+      "Elite Development",
     branch: "Main Branch",
-    centre: "Main Training Centre",
-    headCoachId: "coach-003",
+    centre:
+      "Main Training Centre",
+    headCoachId:
+      "coach-003",
     status: "Active",
-    createdAt: "2026-09-01T09:35:00.000Z",
+    createdAt:
+      "2026-09-01T09:10:00.000Z",
   },
 
   {
     id: "team-009",
-    name: "U19 Development Squad",
+    name:
+      "U19 Development Squad",
     ageCategory: "U19",
     genderCategory: "Boys",
-    program: "Performance Development",
+    program:
+      "Performance Development",
     branch: "Main Branch",
-    centre: "Main Training Centre",
+    centre:
+      "Main Training Centre",
     status: "Active",
-    createdAt: "2026-09-01T09:40:00.000Z",
+    createdAt:
+      "2026-09-01T09:20:00.000Z",
   },
 ];

@@ -1,81 +1,180 @@
-import { Menu, Trophy, X } from "lucide-react";
-import { useState } from "react";
-import { Outlet } from "react-router";
+import {
+  useState,
+} from "react";
+
+import {
+  Menu,
+  X,
+} from "lucide-react";
+
+import {
+  Outlet,
+} from "react-router";
+
+import ParentPlayerSwitcher from "../components/parent/ParentPlayerSwitcher";
 
 import ParentSidebar from "../components/parent/ParentSidebar";
 
+import {
+  getPrimaryLinkedPlayer,
+  setSelectedLinkedPlayerId,
+} from "../services/parentService";
+
 function ParentLayout() {
-  const [mobileSidebarOpen, setMobileSidebarOpen] =
-    useState(false);
+  const [
+    mobileSidebarOpen,
+    setMobileSidebarOpen,
+  ] = useState(false);
+
+  const initialPlayer =
+    getPrimaryLinkedPlayer();
+
+  const [
+    selectedPlayerId,
+    setSelectedPlayerIdState,
+  ] = useState(
+    initialPlayer?.id ?? "",
+  );
+
+  function handlePlayerChange(
+    playerId: string,
+  ) {
+    const success =
+      setSelectedLinkedPlayerId(
+        playerId,
+      );
+
+    if (!success) {
+      return;
+    }
+
+    /*
+     * Updating this state changes the
+     * Outlet key below.
+     *
+     * That remounts the current parent
+     * page, causing it to load data for
+     * the newly selected player.
+     */
+    setSelectedPlayerIdState(
+      playerId,
+    );
+  }
+
+  function closeMobileSidebar() {
+    setMobileSidebarOpen(false);
+  }
 
   return (
-    <div className="min-h-screen bg-slate-100">
-      {/* DESKTOP SIDEBAR */}
-      <div className="fixed inset-y-0 left-0 z-40 hidden lg:block">
+    <div className="min-h-screen bg-slate-50">
+      {/* =========================================
+          DESKTOP SIDEBAR
+      ========================================== */}
+
+      <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 lg:block">
         <ParentSidebar />
-      </div>
+      </aside>
 
-      {/* MOBILE HEADER */}
-      <header className="sticky top-0 z-30 flex items-center justify-between border-b border-slate-200 bg-white px-4 py-4 lg:hidden">
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-green-600 text-white">
-            <Trophy size={18} />
-          </div>
+      {/* =========================================
+          MOBILE SIDEBAR OVERLAY
+      ========================================== */}
 
-          <div>
-            <p className="text-sm font-bold text-slate-900">
-              Elite Academy
-            </p>
-
-            <p className="text-xs text-slate-500">
-              Parent Portal
-            </p>
-          </div>
-        </div>
-
-        <button
-          type="button"
-          onClick={() =>
-            setMobileSidebarOpen(true)
-          }
-          className="rounded-lg border border-slate-200 p-2 text-slate-700"
-        >
-          <Menu size={21} />
-        </button>
-      </header>
-
-      {/* MOBILE OVERLAY */}
       {mobileSidebarOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden">
+        <div
+          className="fixed inset-0 z-40 bg-slate-950/50 lg:hidden"
+          onClick={
+            closeMobileSidebar
+          }
+        />
+      )}
+
+      {/* =========================================
+          MOBILE SIDEBAR
+      ========================================== */}
+
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 w-72 transform bg-slate-950 transition-transform duration-200 lg:hidden ${
+          mobileSidebarOpen
+            ? "translate-x-0"
+            : "-translate-x-full"
+        }`}
+      >
+        <div className="absolute right-3 top-3 z-50">
           <button
             type="button"
-            aria-label="Close menu"
-            onClick={() =>
-              setMobileSidebarOpen(false)
+            onClick={
+              closeMobileSidebar
             }
-            className="absolute inset-0 bg-slate-950/60"
-          />
+            className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-white hover:bg-white/20"
+            aria-label="Close menu"
+          >
+            <X size={19} />
+          </button>
+        </div>
 
-          <div className="relative h-full w-64">
-            <ParentSidebar />
+        <ParentSidebar />
+      </aside>
 
+      {/* =========================================
+          MAIN CONTENT
+      ========================================== */}
+
+      <div className="min-h-screen lg:ml-64">
+        {/* MOBILE HEADER */}
+
+        <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 px-4 py-3 backdrop-blur lg:hidden">
+          <div className="flex items-center justify-between gap-4">
             <button
               type="button"
               onClick={() =>
-                setMobileSidebarOpen(false)
+                setMobileSidebarOpen(
+                  true,
+                )
               }
-              className="absolute right-3 top-3 rounded-lg bg-slate-900 p-2 text-white"
+              className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-slate-700"
+              aria-label="Open menu"
             >
-              <X size={18} />
+              <Menu size={20} />
             </button>
+
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-bold text-slate-900">
+                Elite Academy
+              </p>
+
+              <p className="truncate text-xs text-slate-500">
+                Parent / Guardian Portal
+              </p>
+            </div>
+          </div>
+        </header>
+
+        {/* PLAYER SWITCHER */}
+
+        <div className="border-b border-slate-200 bg-white px-5 py-4 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <div className="max-w-md">
+              <ParentPlayerSwitcher
+                selectedPlayerId={
+                  selectedPlayerId
+                }
+                onPlayerChange={
+                  handlePlayerChange
+                }
+              />
+            </div>
           </div>
         </div>
-      )}
 
-      {/* PAGE CONTENT */}
-      <div className="min-w-0 lg:ml-64">
+        {/* PAGE */}
+
         <main>
-          <Outlet />
+          <Outlet
+            key={
+              selectedPlayerId ||
+              "no-linked-player"
+            }
+          />
         </main>
       </div>
     </div>
