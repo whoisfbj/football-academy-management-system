@@ -4,6 +4,8 @@ import {
   CreditCard,
   LayoutDashboard,
   Shield,
+  ShoppingBag,
+  Ticket,
   Trophy,
   Workflow,
 } from "lucide-react";
@@ -50,6 +52,20 @@ function SportsDirectorLayout() {
             "/sports-director/tournaments",
           icon: (
             <Trophy size={19} />
+          ),
+        },
+        {
+          label: "Academy Shop",
+          path: "/shop",
+          icon: (
+            <ShoppingBag size={19} />
+          ),
+        },
+        {
+          label: "Match Tickets",
+          path: "/tickets",
+          icon: (
+            <Ticket size={19} />
           ),
         },
         {

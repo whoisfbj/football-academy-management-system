@@ -234,7 +234,7 @@ function AdminLayout() {
 
               <input
                 type="search"
-                placeholder="Search players, teams, coaches..."
+                placeholder="Search players, teams, shop, tickets..."
                 className="
                   w-full
                   rounded-lg

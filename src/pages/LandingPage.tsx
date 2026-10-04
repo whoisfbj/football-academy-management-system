@@ -13,6 +13,8 @@ import {
   Menu,
   MessageSquare,
   ShieldCheck,
+  ShoppingBag,
+  Ticket,
   Trophy,
   UserRound,
   Users,
@@ -58,6 +60,18 @@ function LandingPage() {
       description:
         "View player statistics, development reports, attendance records and academy performance information.",
       icon: ChartBar,
+    },
+    {
+      title: "Academy Shop",
+      description:
+        "Sell official jerseys, training kits and academy merchandise with stock tracking and order management.",
+      icon: ShoppingBag,
+    },
+    {
+      title: "Online Match Tickets",
+      description:
+        "Publish ticketed fixtures, offer ticket categories and let supporters complete online ticket purchases.",
+      icon: Ticket,
     },
   ];
 
@@ -122,6 +136,20 @@ function LandingPage() {
               Features
             </a>
 
+            <Link
+              to="/shop"
+              className="text-sm font-medium text-slate-600 transition hover:text-green-600"
+            >
+              Shop
+            </Link>
+
+            <Link
+              to="/tickets"
+              className="text-sm font-medium text-slate-600 transition hover:text-green-600"
+            >
+              Tickets
+            </Link>
+
             <a
               href="#roles"
               className="text-sm font-medium text-slate-600 transition hover:text-green-600"
@@ -180,6 +208,22 @@ function LandingPage() {
               >
                 Features
               </a>
+
+              <Link
+                to="/shop"
+                onClick={() => setMobileMenuOpen(false)}
+                className="font-medium text-slate-600"
+              >
+                Academy Shop
+              </Link>
+
+              <Link
+                to="/tickets"
+                onClick={() => setMobileMenuOpen(false)}
+                className="font-medium text-slate-600"
+              >
+                Match Tickets
+              </Link>
 
               <a
                 href="#roles"
@@ -248,18 +292,26 @@ function LandingPage() {
                 <ArrowRight size={18} />
               </Link>
 
-              <a
-                href="#features"
+              <Link
+                to="/shop"
                 className="rounded-lg border border-slate-700 px-6 py-3.5 text-center font-semibold text-white transition hover:bg-slate-900"
               >
-                Explore Features
-              </a>
+                Shop Jerseys & Gear
+              </Link>
+
+              <Link
+                to="/tickets"
+                className="rounded-lg border border-slate-700 px-6 py-3.5 text-center font-semibold text-white transition hover:bg-slate-900"
+              >
+                Buy Match Tickets
+              </Link>
             </div>
 
             <div className="mt-9 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-400">
               <HeroCheck text="Player Development" />
               <HeroCheck text="Attendance Tracking" />
               <HeroCheck text="Finance Management" />
+              <HeroCheck text="Shop & Ticketing" />
             </div>
           </div>
 
@@ -535,7 +587,7 @@ function LandingPage() {
       <section className="bg-white py-20">
         <div className="mx-auto max-w-7xl px-5 lg:px-8">
           <div className="rounded-3xl border border-slate-200 p-8 lg:p-12">
-            <div className="grid gap-10 lg:grid-cols-3">
+            <div className="grid gap-10 md:grid-cols-2 xl:grid-cols-4">
               <Operation
                 icon={<CalendarDays size={23} />}
                 title="Training Operations"
@@ -552,6 +604,12 @@ function LandingPage() {
                 icon={<CreditCard size={23} />}
                 title="Financial Records"
                 description="Maintain invoices, payments, receipts, sponsorships, discounts and academy expenses."
+              />
+
+              <Operation
+                icon={<ShoppingBag size={23} />}
+                title="Shop & Ticketing"
+                description="Sell academy merchandise and provide online ticket purchasing for fixtures and events."
               />
             </div>
           </div>
@@ -575,13 +633,17 @@ function LandingPage() {
             development journey.
           </p>
 
-          <Link
-            to="/login"
-            className="mt-8 inline-flex items-center gap-2 rounded-lg bg-green-600 px-6 py-3.5 font-semibold text-white transition hover:bg-green-700"
-          >
-            Enter Academy Portal
-            <ArrowRight size={18} />
-          </Link>
+          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <Link
+              to="/login"
+              className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-6 py-3.5 font-semibold text-white transition hover:bg-green-700"
+            >
+              Enter Academy Portal
+              <ArrowRight size={18} />
+            </Link>
+            <Link to="/shop" className="rounded-lg border border-slate-700 px-6 py-3.5 font-semibold text-white hover:bg-slate-900">Visit Shop</Link>
+            <Link to="/tickets" className="rounded-lg border border-slate-700 px-6 py-3.5 font-semibold text-white hover:bg-slate-900">Buy Tickets</Link>
+          </div>
         </div>
       </section>
 

@@ -63,6 +63,13 @@ import ReportsPage from "../pages/admin/reports/ReportsPage";
 /* SETTINGS / ACADEMY ADMINISTRATION */
 import AcademySettingsPage from "../pages/admin/settings/AcademySettingsPage";
 
+/* SHOP & TICKETING ADMIN */
+import AdminShopPage from "../pages/admin/shop/AdminShopPage";
+import AdminProductFormPage from "../pages/admin/shop/AdminProductFormPage";
+import AdminTicketsPage from "../pages/admin/tickets/AdminTicketsPage";
+import AdminTicketEventFormPage from "../pages/admin/tickets/AdminTicketEventFormPage";
+import AdminTicketEventDetailPage from "../pages/admin/tickets/AdminTicketEventDetailPage";
+
 /* PARENT PORTAL */
 import ParentDashboardPage from "../pages/parent/ParentDashboardPage";
 import ParentPlayerPage from "../pages/parent/ParentPlayerPage";
@@ -80,6 +87,18 @@ import ParentContactPage from "../pages/parent/ParentContactPage";
 
 /*LANDING PAGE*/
 import LandingPage from "../pages/LandingPage";
+
+/* PUBLIC COMMERCE */
+import CommerceLayout from "../layouts/CommerceLayout";
+import ShopPage from "../pages/commerce/ShopPage";
+import ProductDetailPage from "../pages/commerce/ProductDetailPage";
+import CartPage from "../pages/commerce/CartPage";
+import ShopCheckoutPage from "../pages/commerce/ShopCheckoutPage";
+import { ShopOrderDetailPage, ShopOrdersPage } from "../pages/commerce/ShopOrdersPage";
+import TicketsPage from "../pages/commerce/TicketsPage";
+import TicketEventPage from "../pages/commerce/TicketEventPage";
+import TicketCheckoutPage from "../pages/commerce/TicketCheckoutPage";
+import { MyTicketsPage, TicketDetailPage } from "../pages/commerce/MyTicketsPage";
 
 
 /* OTHER ROLE DASHBOARDS */
@@ -126,6 +145,24 @@ function AppRouter() {
         {/* ========================= */}
 
        <Route path="/" element={<LandingPage />} />
+
+        {/* ========================= */}
+        {/* PUBLIC SHOP & TICKETS */}
+        {/* ========================= */}
+
+        <Route element={<CommerceLayout />}>
+          <Route path="/shop" element={<ShopPage />} />
+          <Route path="/shop/:productId" element={<ProductDetailPage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout" element={<ShopCheckoutPage />} />
+          <Route path="/orders" element={<ShopOrdersPage />} />
+          <Route path="/orders/:orderId" element={<ShopOrderDetailPage />} />
+          <Route path="/tickets" element={<TicketsPage />} />
+          <Route path="/tickets/:eventId" element={<TicketEventPage />} />
+          <Route path="/tickets/:eventId/checkout" element={<TicketCheckoutPage />} />
+          <Route path="/my-tickets" element={<MyTicketsPage />} />
+          <Route path="/my-tickets/:ticketOrderId" element={<TicketDetailPage />} />
+        </Route>
 
         {/* ========================= */}
         {/* AUTHENTICATION */}
@@ -367,6 +404,23 @@ function AppRouter() {
                 <FinanceRecordsPage />
               }
             />
+
+            {/* ========================= */}
+            {/* SHOP */}
+            {/* ========================= */}
+
+            <Route path="shop" element={<AdminShopPage />} />
+            <Route path="shop/products/new" element={<AdminProductFormPage />} />
+            <Route path="shop/products/:productId/edit" element={<AdminProductFormPage />} />
+
+            {/* ========================= */}
+            {/* TICKETS */}
+            {/* ========================= */}
+
+            <Route path="tickets" element={<AdminTicketsPage />} />
+            <Route path="tickets/events/new" element={<AdminTicketEventFormPage />} />
+            <Route path="tickets/events/:eventId/edit" element={<AdminTicketEventFormPage />} />
+            <Route path="tickets/events/:eventId" element={<AdminTicketEventDetailPage />} />
 
             {/* ========================= */}
             {/* COMMUNICATION */}

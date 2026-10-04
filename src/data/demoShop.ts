@@ -1,0 +1,88 @@
+import type { ShopProduct } from "../shared/types/shop";
+
+export const demoShopProducts: ShopProduct[] = [
+  {
+    id: "product-001",
+    sku: "EA-JER-HOME-26",
+    name: "Elite Academy Home Jersey",
+    category: "Jersey",
+    description:
+      "Official academy home jersey with breathable performance fabric and embroidered academy crest.",
+    price: 18000,
+    sizes: ["XS", "S", "M", "L", "XL", "XXL"],
+    stockQuantity: 42,
+    status: "In Stock",
+    featured: true,
+    createdAt: "2026-09-01T09:00:00.000Z",
+  },
+  {
+    id: "product-002",
+    sku: "EA-JER-AWAY-26",
+    name: "Elite Academy Away Jersey",
+    category: "Jersey",
+    description:
+      "Official away jersey designed for supporters, players and academy families.",
+    price: 18000,
+    sizes: ["XS", "S", "M", "L", "XL", "XXL"],
+    stockQuantity: 28,
+    status: "In Stock",
+    featured: true,
+    createdAt: "2026-09-01T09:10:00.000Z",
+  },
+  {
+    id: "product-003",
+    sku: "EA-TRN-KIT-26",
+    name: "Academy Training Kit",
+    category: "Training Kit",
+    description:
+      "Lightweight training top and shorts set for academy sessions and casual training.",
+    price: 22000,
+    sizes: ["S", "M", "L", "XL"],
+    stockQuantity: 18,
+    status: "In Stock",
+    featured: true,
+    createdAt: "2026-09-03T08:00:00.000Z",
+  },
+  {
+    id: "product-004",
+    sku: "EA-TRACK-26",
+    name: "Academy Tracksuit",
+    category: "Tracksuit",
+    description:
+      "Full-zip academy tracksuit for travel, warm-up and match-day use.",
+    price: 32000,
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    stockQuantity: 9,
+    status: "Low Stock",
+    featured: true,
+    createdAt: "2026-09-05T08:00:00.000Z",
+  },
+  {
+    id: "product-005",
+    sku: "EA-CAP-26",
+    name: "Academy Crest Cap",
+    category: "Accessories",
+    description:
+      "Adjustable everyday cap featuring the Elite Academy crest.",
+    price: 7500,
+    sizes: ["One Size"],
+    stockQuantity: 55,
+    status: "In Stock",
+    featured: false,
+    createdAt: "2026-09-06T08:00:00.000Z",
+  },
+  {
+    id: "product-006",
+    sku: "EA-BAG-26",
+    name: "Academy Kit Bag",
+    category: "Accessories",
+    description:
+      "Roomy academy kit bag with separate boot compartment and shoulder strap.",
+    price: 15000,
+    sizes: ["One Size"],
+    stockQuantity: 6,
+    status: "Low Stock",
+    featured: false,
+    createdAt: "2026-09-07T08:00:00.000Z",
+  },
+];

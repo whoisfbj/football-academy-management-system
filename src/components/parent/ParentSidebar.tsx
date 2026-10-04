@@ -8,6 +8,8 @@ import {
   LogOut,
   Mail,
   ReceiptText,
+  ShoppingBag,
+  Ticket,
   Trophy,
   UserRound,
 } from "lucide-react";
@@ -45,6 +47,26 @@ const navigationItems = [
     label: "Receipts",
     path: "/parent/receipts",
     icon: ReceiptText,
+  },
+  {
+    label: "Academy Shop",
+    path: "/shop",
+    icon: ShoppingBag,
+  },
+  {
+    label: "Buy Match Tickets",
+    path: "/tickets",
+    icon: Ticket,
+  },
+  {
+    label: "My Shop Orders",
+    path: "/orders",
+    icon: ReceiptText,
+  },
+  {
+    label: "My Tickets",
+    path: "/my-tickets",
+    icon: Ticket,
   },
   {
     label: "Announcements",

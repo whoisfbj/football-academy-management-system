@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import {
   CalendarDays,
   CircleDollarSign,
@@ -7,7 +8,14 @@ import {
   Users,
   UsersRound,
   WalletCards,
+  ShoppingBag,
+  Ticket,
 } from "lucide-react";
+
+import { Link } from "react-router";
+import { getShopOrders, getShopProducts } from "../../services/shopService";
+import { getTicketEvents, getTicketOrders } from "../../services/ticketService";
+import { formatNaira } from "../../components/commerce/CommerceUI";
 
 const statistics = [
   {
@@ -122,6 +130,13 @@ const recentRegistrations = [
 ];
 
 function AdminDashboard() {
+  const shopProducts = getShopProducts();
+  const shopOrders = getShopOrders();
+  const ticketEvents = getTicketEvents();
+  const ticketOrders = getTicketOrders();
+  const shopRevenue = shopOrders.reduce((total, order) => total + order.total, 0);
+  const ticketRevenue = ticketOrders.reduce((total, order) => total + order.total, 0);
+
   return (
     <div className="w-full min-w-0">
       {/* =========================================
@@ -675,6 +690,40 @@ function AdminDashboard() {
           </div>
         </section>
       </div>
+
+      {/* =========================================
+          COMMERCIAL OPERATIONS
+      ========================================== */}
+
+      <section className="mt-6 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h2 className="font-bold text-slate-900">Commercial Operations</h2>
+            <p className="mt-1 text-sm text-slate-500">Academy shop inventory, merchandise orders and match ticket activity.</p>
+          </div>
+          <div className="flex flex-col gap-2 sm:flex-row">
+            <Link to="/admin/shop" className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:border-green-300 hover:text-green-700"><ShoppingBag size={16} /> Manage Shop</Link>
+            <Link to="/admin/tickets" className="inline-flex items-center justify-center gap-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700"><Ticket size={16} /> Manage Tickets</Link>
+          </div>
+        </div>
+
+        <div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <CommercialStat label="Shop Products" value={String(shopProducts.length)} icon={<ShoppingBag size={18} />} />
+          <CommercialStat label="Shop Revenue" value={formatNaira(shopRevenue)} icon={<WalletCards size={18} />} />
+          <CommercialStat label="Ticket Events" value={String(ticketEvents.length)} icon={<Ticket size={18} />} />
+          <CommercialStat label="Ticket Revenue" value={formatNaira(ticketRevenue)} icon={<CircleDollarSign size={18} />} />
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function CommercialStat({ label, value, icon }: { label: string; value: string; icon: ReactNode }) {
+  return (
+    <div className="min-w-0 rounded-xl bg-slate-50 p-4">
+      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white text-green-600 shadow-sm">{icon}</div>
+      <p className="mt-3 text-xs font-semibold uppercase tracking-wide text-slate-400">{label}</p>
+      <p className="mt-1 break-words text-xl font-bold text-slate-900">{value}</p>
     </div>
   );
 }

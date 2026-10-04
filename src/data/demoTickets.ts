@@ -1,0 +1,100 @@
+import type { TicketEvent } from "../shared/types/ticket";
+
+export const demoTicketEvents: TicketEvent[] = [
+  {
+    id: "event-001",
+    eventCode: "MAT-2026-001",
+    title: "Elite Academy vs Lagos Future Stars",
+    homeTeam: "Elite Academy U17",
+    awayTeam: "Lagos Future Stars U17",
+    competition: "Youth Development League",
+    date: "2026-10-10",
+    kickoffTime: "16:00",
+    venue: "Elite Academy Main Pitch, Lagos",
+    description:
+      "Support our U17 side in an important Youth Development League fixture.",
+    status: "Sales Open",
+    featured: true,
+    ticketTypes: [
+      {
+        id: "event-001-regular",
+        name: "Regular",
+        description: "General admission seating.",
+        price: 2500,
+        availableQuantity: 180,
+      },
+      {
+        id: "event-001-vip",
+        name: "VIP",
+        description: "Covered seating with dedicated entry.",
+        price: 7500,
+        availableQuantity: 45,
+      },
+      {
+        id: "event-001-vvip",
+        name: "VVIP",
+        description: "Premium seating and hospitality access.",
+        price: 15000,
+        availableQuantity: 12,
+      },
+    ],
+    createdAt: "2026-09-20T09:00:00.000Z",
+  },
+  {
+    id: "event-002",
+    eventCode: "MAT-2026-002",
+    title: "Elite Academy Girls vs Rising Queens",
+    homeTeam: "Elite Academy Girls U17",
+    awayTeam: "Rising Queens U17",
+    competition: "Girls Academy Cup",
+    date: "2026-10-17",
+    kickoffTime: "15:30",
+    venue: "Lekki Training Centre, Lagos",
+    description:
+      "A Girls Academy Cup fixture featuring two exciting youth development teams.",
+    status: "Sales Open",
+    featured: true,
+    ticketTypes: [
+      {
+        id: "event-002-regular",
+        name: "Regular",
+        description: "General admission seating.",
+        price: 2000,
+        availableQuantity: 120,
+      },
+      {
+        id: "event-002-vip",
+        name: "VIP",
+        description: "Premium covered seating.",
+        price: 6000,
+        availableQuantity: 30,
+      },
+    ],
+    createdAt: "2026-09-22T09:00:00.000Z",
+  },
+  {
+    id: "event-003",
+    eventCode: "MAT-2026-003",
+    title: "Elite Academy U15 Showcase",
+    homeTeam: "Elite Academy U15 Lions",
+    awayTeam: "Abuja Development XI",
+    competition: "Academy Showcase Series",
+    date: "2026-10-24",
+    kickoffTime: "11:00",
+    venue: "Elite Academy Main Pitch, Lagos",
+    description:
+      "A showcase fixture for academy families, supporters and invited scouts.",
+    status: "Upcoming",
+    featured: false,
+    ticketTypes: [
+      {
+        id: "event-003-regular",
+        name: "Regular",
+        description: "General admission seating.",
+        price: 2000,
+        availableQuantity: 200,
+      },
+    ],
+    createdAt: "2026-09-25T09:00:00.000Z",
+  },
+];

@@ -9,6 +9,8 @@ import {
   LogOut,
   Megaphone,
   Settings,
+  ShoppingBag,
+  Ticket,
   Trophy,
   UserRoundCog,
   Users,
@@ -75,6 +77,16 @@ const menuItems = [
     label: "Finance Records",
     path: "/admin/finance/records",
     icon: WalletCards,
+  },
+  {
+    label: "Academy Shop",
+    path: "/admin/shop",
+    icon: ShoppingBag,
+  },
+  {
+    label: "Match Tickets",
+    path: "/admin/tickets",
+    icon: Ticket,
   },
   {
     label: "Communication",
