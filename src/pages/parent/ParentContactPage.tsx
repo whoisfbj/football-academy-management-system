@@ -93,8 +93,8 @@ function ParentContactPage() {
   }
 
   return (
-    <div className="p-5 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
         <div>
           <p className="text-sm font-semibold text-green-600">
             Parent / Guardian Portal
@@ -144,7 +144,7 @@ function ParentContactPage() {
             />
           </div>
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm lg:col-span-2">
+          <section className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 shadow-sm lg:col-span-2">
             <div className="flex items-center gap-3">
               <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-green-50 text-green-600">
                 <MessageSquare
@@ -242,7 +242,7 @@ function ParentContactPage() {
 
               <button
                 type="submit"
-                className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-5 py-3 text-sm font-semibold text-white hover:bg-green-700"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-green-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-green-700 sm:w-auto"
               >
                 <Send size={17} />
                 Send Message
@@ -265,7 +265,7 @@ function ContactCard({
   value: string;
 }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="min-w-0 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
       <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-50 text-green-600">
         {icon}
       </div>

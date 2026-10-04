@@ -83,8 +83,8 @@ export function CoachDashboardPage() {
     );
 
   return (
-    <div className="p-5 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
         <PortalPageHeader
           eyebrow="Coach Portal"
           title="Dashboard"
@@ -144,7 +144,7 @@ export function CoachDashboardPage() {
         </div>
 
         <section className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-          <div className="flex items-center justify-between border-b border-slate-200 p-6">
+          <div className="flex items-center justify-between border-b border-slate-200 p-4 sm:p-6">
             <div>
               <h2 className="font-bold text-slate-900">
                 Next Training Sessions
@@ -199,7 +199,7 @@ export function CoachDashboardPage() {
                         </p>
                       </div>
 
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap">
                         <Link
                           to="/coach/attendance"
                           className="rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white"
@@ -234,8 +234,8 @@ export function CoachTeamPage() {
     getCoachPlayers();
 
   return (
-    <div className="p-5 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
         <PortalPageHeader
           eyebrow="Coach Portal"
           title="My Teams"
@@ -255,9 +255,9 @@ export function CoachTeamPage() {
               return (
                 <article
                   key={team.id}
-                  className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+                  className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 shadow-sm"
                 >
-                  <div className="flex justify-between gap-4">
+                  <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                     <div>
                       <h2 className="text-xl font-bold text-slate-900">
                         {team.name}
@@ -349,8 +349,8 @@ export function CoachPlayersPage() {
     getCoachPlayers();
 
   return (
-    <div className="p-5 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
         <PortalPageHeader
           eyebrow="Coach Portal"
           title="Players"
@@ -463,8 +463,8 @@ export function CoachSessionsPage() {
   }
 
   return (
-    <div className="p-5 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
         <PortalPageHeader
           eyebrow="Coach Portal"
           title="Training Sessions"
@@ -478,7 +478,7 @@ export function CoachSessionsPage() {
                 (session) => (
                   <article
                     key={session.id}
-                    className="p-5 lg:p-6"
+                    className="p-4 sm:p-5 lg:p-6"
                   >
                     <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-center">
                       <div>
@@ -527,7 +527,7 @@ export function CoachSessionsPage() {
                         </p>
                       </div>
 
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap">
                         <Link
                           to="/coach/attendance"
                           className="rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white"
@@ -665,8 +665,8 @@ export function CoachAttendancePage() {
   }
 
   return (
-    <div className="p-5 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
         <PortalPageHeader
           eyebrow="Coach Portal"
           title="Attendance"
@@ -917,8 +917,8 @@ export function CoachDevelopmentPage() {
   }
 
   return (
-    <div className="p-5 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
         <PortalPageHeader
           eyebrow="Coach Portal"
           title="Player Development"
@@ -961,7 +961,7 @@ export function CoachDevelopmentPage() {
         </div>
 
         <div className="mt-6 grid gap-6 xl:grid-cols-3">
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <section className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 shadow-sm">
             <h2 className="font-bold text-slate-900">
               Create Progress Report
             </h2>
@@ -1079,7 +1079,7 @@ export function CoachDevelopmentPage() {
           </section>
 
           <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm xl:col-span-2">
-            <div className="border-b border-slate-200 p-6">
+            <div className="border-b border-slate-200 p-4 sm:p-6">
               <h2 className="font-bold text-slate-900">
                 Recent Reports
               </h2>
@@ -1104,7 +1104,7 @@ export function CoachDevelopmentPage() {
                           key={
                             report.id
                           }
-                          className="p-5"
+                          className="min-w-0 p-4 sm:p-5"
                         >
                           <h3 className="font-bold text-slate-900">
                             {player?.fullName ??
@@ -1159,8 +1159,8 @@ export function CoachAnnouncementsPage() {
       .reverse();
 
   return (
-    <div className="p-5 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
         <PortalPageHeader
           eyebrow="Coach Portal"
           title="Announcements"
@@ -1176,7 +1176,7 @@ export function CoachAnnouncementsPage() {
                     key={
                       message.id
                     }
-                    className="p-5 lg:p-6"
+                    className="p-4 sm:p-5 lg:p-6"
                   >
                     <div className="flex gap-3">
                       <Bell

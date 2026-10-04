@@ -30,7 +30,7 @@ function ScoutingReportDetailPage() {
 
   if (!report) {
     return (
-      <div>
+      <div className="w-full min-w-0">
         <Link
           to="/admin/development"
           className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-green-600"
@@ -40,7 +40,7 @@ function ScoutingReportDetailPage() {
           Back to Player Development
         </Link>
 
-        <div className="mt-8 rounded-xl border border-slate-200 bg-white p-12 text-center">
+        <div className="mt-8 rounded-xl border border-slate-200 bg-white px-4 py-8 text-center sm:p-12">
           <h2 className="text-lg font-bold text-slate-900">
             Scouting Report Not Found
           </h2>
@@ -69,7 +69,7 @@ function ScoutingReportDetailPage() {
     );
 
   return (
-    <div>
+    <div className="w-full min-w-0">
       <Link
         to={
           player
@@ -181,7 +181,7 @@ function ScoutingReportDetailPage() {
         </section>
 
         <div className="space-y-6">
-          <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+          <section className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
             <Eye className="text-green-600" />
 
             <h2 className="mt-4 font-bold text-slate-900">
@@ -228,7 +228,7 @@ function ScoutingReportDetailPage() {
             </div>
           </section>
 
-          <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+          <section className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
             <UserRoundCog className="text-green-600" />
 
             <h2 className="mt-4 font-bold text-slate-900">
@@ -270,7 +270,7 @@ function RatingCard({
   score: number;
 }) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
       <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-50 text-green-600">
         <Trophy size={19} />
       </div>
@@ -279,7 +279,7 @@ function RatingCard({
         {title}
       </p>
 
-      <p className="mt-1 text-3xl font-bold text-slate-900">
+      <p className="mt-1 break-words text-2xl font-bold leading-tight text-slate-900 sm:text-3xl">
         {score}
         <span className="text-sm font-normal text-slate-400">
           /100
@@ -297,7 +297,7 @@ function ReportSection({
   value: string;
 }) {
   return (
-    <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+    <section className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
       <h2 className="font-bold text-slate-900">
         {title}
       </h2>
@@ -318,7 +318,7 @@ function Detail({
   value: string;
 }) {
   return (
-    <div>
+    <div className="w-full min-w-0">
       <p className="text-xs uppercase tracking-wide text-slate-400">
         {label}
       </p>

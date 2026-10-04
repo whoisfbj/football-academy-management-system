@@ -33,7 +33,7 @@ function ReceiptPage() {
 
   if (!payment) {
     return (
-      <div>
+      <div className="w-full min-w-0">
         <Link
           to="/admin/finance"
           className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-green-600"
@@ -45,7 +45,7 @@ function ReceiptPage() {
           Back to Finance
         </Link>
 
-        <div className="mt-8 rounded-xl border border-slate-200 bg-white p-12 text-center shadow-sm">
+        <div className="mt-8 rounded-xl border border-slate-200 bg-white px-4 py-8 text-center shadow-sm sm:p-12">
           <ReceiptText
             size={40}
             className="mx-auto text-slate-300"
@@ -86,7 +86,7 @@ function ReceiptPage() {
   };
 
   return (
-    <div>
+    <div className="w-full min-w-0">
       {/* PAGE ACTIONS */}
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between print:hidden">
         <Link
@@ -278,7 +278,7 @@ function ReceiptPage() {
           </div>
 
           {/* PAYMENT AMOUNT */}
-          <section className="mt-8 rounded-xl bg-slate-50 p-6">
+          <section className="mt-8 rounded-xl bg-slate-50 p-4 sm:p-6">
             <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="text-sm font-medium text-slate-500">

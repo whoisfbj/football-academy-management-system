@@ -30,7 +30,7 @@ function ProgressReportDetailPage() {
 
   if (!report) {
     return (
-      <div>
+      <div className="w-full min-w-0">
         <Link
           to="/admin/development"
           className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-green-600"
@@ -40,7 +40,7 @@ function ProgressReportDetailPage() {
           Back to Player Development
         </Link>
 
-        <div className="mt-8 rounded-xl border border-slate-200 bg-white p-12 text-center">
+        <div className="mt-8 rounded-xl border border-slate-200 bg-white px-4 py-8 text-center sm:p-12">
           <h2 className="text-lg font-bold text-slate-900">
             Progress Report Not Found
           </h2>
@@ -60,7 +60,7 @@ function ProgressReportDetailPage() {
     );
 
   return (
-    <div>
+    <div className="w-full min-w-0">
       <Link
         to={
           player
@@ -115,7 +115,7 @@ function ProgressReportDetailPage() {
       </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-3">
-        <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm lg:col-span-2">
+        <section className="rounded-xl border border-slate-200 bg-white p-4 sm:p-6 shadow-sm lg:col-span-2">
           <div className="flex items-center gap-3">
             <ClipboardCheck
               size={21}
@@ -158,7 +158,7 @@ function ProgressReportDetailPage() {
           </div>
         </section>
 
-        <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+        <section className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
           <p className="text-sm font-medium text-slate-500">
             Attendance
           </p>
@@ -177,7 +177,7 @@ function ProgressReportDetailPage() {
         </section>
       </div>
 
-      <section className="mt-6 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+      <section className="mt-6 min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
         <h2 className="font-bold text-slate-900">
           Coach Comments
         </h2>
@@ -188,7 +188,7 @@ function ProgressReportDetailPage() {
         </p>
       </section>
 
-      <section className="mt-6 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+      <section className="mt-6 min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
         <h2 className="font-bold text-slate-900">
           Recommendations
         </h2>
@@ -199,7 +199,7 @@ function ProgressReportDetailPage() {
         </p>
       </section>
 
-      <section className="mt-6 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+      <section className="mt-6 min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
         <div className="grid gap-5 sm:grid-cols-2">
           <div className="flex gap-3">
             <CalendarDays
@@ -251,7 +251,7 @@ function InfoCard({
   value: string;
 }) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
       <p className="text-sm text-slate-500">
         {title}
       </p>

@@ -74,9 +74,9 @@ function ParentPaymentsPage() {
 
   if (!linkedPlayer) {
     return (
-      <div className="p-5 lg:p-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center shadow-sm">
+      <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+        <div className="mx-auto w-full max-w-7xl min-w-0">
+          <div className="rounded-2xl border border-slate-200 bg-white px-4 py-8 text-center shadow-sm sm:p-12">
             <CreditCard
               size={34}
               className="mx-auto text-slate-300"
@@ -301,8 +301,8 @@ function ParentPaymentsPage() {
   }
 
   return (
-    <div className="p-5 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
         <div>
           <p className="text-sm font-semibold text-green-600">
             Parent / Guardian Portal
@@ -318,7 +318,7 @@ function ParentPaymentsPage() {
           </p>
         </div>
 
-        <section className="mt-6 rounded-2xl bg-slate-950 p-6 text-white">
+        <section className="mt-6 rounded-2xl bg-slate-950 p-4 sm:p-6 text-white">
           <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-center">
             <div>
               <p className="text-sm text-slate-400">
@@ -376,7 +376,7 @@ function ParentPaymentsPage() {
 
         <div className="mt-6 grid gap-6 xl:grid-cols-3">
           <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm xl:col-span-2">
-            <div className="border-b border-slate-200 p-6">
+            <div className="border-b border-slate-200 p-4 sm:p-6">
               <h2 className="font-bold text-slate-900">
                 Fee Invoices
               </h2>
@@ -396,7 +396,7 @@ function ParentPaymentsPage() {
                         key={
                           invoice.id
                         }
-                        className="p-5 lg:p-6"
+                        className="p-4 sm:p-5 lg:p-6"
                       >
                         <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
                           <div>
@@ -483,13 +483,13 @@ function ParentPaymentsPage() {
                 )}
               </div>
             ) : (
-              <div className="p-12 text-center text-sm text-slate-500">
+              <div className="px-4 py-10 text-center text-sm text-slate-500 sm:p-12">
                 No invoices available.
               </div>
             )}
           </section>
 
-          <section className="h-fit rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <section className="h-fit rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 shadow-sm">
             <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-green-50 text-green-600">
               <WalletCards
                 size={21}
@@ -667,7 +667,7 @@ function ParentPaymentsPage() {
         </div>
 
         <section className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-          <div className="border-b border-slate-200 p-6">
+          <div className="border-b border-slate-200 p-4 sm:p-6">
             <h2 className="font-bold text-slate-900">
               Payment History
             </h2>
@@ -709,7 +709,7 @@ function ParentPaymentsPage() {
               )}
             </div>
           ) : (
-            <div className="p-12 text-center">
+            <div className="px-4 py-10 text-center sm:p-12">
               <ReceiptText
                 size={34}
                 className="mx-auto text-slate-300"
@@ -734,7 +734,7 @@ function SummaryCard({
   value: string;
 }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="min-w-0 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
       <CreditCard
         size={19}
         className="text-green-600"

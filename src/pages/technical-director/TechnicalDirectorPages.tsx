@@ -81,8 +81,8 @@ export function TechnicalDirectorDashboardPage() {
   });
 
   return (
-    <div className="p-5 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
         <PortalPageHeader
           eyebrow="Technical Director Portal"
           title="Dashboard"
@@ -209,8 +209,8 @@ export function TechnicalDirectorTeamsPage() {
   }
 
   return (
-    <div className="p-5 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
         <PortalPageHeader
           eyebrow="Technical Director Portal"
           title="Academy Teams"
@@ -230,9 +230,9 @@ export function TechnicalDirectorTeamsPage() {
               return (
                 <article
                   key={team.id}
-                  className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+                  className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 shadow-sm"
                 >
-                  <div className="flex justify-between gap-4">
+                  <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                     <div>
                       <h2 className="text-lg font-bold text-slate-900">
                         {team.name}
@@ -377,8 +377,8 @@ export function TechnicalDirectorCoachesPage() {
     );
 
   return (
-    <div className="p-5 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
         <PortalPageHeader
           eyebrow="Technical Director Portal"
           title="Coaches"
@@ -393,7 +393,7 @@ export function TechnicalDirectorCoachesPage() {
             ]) => (
               <article
                 key={coachId}
-                className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+                className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 shadow-sm"
               >
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-green-50 text-green-600">
                   <UsersRound
@@ -497,8 +497,8 @@ export function TechnicalDirectorSessionsPage() {
   }
 
   return (
-    <div className="p-5 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
         <PortalPageHeader
           eyebrow="Technical Director Portal"
           title="Training Sessions"
@@ -514,7 +514,7 @@ export function TechnicalDirectorSessionsPage() {
                     key={
                       session.id
                     }
-                    className="p-5 lg:p-6"
+                    className="p-4 sm:p-5 lg:p-6"
                   >
                     <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-center">
                       <div>
@@ -553,7 +553,7 @@ export function TechnicalDirectorSessionsPage() {
                         </p>
                       </div>
 
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap">
                         <PortalButton
                           variant="secondary"
                           onClick={() =>
@@ -694,8 +694,8 @@ export function TechnicalDirectorDevelopmentPage() {
   }
 
   return (
-    <div className="p-5 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
         <PortalPageHeader
           eyebrow="Technical Director Portal"
           title="Player Development"
@@ -743,7 +743,7 @@ export function TechnicalDirectorDevelopmentPage() {
         </div>
 
         <div className="mt-6 grid gap-6 xl:grid-cols-3">
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <section className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 shadow-sm">
             <h2 className="font-bold text-slate-900">
               Create Technical Report
             </h2>
@@ -831,7 +831,7 @@ export function TechnicalDirectorDevelopmentPage() {
           </section>
 
           <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm xl:col-span-2">
-            <div className="border-b border-slate-200 p-6">
+            <div className="border-b border-slate-200 p-4 sm:p-6">
               <h2 className="font-bold text-slate-900">
                 Recent Reports
               </h2>
@@ -857,7 +857,7 @@ export function TechnicalDirectorDevelopmentPage() {
                           key={
                             report.id
                           }
-                          className="p-5"
+                          className="min-w-0 p-4 sm:p-5"
                         >
                           <p className="font-bold text-slate-900">
                             {player?.fullName ??
@@ -929,8 +929,8 @@ export function TechnicalDirectorReportsPage() {
     ).length;
 
   return (
-    <div className="p-5 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
         <PortalPageHeader
           eyebrow="Technical Director Portal"
           title="Technical Reports"

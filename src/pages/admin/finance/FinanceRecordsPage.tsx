@@ -92,16 +92,16 @@ function FinanceRecordsPage() {
     );
 
   return (
-    <div>
-      <p className="text-sm font-semibold text-green-600">
+    <div className="w-full min-w-0">
+      <p className="text-xs font-semibold uppercase tracking-wide text-green-600 sm:text-sm">
         Financial Management
       </p>
 
-      <h1 className="mt-1 text-3xl font-bold text-slate-900">
+      <h1 className="mt-1 break-words text-2xl font-bold leading-tight text-slate-900 sm:text-3xl">
         Finance Records
       </h1>
 
-      <div className="mt-7 grid gap-6 xl:grid-cols-3">
+      <div className="mt-6 grid grid-cols-1 gap-6 sm:mt-7 xl:grid-cols-3">
         <QuickForm
           title="Record Expense"
           icon={
@@ -350,7 +350,7 @@ function FinanceRecordsPage() {
         </QuickForm>
       </div>
 
-      <div className="mt-8 grid gap-6 xl:grid-cols-3">
+      <div className="mt-8 grid grid-cols-1 gap-6 xl:grid-cols-3">
         <Records
           title="Expenses"
           rows={expenses.map(
@@ -397,10 +397,10 @@ function FinanceRecordsPage() {
 }
 
 const inputClass =
-  "w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-green-500";
+  "w-full min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-base outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100 sm:text-sm";
 
 const buttonClass =
-  "inline-flex items-center justify-center gap-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white";
+  "inline-flex w-full items-center justify-center gap-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-green-700";
 
 function QuickForm({
   title,
@@ -412,8 +412,8 @@ function QuickForm({
   children: ReactNode;
 }) {
   return (
-    <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-      <div className="flex items-center gap-2 text-green-600">
+    <section className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+      <div className="flex min-w-0 items-center gap-2 text-green-600">
         {icon}
 
         <h2 className="font-bold text-slate-900">
@@ -439,7 +439,7 @@ function Records({
   }[];
 }) {
   return (
-    <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+    <section className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
       <h2 className="font-bold text-slate-900">
         {title}
       </h2>
@@ -449,13 +449,13 @@ function Records({
           (row, index) => (
             <div
               key={`${row.name}-${index}`}
-              className="flex justify-between border-b border-slate-100 pb-3"
+              className="flex min-w-0 flex-col gap-1 border-b border-slate-100 pb-3 min-[420px]:flex-row min-[420px]:items-start min-[420px]:justify-between"
             >
-              <span className="text-sm text-slate-600">
+              <span className="min-w-0 break-words text-sm text-slate-600">
                 {row.name}
               </span>
 
-              <span className="font-semibold text-slate-800">
+              <span className="shrink-0 break-words font-semibold text-slate-800">
                 {row.value}
               </span>
             </div>

@@ -6,7 +6,7 @@ function PlaceholderPage({
   title,
 }: PlaceholderPageProps) {
   return (
-    <div>
+    <div className="w-full min-w-0">
       <p className="text-sm font-semibold text-green-600">
         Football Academy
       </p>
@@ -19,7 +19,7 @@ function PlaceholderPage({
         This module will be implemented shortly.
       </p>
 
-      <div className="mt-8 rounded-xl border border-dashed border-slate-300 bg-white p-12 text-center">
+      <div className="mt-8 rounded-xl border border-dashed border-slate-300 bg-white px-4 py-8 text-center sm:p-12">
         <h2 className="font-semibold text-slate-700">
           {title}
         </h2>

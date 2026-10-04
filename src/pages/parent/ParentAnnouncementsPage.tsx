@@ -18,8 +18,8 @@ function ParentAnnouncementsPage() {
     .reverse();
 
   return (
-    <div className="p-5 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
         {/* HEADER */}
 
         <div>
@@ -38,7 +38,7 @@ function ParentAnnouncementsPage() {
 
         {/* SUMMARY */}
 
-        <section className="mt-6 rounded-2xl bg-slate-950 p-6 text-white shadow-sm">
+        <section className="mt-6 rounded-2xl bg-slate-950 p-4 sm:p-6 text-white shadow-sm">
           <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
             <div className="flex items-center gap-4">
               <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-white/10">
@@ -75,7 +75,7 @@ function ParentAnnouncementsPage() {
         {/* ANNOUNCEMENTS */}
 
         <section className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-          <div className="border-b border-slate-200 p-6">
+          <div className="border-b border-slate-200 p-4 sm:p-6">
             <div className="flex items-center gap-3">
               <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-green-50 text-green-600">
                 <Bell size={21} />
@@ -98,7 +98,7 @@ function ParentAnnouncementsPage() {
               {announcements.map((announcement) => (
                 <article
                   key={announcement.id}
-                  className="p-5 transition hover:bg-slate-50 lg:p-6"
+                  className="min-w-0 p-4 transition hover:bg-slate-50 sm:p-5 lg:p-6"
                 >
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
                     <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-green-50 text-green-600">
@@ -135,7 +135,7 @@ function ParentAnnouncementsPage() {
               ))}
             </div>
           ) : (
-            <div className="p-12 text-center">
+            <div className="px-4 py-10 text-center sm:p-12">
               <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 text-slate-300">
                 <Bell size={27} />
               </div>

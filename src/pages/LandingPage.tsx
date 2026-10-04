@@ -95,11 +95,11 @@ function LandingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-white text-slate-900">
+    <div className="min-h-dvh w-full overflow-x-hidden bg-white text-slate-900">
       {/* NAVBAR */}
       <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
-          <Link to="/" className="flex items-center gap-3">
+        <div className="mx-auto flex w-full max-w-7xl min-w-0 items-center justify-between gap-3 px-4 py-3 sm:px-6 sm:py-4 lg:px-8">
+          <Link to="/" className="flex min-w-0 items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-green-600 text-white">
               <Trophy size={22} />
             </div>
@@ -310,7 +310,7 @@ function LandingPage() {
                   </div>
 
                   <div className="mt-4 rounded-xl bg-white p-5">
-                    <div className="flex items-center justify-between">
+                    <div className="flex min-w-0 items-center justify-between gap-3">
                       <div>
                         <p className="font-semibold text-slate-900">
                           Player Development
@@ -628,7 +628,7 @@ function PreviewStat({
 }) {
   return (
     <div className="rounded-xl bg-white p-4">
-      <div className="flex items-center justify-between">
+      <div className="flex min-w-0 items-center justify-between gap-3">
         <div className="text-green-600">{icon}</div>
         <span className="text-xl font-bold text-slate-900">{value}</span>
       </div>
@@ -646,7 +646,7 @@ function ProgressItem({
   value: number;
 }) {
   return (
-    <div>
+    <div className="w-full min-w-0">
       <div className="mb-2 flex justify-between text-xs">
         <span className="font-medium text-slate-600">{label}</span>
         <span className="font-bold text-slate-900">{value}%</span>
@@ -670,7 +670,7 @@ function Stat({
   label: string;
 }) {
   return (
-    <div>
+    <div className="w-full min-w-0">
       <p className="text-3xl font-bold text-slate-950">{value}</p>
       <p className="mt-2 text-sm text-slate-500">{label}</p>
     </div>
@@ -723,7 +723,7 @@ function Operation({
   description: string;
 }) {
   return (
-    <div>
+    <div className="w-full min-w-0">
       <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-green-50 text-green-600">
         {icon}
       </div>

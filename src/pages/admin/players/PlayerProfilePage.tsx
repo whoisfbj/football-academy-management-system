@@ -58,6 +58,10 @@ import {
   getSessionById,
 } from "../../../services/sessionService";
 
+/* =========================================================
+   TYPES
+========================================================= */
+
 type ProfileTab =
   | "overview"
   | "development"
@@ -101,39 +105,65 @@ const tabs: {
   },
 ];
 
+/* =========================================================
+   PLAYER PROFILE
+========================================================= */
+
 function PlayerProfilePage() {
-  const { playerId } =
-    useParams();
+  const {
+    playerId,
+  } = useParams();
 
   const [
     activeTab,
     setActiveTab,
-  ] =
-    useState<ProfileTab>(
-      "overview",
-    );
+  ] = useState<ProfileTab>(
+    "overview",
+  );
 
   const player = playerId
-    ? getPlayerById(
-        playerId,
-      )
+    ? getPlayerById(playerId)
     : undefined;
+
+  /* =======================================================
+     PLAYER NOT FOUND
+  ======================================================= */
 
   if (!player) {
     return (
-      <div>
+      <div className="w-full min-w-0">
         <Link
           to="/admin/players"
-          className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition hover:text-green-600"
+          className="
+            inline-flex
+            items-center
+            gap-2
+            text-sm
+            font-medium
+            text-slate-500
+            transition
+            hover:text-green-600
+          "
         >
-          <ArrowLeft
-            size={17}
-          />
+          <ArrowLeft size={17} />
 
           Back to Players
         </Link>
 
-        <div className="mt-8 rounded-xl border border-slate-200 bg-white p-12 text-center shadow-sm">
+        <div
+          className="
+            mt-8
+            rounded-xl
+            border
+            border-slate-200
+            bg-white
+            px-4
+            py-8
+            text-center
+            shadow-sm
+            sm:p-12
+          "
+        >
           <UserRound
             size={40}
             className="mx-auto text-slate-300"
@@ -144,8 +174,7 @@ function PlayerProfilePage() {
           </h2>
 
           <p className="mt-2 text-sm text-slate-500">
-            The requested
-            player record could
+            The requested player record could
             not be found.
           </p>
         </div>
@@ -153,14 +182,13 @@ function PlayerProfilePage() {
     );
   }
 
-  const age =
-    calculateAge(
-      player.dateOfBirth,
-    );
+  const age = calculateAge(
+    player.dateOfBirth,
+  );
 
-  // =========================
-  // ATTENDANCE DATA
-  // =========================
+  /* =======================================================
+     ATTENDANCE
+  ======================================================= */
 
   const attendanceRecords =
     getAttendanceByPlayer(
@@ -201,43 +229,36 @@ function PlayerProfilePage() {
     ).length;
 
   const attendedCount =
-    presentCount +
-    lateCount;
+    presentCount + lateCount;
 
   const attendanceHistory =
     attendanceRecords
-      .map(
-        (record) => {
-          const session =
-            getSessionById(
-              record.sessionId,
-            );
-
-          return {
-            ...record,
-            session,
-          };
-        },
-      )
-      .sort(
-        (a, b) => {
-          const aDate =
-            a.session
-              ?.date ?? "";
-
-          const bDate =
-            b.session
-              ?.date ?? "";
-
-          return bDate.localeCompare(
-            aDate,
+      .map((record) => {
+        const session =
+          getSessionById(
+            record.sessionId,
           );
-        },
-      );
 
-  // =========================
-  // DEVELOPMENT DATA
-  // =========================
+        return {
+          ...record,
+          session,
+        };
+      })
+      .sort((a, b) => {
+        const aDate =
+          a.session?.date ?? "";
+
+        const bDate =
+          b.session?.date ?? "";
+
+        return bDate.localeCompare(
+          aDate,
+        );
+      });
+
+  /* =======================================================
+     DEVELOPMENT
+  ======================================================= */
 
   const technicalAssessment =
     getLatestAssessment(
@@ -288,9 +309,9 @@ function PlayerProfilePage() {
         ),
     );
 
-  // =========================
-  // FINANCE DATA
-  // =========================
+  /* =======================================================
+     FINANCE
+  ======================================================= */
 
   const playerInvoices =
     getInvoicesByPlayer(
@@ -372,24 +393,65 @@ function PlayerProfilePage() {
     );
 
   return (
-    <div>
-      {/* BACK */}
+    <div className="w-full min-w-0">
+      {/* ===================================================
+          BACK
+      ==================================================== */}
+
       <Link
         to="/admin/players"
-        className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition hover:text-green-600"
+        className="
+          inline-flex
+          items-center
+          gap-2
+          text-sm
+          font-medium
+          text-slate-500
+          transition
+          hover:text-green-600
+        "
       >
-        <ArrowLeft
-          size={17}
-        />
+        <ArrowLeft size={17} />
 
         Back to Players
       </Link>
 
-      {/* PROFILE HEADER */}
-      <section className="mt-5 overflow-hidden rounded-xl bg-slate-950 shadow-sm">
-        <div className="p-6 lg:p-8">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-            <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
+      {/* ===================================================
+          PROFILE HEADER
+      ==================================================== */}
+
+      <section
+        className="
+          mt-5
+          min-w-0
+          overflow-hidden
+          rounded-xl
+          bg-slate-950
+          shadow-sm
+        "
+      >
+        <div className="p-4 sm:p-6 lg:p-8">
+          <div
+            className="
+              flex
+              min-w-0
+              flex-col
+              gap-6
+              lg:flex-row
+              lg:items-center
+              lg:justify-between
+            "
+          >
+            <div
+              className="
+                flex
+                min-w-0
+                flex-col
+                gap-5
+                sm:flex-row
+                sm:items-center
+              "
+            >
               {player.passportPhoto ? (
                 <img
                   src={
@@ -398,19 +460,67 @@ function PlayerProfilePage() {
                   alt={
                     player.fullName
                   }
-                  className="h-24 w-24 rounded-xl object-cover ring-4 ring-white/10"
+                  className="
+                    h-20
+                    w-20
+                    shrink-0
+                    rounded-xl
+                    object-cover
+                    ring-4
+                    ring-white/10
+                    sm:h-24
+                    sm:w-24
+                  "
                 />
               ) : (
-                <div className="flex h-24 w-24 items-center justify-center rounded-xl bg-white/10 text-white ring-4 ring-white/5">
+                <div
+                  className="
+                    flex
+                    h-20
+                    w-20
+                    shrink-0
+                    items-center
+                    justify-center
+                    rounded-xl
+                    bg-white/10
+                    text-white
+                    ring-4
+                    ring-white/5
+                    sm:h-24
+                    sm:w-24
+                  "
+                >
                   <UserRound
                     size={38}
                   />
                 </div>
               )}
 
-              <div>
-                <div className="flex flex-wrap items-center gap-3">
-                  <h1 className="text-3xl font-bold text-white">
+              <div className="min-w-0">
+                <div
+                  className="
+                    flex
+                    min-w-0
+                    flex-col
+                    items-start
+                    gap-2
+                    sm:flex-row
+                    sm:flex-wrap
+                    sm:items-center
+                    sm:gap-3
+                  "
+                >
+                  <h1
+                    className="
+                      max-w-full
+                      break-words
+                      text-2xl
+                      font-bold
+                      leading-tight
+                      text-white
+                      sm:text-3xl
+                    "
+                  >
                     {
                       player.fullName
                     }
@@ -423,13 +533,31 @@ function PlayerProfilePage() {
                   />
                 </div>
 
-                <p className="mt-2 font-semibold text-green-400">
+                <p
+                  className="
+                    mt-2
+                    break-all
+                    font-semibold
+                    text-green-400
+                  "
+                >
                   {
                     player.playerId
                   }
                 </p>
 
-                <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-300">
+                <div
+                  className="
+                    mt-4
+                    flex
+                    flex-wrap
+                    gap-x-4
+                    gap-y-2
+                    text-sm
+                    text-slate-300
+                    sm:gap-x-6
+                  "
+                >
                   <span>
                     {
                       player.ageCategory
@@ -456,17 +584,55 @@ function PlayerProfilePage() {
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-3">
+            <div
+              className="
+                grid
+                w-full
+                grid-cols-1
+                gap-3
+                sm:grid-cols-2
+                lg:w-auto
+              "
+            >
               <Link
                 to="/admin/development"
-                className="rounded-lg border border-white/20 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10"
+                className="
+                  inline-flex
+                  items-center
+                  justify-center
+                  rounded-lg
+                  border
+                  border-white/20
+                  px-4
+                  py-2.5
+                  text-center
+                  text-sm
+                  font-semibold
+                  text-white
+                  transition
+                  hover:bg-white/10
+                "
               >
                 Player Development
               </Link>
 
               <Link
                 to={`/admin/players/${player.id}/edit`}
-                className="rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-green-700"
+                className="
+                  inline-flex
+                  items-center
+                  justify-center
+                  rounded-lg
+                  bg-green-600
+                  px-4
+                  py-2.5
+                  text-center
+                  text-sm
+                  font-semibold
+                  text-white
+                  transition
+                  hover:bg-green-700
+                "
               >
                 Edit Player
               </Link>
@@ -475,57 +641,118 @@ function PlayerProfilePage() {
         </div>
       </section>
 
-      {/* TABS */}
-      <div className="mt-6 overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
-        <div className="flex min-w-max">
-          {tabs.map(
-            (tab) => (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() =>
-                  setActiveTab(
-                    tab.id,
-                  )
-                }
-                className={[
-                  "border-b-2 px-5 py-4 text-sm font-semibold transition",
-                  activeTab ===
-                  tab.id
-                    ? "border-green-600 text-green-600"
-                    : "border-transparent text-slate-500 hover:text-slate-800",
-                ].join(
-                  " ",
-                )}
-              >
-                {tab.label}
-              </button>
-            ),
-          )}
+      {/* ===================================================
+          TABS
+      ==================================================== */}
+
+      <div
+        className="
+          mt-6
+          w-full
+          min-w-0
+          overflow-hidden
+          rounded-xl
+          border
+          border-slate-200
+          bg-white
+          shadow-sm
+        "
+      >
+        <div
+          className="
+            hide-scrollbar
+            w-full
+            overflow-x-auto
+            overscroll-x-contain
+          "
+        >
+          <div className="flex min-w-max">
+            {tabs.map(
+              (tab) => (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() =>
+                    setActiveTab(
+                      tab.id,
+                    )
+                  }
+                  className={[
+                    `
+                      shrink-0
+                      border-b-2
+                      px-4
+                      py-3.5
+                      text-sm
+                      font-semibold
+                      transition
+                      sm:px-5
+                      sm:py-4
+                    `,
+                    activeTab ===
+                    tab.id
+                      ? `
+                          border-green-600
+                          text-green-600
+                        `
+                      : `
+                          border-transparent
+                          text-slate-500
+                          hover:text-slate-800
+                        `,
+                  ].join(
+                    " ",
+                  )}
+                >
+                  {tab.label}
+                </button>
+              ),
+            )}
+          </div>
         </div>
       </div>
 
-      {/* ===================== */}
-      {/* OVERVIEW */}
-      {/* ===================== */}
+      {/* ===================================================
+          OVERVIEW
+      ==================================================== */}
 
       {activeTab ===
         "overview" && (
-        <div className="mt-6 grid gap-6 xl:grid-cols-3">
-          <div className="space-y-6 xl:col-span-2">
-            <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-              <div className="flex items-center gap-3">
+        <div
+          className="
+            mt-6
+            grid
+            min-w-0
+            grid-cols-1
+            gap-6
+            xl:grid-cols-3
+          "
+        >
+          <div
+            className="
+              min-w-0
+              space-y-6
+              xl:col-span-2
+            "
+          >
+            {/* PLAYER INFORMATION */}
+
+            <ProfileSection
+              icon={
                 <UserRound
                   size={21}
-                  className="text-green-600"
                 />
-
-                <h2 className="text-lg font-bold text-slate-900">
-                  Player Information
-                </h2>
-              </div>
-
-              <div className="mt-6 grid gap-5 sm:grid-cols-2">
+              }
+              title="Player Information"
+            >
+              <div
+                className="
+                  grid
+                  grid-cols-1
+                  gap-5
+                  sm:grid-cols-2
+                "
+              >
                 <ProfileDetail
                   label="Full Name"
                   value={
@@ -580,21 +807,26 @@ function PlayerProfilePage() {
                   )}
                 />
               </div>
-            </section>
+            </ProfileSection>
 
-            <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-              <div className="flex items-center gap-3">
+            {/* FOOTBALL */}
+
+            <ProfileSection
+              icon={
                 <Trophy
                   size={21}
-                  className="text-green-600"
                 />
-
-                <h2 className="text-lg font-bold text-slate-900">
-                  Football Information
-                </h2>
-              </div>
-
-              <div className="mt-6 grid gap-5 sm:grid-cols-2">
+              }
+              title="Football Information"
+            >
+              <div
+                className="
+                  grid
+                  grid-cols-1
+                  gap-5
+                  sm:grid-cols-2
+                "
+              >
                 <ProfileDetail
                   label="Academy Team"
                   value={
@@ -639,21 +871,26 @@ function PlayerProfilePage() {
                   }
                 />
               </div>
-            </section>
+            </ProfileSection>
 
-            <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-              <div className="flex items-center gap-3">
+            {/* ACADEMIC */}
+
+            <ProfileSection
+              icon={
                 <GraduationCap
                   size={21}
-                  className="text-green-600"
                 />
-
-                <h2 className="text-lg font-bold text-slate-900">
-                  Academic Information
-                </h2>
-              </div>
-
-              <div className="mt-6 grid gap-5 sm:grid-cols-2">
+              }
+              title="Academic Information"
+            >
+              <div
+                className="
+                  grid
+                  grid-cols-1
+                  gap-5
+                  sm:grid-cols-2
+                "
+              >
                 <ProfileDetail
                   label="School Attended"
                   value={
@@ -669,23 +906,23 @@ function PlayerProfilePage() {
                   }
                 />
               </div>
-            </section>
+            </ProfileSection>
           </div>
 
-          <div className="space-y-6">
-            <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-              <div className="flex items-center gap-3">
+          {/* RIGHT COLUMN */}
+
+          <div className="min-w-0 space-y-6">
+            {/* PHYSICAL */}
+
+            <ProfileSection
+              icon={
                 <Ruler
                   size={20}
-                  className="text-green-600"
                 />
-
-                <h2 className="font-bold text-slate-900">
-                  Physical Profile
-                </h2>
-              </div>
-
-              <div className="mt-6 space-y-5">
+              }
+              title="Physical Profile"
+            >
+              <div className="space-y-5">
                 <InfoItem
                   icon={
                     <Ruler
@@ -718,21 +955,19 @@ function PlayerProfilePage() {
                   }
                 />
               </div>
-            </section>
+            </ProfileSection>
 
-            <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-              <div className="flex items-center gap-3">
+            {/* GUARDIAN */}
+
+            <ProfileSection
+              icon={
                 <Users
                   size={20}
-                  className="text-green-600"
                 />
-
-                <h2 className="font-bold text-slate-900">
-                  Parent / Guardian
-                </h2>
-              </div>
-
-              <div className="mt-6 space-y-5">
+              }
+              title="Parent / Guardian"
+            >
+              <div className="space-y-5">
                 <ProfileDetail
                   label="Full Name"
                   value={
@@ -787,26 +1022,24 @@ function PlayerProfilePage() {
                   label="Address"
                   value={
                     player.guardian
-                      .address??
-                      "Not provided"
+                      .address ??
+                    "Not provided"
                   }
                 />
               </div>
-            </section>
+            </ProfileSection>
 
-            <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-              <div className="flex items-center gap-3">
+            {/* REGISTRATION */}
+
+            <ProfileSection
+              icon={
                 <ShieldCheck
                   size={20}
-                  className="text-green-600"
                 />
-
-                <h2 className="font-bold text-slate-900">
-                  Registration
-                </h2>
-              </div>
-
-              <div className="mt-6 space-y-5">
+              }
+              title="Registration"
+            >
+              <div className="space-y-5">
                 <ProfileDetail
                   label="Player ID"
                   value={
@@ -830,25 +1063,32 @@ function PlayerProfilePage() {
                   }
                 />
               </div>
-            </section>
+            </ProfileSection>
           </div>
         </div>
       )}
 
-      {/* ===================== */}
-      {/* DEVELOPMENT */}
-      {/* ===================== */}
+      {/* ===================================================
+          DEVELOPMENT
+      ==================================================== */}
 
       {activeTab ===
         "development" && (
-        <div className="mt-6 space-y-6">
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-6 min-w-0 space-y-6">
+          <div
+            className="
+              grid
+              grid-cols-1
+              gap-4
+              sm:grid-cols-2
+              xl:grid-cols-4
+            "
+          >
             <DevelopmentScore
               title="Technical"
               score={
                 technicalAssessment
-                  ?.overallScore ??
-                0
+                  ?.overallScore ?? 0
               }
             />
 
@@ -856,8 +1096,7 @@ function PlayerProfilePage() {
               title="Tactical"
               score={
                 tacticalAssessment
-                  ?.overallScore ??
-                0
+                  ?.overallScore ?? 0
               }
             />
 
@@ -865,8 +1104,7 @@ function PlayerProfilePage() {
               title="Physical"
               score={
                 physicalAssessment
-                  ?.overallScore ??
-                0
+                  ?.overallScore ?? 0
               }
             />
 
@@ -874,28 +1112,62 @@ function PlayerProfilePage() {
               title="Performance"
               score={
                 performanceAssessment
-                  ?.overallScore ??
-                0
+                  ?.overallScore ?? 0
               }
             />
           </div>
 
-          <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <h2 className="text-lg font-bold text-slate-900">
+          {/* IDP */}
+
+          <section
+            className="
+              min-w-0
+              rounded-xl
+              border
+              border-slate-200
+              bg-white
+              p-4
+              shadow-sm
+              sm:p-6
+            "
+          >
+            <div
+              className="
+                flex
+                min-w-0
+                flex-col
+                gap-3
+                sm:flex-row
+                sm:items-center
+                sm:justify-between
+              "
+            >
+              <div className="min-w-0">
+                <h2 className="break-words text-lg font-bold text-slate-900">
                   Individual Development Plan
                   (IDP)
                 </h2>
 
                 <p className="mt-1 text-sm text-slate-500">
-                  Current player
-                  development objectives.
+                  Current player development
+                  objectives.
                 </p>
               </div>
 
               {currentDevelopmentPlan && (
-                <span className="w-fit rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-700">
+                <span
+                  className="
+                    w-fit
+                    shrink-0
+                    rounded-full
+                    bg-green-50
+                    px-3
+                    py-1
+                    text-xs
+                    font-semibold
+                    text-green-700
+                  "
+                >
                   {
                     currentDevelopmentPlan.status
                   }
@@ -905,7 +1177,15 @@ function PlayerProfilePage() {
 
             {currentDevelopmentPlan ? (
               <>
-                <div className="mt-6 grid gap-5 md:grid-cols-2">
+                <div
+                  className="
+                    mt-6
+                    grid
+                    grid-cols-1
+                    gap-5
+                    md:grid-cols-2
+                  "
+                >
                   <ProfileDetail
                     label="Primary Goal"
                     value={
@@ -936,7 +1216,16 @@ function PlayerProfilePage() {
                   />
                 </div>
 
-                <div className="mt-6 rounded-lg bg-slate-50 p-5">
+                <div
+                  className="
+                    mt-6
+                    min-w-0
+                    rounded-lg
+                    bg-slate-50
+                    p-4
+                    sm:p-5
+                  "
+                >
                   <p className="text-sm font-semibold text-slate-800">
                     Development Actions
                   </p>
@@ -949,10 +1238,9 @@ function PlayerProfilePage() {
                       ) => (
                         <li
                           key={`${action}-${index}`}
-                          className="text-sm text-slate-600"
+                          className="break-words text-sm leading-6 text-slate-600"
                         >
-                          •{" "}
-                          {action}
+                          • {action}
                         </li>
                       ),
                     )}
@@ -960,21 +1248,45 @@ function PlayerProfilePage() {
                 </div>
               </>
             ) : (
-              <div className="mt-6 rounded-lg bg-slate-50 p-8 text-center">
+              <div
+                className="
+                  mt-6
+                  rounded-lg
+                  bg-slate-50
+                  px-4
+                  py-8
+                  text-center
+                  sm:p-8
+                "
+              >
                 <p className="font-medium text-slate-700">
-                  No Individual
-                  Development Plan
+                  No Individual Development
+                  Plan
                 </p>
 
                 <p className="mt-1 text-sm text-slate-500">
-                  An IDP has not yet
-                  been created for this
-                  player.
+                  An IDP has not yet been
+                  created for this player.
                 </p>
 
                 <Link
                   to="/admin/development/idp/new"
-                  className="mt-4 inline-flex rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700"
+                  className="
+                    mt-4
+                    inline-flex
+                    w-full
+                    items-center
+                    justify-center
+                    rounded-lg
+                    bg-green-600
+                    px-4
+                    py-2.5
+                    text-sm
+                    font-semibold
+                    text-white
+                    hover:bg-green-700
+                    sm:w-auto
+                  "
                 >
                   Create IDP
                 </Link>
@@ -982,7 +1294,17 @@ function PlayerProfilePage() {
             )}
           </section>
 
-          <div className="grid gap-6 lg:grid-cols-2">
+          {/* ASSESSMENTS */}
+
+          <div
+            className="
+              grid
+              min-w-0
+              grid-cols-1
+              gap-6
+              lg:grid-cols-2
+            "
+          >
             <AssessmentDetailCard
               title="Latest Technical Assessment"
               assessment={
@@ -1014,29 +1336,46 @@ function PlayerProfilePage() {
         </div>
       )}
 
-      {/* ===================== */}
-      {/* ATTENDANCE */}
-      {/* ===================== */}
+      {/* ===================================================
+          ATTENDANCE
+      ==================================================== */}
 
       {activeTab ===
         "attendance" && (
-        <div className="mt-6 space-y-6">
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
-            <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="mt-6 min-w-0 space-y-6">
+          {/* SUMMARY */}
+
+          <div
+            className="
+              grid
+              grid-cols-1
+              gap-4
+              sm:grid-cols-2
+              xl:grid-cols-5
+            "
+          >
+            <section
+              className="
+                min-w-0
+                rounded-xl
+                border
+                border-slate-200
+                bg-white
+                p-4
+                shadow-sm
+                sm:p-6
+              "
+            >
               <p className="text-sm text-slate-500">
                 Attendance Rate
               </p>
 
-              <p className="mt-2 text-4xl font-bold text-green-600">
-                {
-                  attendancePercentage
-                }
-                %
+              <p className="mt-2 text-3xl font-bold text-green-600 sm:text-4xl">
+                {attendancePercentage}%
               </p>
 
               <p className="mt-2 text-sm text-slate-500">
-                Based on recorded
-                sessions
+                Based on recorded sessions
               </p>
             </section>
 
@@ -1073,58 +1412,137 @@ function PlayerProfilePage() {
             />
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-3">
-            <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-              <p className="text-sm text-slate-500">
-                Sessions Recorded
-              </p>
+          {/* COUNTS */}
 
-              <p className="mt-2 text-3xl font-bold text-slate-900">
-                {
-                  attendanceRecords.length
-                }
-              </p>
-            </section>
+          <div
+            className="
+              grid
+              grid-cols-1
+              gap-4
+              sm:grid-cols-3
+              sm:gap-6
+            "
+          >
+            <SimpleNumberCard
+              label="Sessions Recorded"
+              value={
+                attendanceRecords.length
+              }
+            />
 
-            <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-              <p className="text-sm text-slate-500">
-                Sessions Attended
-              </p>
+            <SimpleNumberCard
+              label="Sessions Attended"
+              value={
+                attendedCount
+              }
+            />
 
-              <p className="mt-2 text-3xl font-bold text-slate-900">
-                {
-                  attendedCount
-                }
-              </p>
-            </section>
-
-            <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-              <p className="text-sm text-slate-500">
-                Missed Sessions
-              </p>
-
-              <p className="mt-2 text-3xl font-bold text-slate-900">
-                {
-                  absentCount
-                }
-              </p>
-            </section>
+            <SimpleNumberCard
+              label="Missed Sessions"
+              value={
+                absentCount
+              }
+            />
           </div>
 
-          <section className="rounded-xl border border-slate-200 bg-white shadow-sm">
-            <div className="border-b border-slate-200 p-6">
-              <h2 className="font-bold text-slate-900">
-                Attendance History
-              </h2>
+          {/* HISTORY */}
 
-              <p className="mt-1 text-sm text-slate-500">
-                Training and academy
-                session attendance for
-                this player.
-              </p>
+          <section
+            className="
+              min-w-0
+              overflow-hidden
+              rounded-xl
+              border
+              border-slate-200
+              bg-white
+              shadow-sm
+            "
+          >
+            <SectionHeader
+              title="Attendance History"
+              description="Training and academy session attendance for this player."
+            />
+
+            {/* MOBILE */}
+
+            <div className="space-y-3 bg-slate-50/50 p-3 md:hidden">
+              {attendanceHistory.map(
+                (record) => (
+                  <article
+                    key={
+                      record.id
+                    }
+                    className="
+                      min-w-0
+                      rounded-xl
+                      border
+                      border-slate-200
+                      bg-white
+                      p-4
+                    "
+                  >
+                    <div className="flex min-w-0 items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <p className="break-words font-semibold text-slate-800">
+                          {record
+                            .session
+                            ?.title ??
+                            "Unknown Session"}
+                        </p>
+
+                        <p className="mt-1 break-words text-sm text-slate-500">
+                          {record
+                            .session
+                            ?.sessionType ??
+                            "—"}
+                        </p>
+                      </div>
+
+                      <div className="shrink-0">
+                        <AttendanceStatusBadge
+                          status={
+                            record.status
+                          }
+                        />
+                      </div>
+                    </div>
+
+                    <div className="mt-4 grid grid-cols-2 gap-4 border-t border-slate-100 pt-4">
+                      <ProfileDetail
+                        label="Date"
+                        value={
+                          record.session
+                            ? formatDate(
+                                record
+                                  .session
+                                  .date,
+                              )
+                            : "—"
+                        }
+                      />
+
+                      <ProfileDetail
+                        label="Time"
+                        value={
+                          record.session
+                            ? `${record.session.startTime} – ${record.session.endTime}`
+                            : "—"
+                        }
+                      />
+                    </div>
+                  </article>
+                ),
+              )}
+
+              {attendanceHistory.length ===
+                0 && (
+                <AttendanceEmptyState />
+              )}
             </div>
 
-            <div className="overflow-x-auto">
+            {/* DESKTOP */}
+
+            <div className="hidden overflow-x-auto md:block">
               <table className="w-full min-w-[800px]">
                 <thead className="bg-slate-50">
                   <tr className="text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
@@ -1152,9 +1570,7 @@ function PlayerProfilePage() {
 
                 <tbody className="divide-y divide-slate-100">
                   {attendanceHistory.map(
-                    (
-                      record,
-                    ) => (
+                    (record) => (
                       <tr
                         key={
                           record.id
@@ -1208,38 +1624,31 @@ function PlayerProfilePage() {
 
               {attendanceHistory.length ===
                 0 && (
-                <div className="p-12 text-center">
-                  <ClipboardCheck
-                    size={36}
-                    className="mx-auto text-slate-300"
-                  />
-
-                  <p className="mt-4 font-medium text-slate-700">
-                    No attendance
-                    recorded
-                  </p>
-
-                  <p className="mt-1 text-sm text-slate-500">
-                    Attendance will
-                    appear here once
-                    this player attends
-                    a session.
-                  </p>
-                </div>
+                <AttendanceEmptyState />
               )}
             </div>
           </section>
         </div>
       )}
 
-      {/* ===================== */}
-      {/* PAYMENTS */}
-      {/* ===================== */}
+      {/* ===================================================
+          PAYMENTS
+      ==================================================== */}
 
       {activeTab ===
         "payments" && (
-        <div className="mt-6 space-y-6">
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-6 min-w-0 space-y-6">
+          {/* FINANCE SUMMARY */}
+
+          <div
+            className="
+              grid
+              grid-cols-1
+              gap-4
+              sm:grid-cols-2
+              xl:grid-cols-4
+            "
+          >
             <FinanceSummaryCard
               title="Total Fees"
               value={formatCurrency(
@@ -1271,53 +1680,175 @@ function PlayerProfilePage() {
             />
           </div>
 
-          {(totalDiscounts >
-            0 ||
+          {(totalDiscounts > 0 ||
             totalSponsorships >
               0) && (
-            <div className="grid gap-4 sm:grid-cols-2">
-              <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-                <p className="text-sm text-slate-500">
-                  Total Discounts
-                </p>
+            <div
+              className="
+                grid
+                grid-cols-1
+                gap-4
+                sm:grid-cols-2
+              "
+            >
+              <AmountCard
+                label="Total Discounts"
+                value={formatCurrency(
+                  totalDiscounts,
+                )}
+                className="text-amber-600"
+              />
 
-                <p className="mt-2 text-2xl font-bold text-amber-600">
-                  {formatCurrency(
-                    totalDiscounts,
-                  )}
-                </p>
-              </section>
-
-              <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-                <p className="text-sm text-slate-500">
-                  Sponsorship
-                  Support
-                </p>
-
-                <p className="mt-2 text-2xl font-bold text-purple-600">
-                  {formatCurrency(
-                    totalSponsorships,
-                  )}
-                </p>
-              </section>
+              <AmountCard
+                label="Sponsorship Support"
+                value={formatCurrency(
+                  totalSponsorships,
+                )}
+                className="text-purple-600"
+              />
             </div>
           )}
 
-          <section className="rounded-xl border border-slate-200 bg-white shadow-sm">
-            <div className="border-b border-slate-200 p-6">
-              <h2 className="text-lg font-bold text-slate-900">
-                Player Fees &
-                Invoices
-              </h2>
+          {/* INVOICES */}
 
-              <p className="mt-1 text-sm text-slate-500">
-                Current and previous
-                academy fee invoices
-                for this player.
-              </p>
+          <section
+            className="
+              min-w-0
+              overflow-hidden
+              rounded-xl
+              border
+              border-slate-200
+              bg-white
+              shadow-sm
+            "
+          >
+            <SectionHeader
+              title="Player Fees & Invoices"
+              description="Current and previous academy fee invoices for this player."
+            />
+
+            {/* MOBILE INVOICES */}
+
+            <div className="space-y-3 bg-slate-50/50 p-3 md:hidden">
+              {playerInvoices.map(
+                (invoice) => {
+                  const balance =
+                    getInvoiceBalance(
+                      invoice,
+                    );
+
+                  return (
+                    <article
+                      key={
+                        invoice.id
+                      }
+                      className="
+                        min-w-0
+                        rounded-xl
+                        border
+                        border-slate-200
+                        bg-white
+                        p-4
+                      "
+                    >
+                      <div className="flex min-w-0 items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <p className="break-all font-semibold text-slate-900">
+                            {
+                              invoice.invoiceNumber
+                            }
+                          </p>
+
+                          <p className="mt-1 break-words text-sm leading-5 text-slate-500">
+                            {
+                              invoice.description
+                            }
+                          </p>
+                        </div>
+
+                        <div className="shrink-0">
+                          <PlayerInvoiceStatusBadge
+                            status={
+                              invoice.status
+                            }
+                          />
+                        </div>
+                      </div>
+
+                      <div
+                        className="
+                          mt-4
+                          grid
+                          grid-cols-2
+                          gap-x-4
+                          gap-y-4
+                          border-t
+                          border-slate-100
+                          pt-4
+                        "
+                      >
+                        <ProfileDetail
+                          label="Amount"
+                          value={formatCurrency(
+                            invoice.amount,
+                          )}
+                        />
+
+                        <ProfileDetail
+                          label="Paid"
+                          value={formatCurrency(
+                            invoice.amountPaid,
+                          )}
+                        />
+
+                        <ProfileDetail
+                          label="Balance"
+                          value={formatCurrency(
+                            balance,
+                          )}
+                        />
+
+                        <ProfileDetail
+                          label="Due Date"
+                          value={formatDate(
+                            invoice.dueDate,
+                          )}
+                        />
+
+                        {invoice.discountAmount >
+                          0 && (
+                          <ProfileDetail
+                            label="Discount"
+                            value={formatCurrency(
+                              invoice.discountAmount,
+                            )}
+                          />
+                        )}
+
+                        {invoice.sponsorshipAmount >
+                          0 && (
+                          <ProfileDetail
+                            label="Sponsorship"
+                            value={formatCurrency(
+                              invoice.sponsorshipAmount,
+                            )}
+                          />
+                        )}
+                      </div>
+                    </article>
+                  );
+                },
+              )}
+
+              {playerInvoices.length ===
+                0 && (
+                <InvoiceEmptyState />
+              )}
             </div>
 
-            <div className="overflow-x-auto">
+            {/* DESKTOP INVOICE TABLE */}
+
+            <div className="hidden overflow-x-auto md:block">
               <table className="w-full min-w-[1050px]">
                 <thead className="bg-slate-50">
                   <tr className="text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
@@ -1361,9 +1892,7 @@ function PlayerProfilePage() {
 
                 <tbody className="divide-y divide-slate-100">
                   {playerInvoices.map(
-                    (
-                      invoice,
-                    ) => {
+                    (invoice) => {
                       const balance =
                         getInvoiceBalance(
                           invoice,
@@ -1457,42 +1986,139 @@ function PlayerProfilePage() {
 
               {playerInvoices.length ===
                 0 && (
-                <div className="p-12 text-center">
-                  <CreditCard
-                    size={36}
-                    className="mx-auto text-slate-300"
-                  />
-
-                  <p className="mt-4 font-medium text-slate-700">
-                    No invoices
-                    found
-                  </p>
-
-                  <p className="mt-1 text-sm text-slate-500">
-                    No academy fee
-                    invoice has been
-                    created for this
-                    player.
-                  </p>
-                </div>
+                <InvoiceEmptyState />
               )}
             </div>
           </section>
 
-          <section className="rounded-xl border border-slate-200 bg-white shadow-sm">
-            <div className="border-b border-slate-200 p-6">
-              <h2 className="text-lg font-bold text-slate-900">
-                Payment History
-              </h2>
+          {/* PAYMENT HISTORY */}
 
-              <p className="mt-1 text-sm text-slate-500">
-                All payments and
-                receipts recorded for
-                this player.
-              </p>
+          <section
+            className="
+              min-w-0
+              overflow-hidden
+              rounded-xl
+              border
+              border-slate-200
+              bg-white
+              shadow-sm
+            "
+          >
+            <SectionHeader
+              title="Payment History"
+              description="All payments and receipts recorded for this player."
+            />
+
+            {/* MOBILE PAYMENTS */}
+
+            <div className="space-y-3 bg-slate-50/50 p-3 md:hidden">
+              {playerPayments.map(
+                (payment) => (
+                  <article
+                    key={
+                      payment.id
+                    }
+                    className="
+                      min-w-0
+                      rounded-xl
+                      border
+                      border-slate-200
+                      bg-white
+                      p-4
+                    "
+                  >
+                    <div className="flex min-w-0 items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <Link
+                          to={`/admin/finance/receipt/${payment.id}`}
+                          className="
+                            break-all
+                            font-semibold
+                            text-green-600
+                            hover:underline
+                          "
+                        >
+                          {
+                            payment.receiptNumber
+                          }
+                        </Link>
+
+                        <p className="mt-1 break-all text-xs text-slate-500">
+                          {
+                            payment.paymentNumber
+                          }
+                        </p>
+                      </div>
+
+                      <p className="shrink-0 font-bold text-green-600">
+                        {formatCurrency(
+                          payment.amount,
+                        )}
+                      </p>
+                    </div>
+
+                    <div className="mt-4 grid grid-cols-2 gap-4 border-t border-slate-100 pt-4">
+                      <ProfileDetail
+                        label="Date"
+                        value={formatDate(
+                          payment.paymentDate,
+                        )}
+                      />
+
+                      <ProfileDetail
+                        label="Method"
+                        value={
+                          payment.paymentMethod
+                        }
+                      />
+
+                      <div className="col-span-2">
+                        <ProfileDetail
+                          label="Reference"
+                          value={
+                            payment.reference ||
+                            "—"
+                          }
+                        />
+                      </div>
+                    </div>
+
+                    <Link
+                      to={`/admin/finance/receipt/${payment.id}`}
+                      className="
+                        mt-4
+                        inline-flex
+                        w-full
+                        items-center
+                        justify-center
+                        rounded-lg
+                        border
+                        border-green-200
+                        bg-green-50
+                        px-4
+                        py-2.5
+                        text-sm
+                        font-semibold
+                        text-green-700
+                        transition
+                        hover:bg-green-100
+                      "
+                    >
+                      View Receipt
+                    </Link>
+                  </article>
+                ),
+              )}
+
+              {playerPayments.length ===
+                0 && (
+                <PaymentEmptyState />
+              )}
             </div>
 
-            <div className="overflow-x-auto">
+            {/* DESKTOP PAYMENT TABLE */}
+
+            <div className="hidden overflow-x-auto md:block">
               <table className="w-full min-w-[900px]">
                 <thead className="bg-slate-50">
                   <tr className="text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
@@ -1524,25 +2150,29 @@ function PlayerProfilePage() {
 
                 <tbody className="divide-y divide-slate-100">
                   {playerPayments.map(
-                    (
-                      payment,
-                    ) => (
+                    (payment) => (
                       <tr
                         key={
                           payment.id
                         }
                         className="hover:bg-slate-50"
                       >
-                       <td className="px-5 py-4">
-  <Link
-    to={`/admin/finance/receipt/${payment.id}`}
-    className="font-semibold text-green-600 hover:text-green-700 hover:underline"
-  >
-    {
-      payment.receiptNumber
-    }
-  </Link>
-</td>
+                        <td className="px-5 py-4">
+                          <Link
+                            to={`/admin/finance/receipt/${payment.id}`}
+                            className="
+                              font-semibold
+                              text-green-600
+                              hover:text-green-700
+                              hover:underline
+                            "
+                          >
+                            {
+                              payment.receiptNumber
+                            }
+                          </Link>
+                        </td>
+
                         <td className="px-5 py-4 text-sm text-slate-600">
                           {
                             payment.paymentNumber
@@ -1556,7 +2186,17 @@ function PlayerProfilePage() {
                         </td>
 
                         <td className="px-5 py-4">
-                          <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600">
+                          <span
+                            className="
+                              rounded-full
+                              bg-slate-100
+                              px-2.5
+                              py-1
+                              text-xs
+                              font-semibold
+                              text-slate-600
+                            "
+                          >
                             {
                               payment.paymentMethod
                             }
@@ -1581,62 +2221,53 @@ function PlayerProfilePage() {
 
               {playerPayments.length ===
                 0 && (
-                <div className="p-12 text-center">
-                  <CreditCard
-                    size={36}
-                    className="mx-auto text-slate-300"
-                  />
-
-                  <p className="mt-4 font-medium text-slate-700">
-                    No payments
-                    recorded
-                  </p>
-
-                  <p className="mt-1 text-sm text-slate-500">
-                    Payments made for
-                    this player will
-                    appear here.
-                  </p>
-                </div>
+                <PaymentEmptyState />
               )}
             </div>
           </section>
         </div>
       )}
 
-      {/* ===================== */}
-      {/* REPORTS */}
-      {/* ===================== */}
+      {/* ===================================================
+          REPORTS
+      ==================================================== */}
 
       {activeTab ===
         "reports" && (
-        <div className="mt-6 space-y-8">
-          <section>
+        <div className="mt-6 min-w-0 space-y-8">
+          {/* PROGRESS REPORTS */}
+
+          <section className="min-w-0">
             <div className="mb-4">
               <h2 className="text-lg font-bold text-slate-900">
                 Progress Reports
               </h2>
 
-              <p className="mt-1 text-sm text-slate-500">
-                Player development
-                reports created by
-                academy coaches.
+              <p className="mt-1 text-sm leading-6 text-slate-500">
+                Player development reports
+                created by academy coaches.
               </p>
             </div>
 
             {playerProgressReports.length >
             0 ? (
-              <div className="grid gap-6 lg:grid-cols-2">
+              <div
+                className="
+                  grid
+                  grid-cols-1
+                  gap-4
+                  lg:grid-cols-2
+                  lg:gap-6
+                "
+              >
                 {playerProgressReports.map(
-                  (
-                    report,
-                  ) => (
+                  (report) => (
                     <Link
                       key={
                         report.id
                       }
                       to={`/admin/development/progress-report/${report.id}`}
-                      className="block"
+                      className="block min-w-0"
                     >
                       <ReportCard
                         title={
@@ -1661,33 +2292,39 @@ function PlayerProfilePage() {
             )}
           </section>
 
-          <section>
+          {/* SCOUTING */}
+
+          <section className="min-w-0">
             <div className="mb-4">
               <h2 className="text-lg font-bold text-slate-900">
                 Scouting Reports
               </h2>
 
-              <p className="mt-1 text-sm text-slate-500">
-                Scouting
-                observations and
-                player potential
-                assessments.
+              <p className="mt-1 text-sm leading-6 text-slate-500">
+                Scouting observations and player
+                potential assessments.
               </p>
             </div>
 
             {playerScoutingReports.length >
             0 ? (
-              <div className="grid gap-6 lg:grid-cols-2">
+              <div
+                className="
+                  grid
+                  grid-cols-1
+                  gap-4
+                  lg:grid-cols-2
+                  lg:gap-6
+                "
+              >
                 {playerScoutingReports.map(
-                  (
-                    report,
-                  ) => (
+                  (report) => (
                     <Link
                       key={
                         report.id
                       }
                       to={`/admin/development/scouting-report/${report.id}`}
-                      className="block"
+                      className="block min-w-0"
                     >
                       <ReportCard
                         title={
@@ -1713,26 +2350,31 @@ function PlayerProfilePage() {
         </div>
       )}
 
-      {/* ===================== */}
-      {/* MEDICAL */}
-      {/* ===================== */}
+      {/* ===================================================
+          MEDICAL
+      ==================================================== */}
 
       {activeTab ===
         "medical" && (
-        <div className="mt-6 grid gap-6 lg:grid-cols-2">
-          <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="flex items-center gap-3">
+        <div
+          className="
+            mt-6
+            grid
+            min-w-0
+            grid-cols-1
+            gap-6
+            lg:grid-cols-2
+          "
+        >
+          <ProfileSection
+            icon={
               <HeartPulse
                 size={21}
-                className="text-green-600"
               />
-
-              <h2 className="text-lg font-bold text-slate-900">
-                Medical Information
-              </h2>
-            </div>
-
-            <div className="mt-6 space-y-5">
+            }
+            title="Medical Information"
+          >
+            <div className="space-y-5">
               <ProfileDetail
                 label="Medical Conditions"
                 value={
@@ -1769,21 +2411,17 @@ function PlayerProfilePage() {
                 }
               />
             </div>
-          </section>
+          </ProfileSection>
 
-          <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="flex items-center gap-3">
+          <ProfileSection
+            icon={
               <Phone
                 size={21}
-                className="text-green-600"
               />
-
-              <h2 className="text-lg font-bold text-slate-900">
-                Emergency Contact
-              </h2>
-            </div>
-
-            <div className="mt-6 space-y-5">
+            }
+            title="Emergency Contact"
+          >
+            <div className="space-y-5">
               <ProfileDetail
                 label="Full Name"
                 value={
@@ -1811,30 +2449,32 @@ function PlayerProfilePage() {
                 }
               />
             </div>
-          </section>
+          </ProfileSection>
         </div>
       )}
 
-      {/* ===================== */}
-      {/* DOCUMENTS */}
-      {/* ===================== */}
+      {/* ===================================================
+          DOCUMENTS
+      ==================================================== */}
 
       {activeTab ===
         "documents" && (
-        <div className="mt-6">
-          <section className="rounded-xl border border-slate-200 bg-white shadow-sm">
-            <div className="border-b border-slate-200 p-6">
-              <h2 className="text-lg font-bold text-slate-900">
-                Player Documents
-              </h2>
-
-              <p className="mt-1 text-sm text-slate-500">
-                Registration and
-                academy documents
-                associated with this
-                player.
-              </p>
-            </div>
+        <div className="mt-6 min-w-0">
+          <section
+            className="
+              min-w-0
+              overflow-hidden
+              rounded-xl
+              border
+              border-slate-200
+              bg-white
+              shadow-sm
+            "
+          >
+            <SectionHeader
+              title="Player Documents"
+              description="Registration and academy documents associated with this player."
+            />
 
             <div className="divide-y divide-slate-100">
               <DocumentRow
@@ -1872,9 +2512,83 @@ function PlayerProfilePage() {
   );
 }
 
-/* ========================================================= */
-/* HELPER COMPONENTS */
-/* ========================================================= */
+/* =========================================================
+   PROFILE SECTION
+========================================================= */
+
+function ProfileSection({
+  icon,
+  title,
+  children,
+}: {
+  icon: ReactNode;
+  title: string;
+  children: ReactNode;
+}) {
+  return (
+    <section
+      className="
+        min-w-0
+        rounded-xl
+        border
+        border-slate-200
+        bg-white
+        p-4
+        shadow-sm
+        sm:p-6
+      "
+    >
+      <div className="flex min-w-0 items-center gap-3">
+        <div className="shrink-0 text-green-600">
+          {icon}
+        </div>
+
+        <h2 className="min-w-0 break-words text-lg font-bold text-slate-900">
+          {title}
+        </h2>
+      </div>
+
+      <div className="mt-6 min-w-0">
+        {children}
+      </div>
+    </section>
+  );
+}
+
+/* =========================================================
+   SECTION HEADER
+========================================================= */
+
+function SectionHeader({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) {
+  return (
+    <div
+      className="
+        border-b
+        border-slate-200
+        p-4
+        sm:p-6
+      "
+    >
+      <h2 className="break-words text-lg font-bold text-slate-900">
+        {title}
+      </h2>
+
+      <p className="mt-1 max-w-3xl text-sm leading-6 text-slate-500">
+        {description}
+      </p>
+    </div>
+  );
+}
+
+/* =========================================================
+   INFO ITEM
+========================================================= */
 
 function InfoItem({
   icon,
@@ -1886,23 +2600,27 @@ function InfoItem({
   value: string;
 }) {
   return (
-    <div className="flex gap-3">
-      <div className="mt-0.5 text-green-600">
+    <div className="flex min-w-0 gap-3">
+      <div className="mt-0.5 shrink-0 text-green-600">
         {icon}
       </div>
 
-      <div>
+      <div className="min-w-0">
         <p className="text-xs uppercase tracking-wide text-slate-400">
           {label}
         </p>
 
-        <p className="mt-1 text-sm font-semibold text-slate-700">
+        <p className="mt-1 break-words text-sm font-semibold text-slate-700">
           {value}
         </p>
       </div>
     </div>
   );
 }
+
+/* =========================================================
+   PROFILE DETAIL
+========================================================= */
 
 function ProfileDetail({
   label,
@@ -1912,17 +2630,37 @@ function ProfileDetail({
   value: string;
 }) {
   return (
-    <div>
-      <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+    <div className="min-w-0">
+      <p
+        className="
+          text-xs
+          font-semibold
+          uppercase
+          tracking-wide
+          text-slate-400
+        "
+      >
         {label}
       </p>
 
-      <p className="mt-1 text-sm font-semibold text-slate-700">
-        {value}
+      <p
+        className="
+          mt-1
+          break-words
+          text-sm
+          font-semibold
+          text-slate-700
+        "
+      >
+        {value || "—"}
       </p>
     </div>
   );
 }
+
+/* =========================================================
+   DEVELOPMENT SCORE
+========================================================= */
 
 function DevelopmentScore({
   title,
@@ -1932,21 +2670,33 @@ function DevelopmentScore({
   score: number;
 }) {
   return (
-    <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-      <div className="flex items-center justify-between">
-        <p className="text-sm font-medium text-slate-500">
+    <section
+      className="
+        min-w-0
+        rounded-xl
+        border
+        border-slate-200
+        bg-white
+        p-4
+        shadow-sm
+        sm:p-5
+      "
+    >
+      <div className="flex min-w-0 items-center justify-between gap-3">
+        <p className="min-w-0 truncate text-sm font-medium text-slate-500">
           {title}
         </p>
 
         <Trophy
           size={18}
-          className="text-green-600"
+          className="shrink-0 text-green-600"
         />
       </div>
 
-      <p className="mt-3 text-3xl font-bold text-slate-900">
+      <p className="mt-3 break-words text-2xl font-bold text-slate-900 sm:text-3xl">
         {score}
-        <span className="text-sm font-normal text-slate-400">
+
+        <span className="ml-1 text-sm font-normal text-slate-400">
           /100
         </span>
       </p>
@@ -1969,6 +2719,10 @@ function DevelopmentScore({
   );
 }
 
+/* =========================================================
+   ASSESSMENT
+========================================================= */
+
 function AssessmentDetailCard({
   title,
   assessment,
@@ -1990,24 +2744,56 @@ function AssessmentDetailCard({
 }) {
   if (!assessment) {
     return (
-      <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-        <h2 className="font-bold text-slate-900">
+      <section
+        className="
+          min-w-0
+          rounded-xl
+          border
+          border-slate-200
+          bg-white
+          p-4
+          shadow-sm
+          sm:p-6
+        "
+      >
+        <h2 className="break-words font-bold text-slate-900">
           {title}
         </h2>
 
         <p className="mt-4 text-sm text-slate-500">
-          No assessment has
-          been recorded yet.
+          No assessment has been recorded
+          yet.
         </p>
       </section>
     );
   }
 
   return (
-    <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <h2 className="font-bold text-slate-900">
+    <section
+      className="
+        min-w-0
+        rounded-xl
+        border
+        border-slate-200
+        bg-white
+        p-4
+        shadow-sm
+        sm:p-6
+      "
+    >
+      <div
+        className="
+          flex
+          min-w-0
+          flex-col
+          gap-3
+          min-[420px]:flex-row
+          min-[420px]:items-start
+          min-[420px]:justify-between
+        "
+      >
+        <div className="min-w-0">
+          <h2 className="break-words font-bold text-slate-900">
             {title}
           </h2>
 
@@ -2018,7 +2804,19 @@ function AssessmentDetailCard({
           </p>
         </div>
 
-        <span className="rounded-lg bg-green-50 px-3 py-2 text-lg font-bold text-green-700">
+        <span
+          className="
+            w-fit
+            shrink-0
+            rounded-lg
+            bg-green-50
+            px-3
+            py-2
+            text-lg
+            font-bold
+            text-green-700
+          "
+        >
           {
             assessment.overallScore
           }
@@ -2026,16 +2824,22 @@ function AssessmentDetailCard({
         </span>
       </div>
 
-      <div className="mt-6 grid gap-3 sm:grid-cols-2">
+      <div
+        className="
+          mt-6
+          grid
+          grid-cols-1
+          gap-3
+          sm:grid-cols-2
+        "
+      >
         {assessment.metrics.map(
           (metric) => (
             <div
-              key={
-                metric.name
-              }
-              className="rounded-lg bg-slate-50 p-3"
+              key={metric.name}
+              className="min-w-0 rounded-lg bg-slate-50 p-3"
             >
-              <p className="text-xs text-slate-500">
+              <p className="break-words text-xs text-slate-500">
                 {
                   metric.name
                 }
@@ -2081,11 +2885,13 @@ function AssessmentDetailCard({
   );
 }
 
+/* =========================================================
+   ATTENDANCE SUMMARY
+========================================================= */
+
 interface AttendanceSummaryCardProps {
   title: string;
-
   value: number;
-
   style:
     | "green"
     | "amber"
@@ -2101,31 +2907,54 @@ function AttendanceSummaryCard({
   const styles = {
     green:
       "bg-green-50 text-green-700",
-
     amber:
       "bg-amber-50 text-amber-700",
-
     red:
       "bg-red-50 text-red-700",
-
     blue:
       "bg-blue-50 text-blue-700",
   };
 
   return (
-    <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+    <section
+      className="
+        min-w-0
+        rounded-xl
+        border
+        border-slate-200
+        bg-white
+        p-4
+        shadow-sm
+        sm:p-6
+      "
+    >
       <div
-        className={`inline-flex rounded-lg px-3 py-1 text-xs font-semibold ${styles[style]}`}
+        className={`
+          inline-flex
+          max-w-full
+          rounded-lg
+          px-3
+          py-1
+          text-xs
+          font-semibold
+          ${styles[style]}
+        `}
       >
-        {title}
+        <span className="truncate">
+          {title}
+        </span>
       </div>
 
-      <p className="mt-4 text-3xl font-bold text-slate-900">
+      <p className="mt-4 text-2xl font-bold text-slate-900 sm:text-3xl">
         {value}
       </p>
     </section>
   );
 }
+
+/* =========================================================
+   ATTENDANCE STATUS
+========================================================= */
 
 function AttendanceStatusBadge({
   status,
@@ -2145,18 +2974,64 @@ function AttendanceStatusBadge({
 
   return (
     <span
-      className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${style}`}
+      className={`
+        inline-flex
+        whitespace-nowrap
+        rounded-full
+        px-2.5
+        py-1
+        text-xs
+        font-semibold
+        ${style}
+      `}
     >
       {status}
     </span>
   );
 }
 
+/* =========================================================
+   SIMPLE NUMBER CARD
+========================================================= */
+
+function SimpleNumberCard({
+  label,
+  value,
+}: {
+  label: string;
+  value: number;
+}) {
+  return (
+    <section
+      className="
+        min-w-0
+        rounded-xl
+        border
+        border-slate-200
+        bg-white
+        p-4
+        shadow-sm
+        sm:p-6
+      "
+    >
+      <p className="break-words text-sm text-slate-500">
+        {label}
+      </p>
+
+      <p className="mt-2 text-2xl font-bold text-slate-900 sm:text-3xl">
+        {value}
+      </p>
+    </section>
+  );
+}
+
+/* =========================================================
+   FINANCE SUMMARY
+========================================================= */
+
 interface FinanceSummaryCardProps {
   title: string;
-
   value: string;
-
   style:
     | "green"
     | "red"
@@ -2172,31 +3047,100 @@ function FinanceSummaryCard({
   const styles = {
     green:
       "bg-green-50 text-green-700",
-
     red:
       "bg-red-50 text-red-700",
-
     blue:
       "bg-blue-50 text-blue-700",
-
     slate:
       "bg-slate-100 text-slate-700",
   };
 
   return (
-    <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+    <section
+      className="
+        min-w-0
+        rounded-xl
+        border
+        border-slate-200
+        bg-white
+        p-4
+        shadow-sm
+        sm:p-5
+      "
+    >
       <span
-        className={`inline-flex rounded-lg px-3 py-1 text-xs font-semibold ${styles[style]}`}
+        className={`
+          inline-flex
+          max-w-full
+          rounded-lg
+          px-3
+          py-1
+          text-xs
+          font-semibold
+          ${styles[style]}
+        `}
       >
-        {title}
+        <span className="truncate">
+          {title}
+        </span>
       </span>
 
-      <p className="mt-4 text-2xl font-bold text-slate-900">
+      <p className="mt-4 break-words text-xl font-bold text-slate-900 sm:text-2xl">
         {value}
       </p>
     </section>
   );
 }
+
+/* =========================================================
+   AMOUNT CARD
+========================================================= */
+
+function AmountCard({
+  label,
+  value,
+  className,
+}: {
+  label: string;
+  value: string;
+  className: string;
+}) {
+  return (
+    <section
+      className="
+        min-w-0
+        rounded-xl
+        border
+        border-slate-200
+        bg-white
+        p-4
+        shadow-sm
+        sm:p-5
+      "
+    >
+      <p className="text-sm text-slate-500">
+        {label}
+      </p>
+
+      <p
+        className={`
+          mt-2
+          break-words
+          text-xl
+          font-bold
+          sm:text-2xl
+          ${className}
+        `}
+      >
+        {value}
+      </p>
+    </section>
+  );
+}
+
+/* =========================================================
+   INVOICE STATUS
+========================================================= */
 
 function PlayerInvoiceStatusBadge({
   status,
@@ -2219,12 +3163,26 @@ function PlayerInvoiceStatusBadge({
 
   return (
     <span
-      className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${style}`}
+      className={`
+        inline-flex
+        max-w-full
+        whitespace-nowrap
+        rounded-full
+        px-2.5
+        py-1
+        text-xs
+        font-semibold
+        ${style}
+      `}
     >
       {status}
     </span>
   );
 }
+
+/* =========================================================
+   REPORT CARD
+========================================================= */
 
 function ReportCard({
   title,
@@ -2238,14 +3196,37 @@ function ReportCard({
   description: string;
 }) {
   return (
-    <div className="h-full rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-green-300 hover:shadow-md">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-green-600">
+    <div
+      className="
+        h-full
+        min-w-0
+        rounded-xl
+        border
+        border-slate-200
+        bg-white
+        p-4
+        shadow-sm
+        transition
+        hover:border-green-300
+        hover:shadow-md
+        sm:p-6
+      "
+    >
+      <div className="flex min-w-0 items-start justify-between gap-4">
+        <div className="min-w-0">
+          <p
+            className="
+              text-xs
+              font-semibold
+              uppercase
+              tracking-wide
+              text-green-600
+            "
+          >
             {type}
           </p>
 
-          <h3 className="mt-2 font-bold text-slate-900">
+          <h3 className="mt-2 break-words font-bold text-slate-900">
             {title}
           </h3>
         </div>
@@ -2256,13 +3237,23 @@ function ReportCard({
         />
       </div>
 
-      <p className="mt-4 line-clamp-3 text-sm leading-6 text-slate-600">
+      <p
+        className="
+          mt-4
+          line-clamp-3
+          break-words
+          text-sm
+          leading-6
+          text-slate-600
+        "
+      >
         {description}
       </p>
 
       <div className="mt-5 flex items-center gap-2 text-xs text-slate-400">
         <CalendarDays
           size={14}
+          className="shrink-0"
         />
 
         {date}
@@ -2271,13 +3262,29 @@ function ReportCard({
   );
 }
 
+/* =========================================================
+   REPORT EMPTY STATE
+========================================================= */
+
 function EmptyReportState({
   title,
 }: {
   title: string;
 }) {
   return (
-    <div className="rounded-xl border border-dashed border-slate-300 bg-white p-10 text-center">
+    <div
+      className="
+        rounded-xl
+        border
+        border-dashed
+        border-slate-300
+        bg-white
+        px-4
+        py-8
+        text-center
+        sm:p-10
+      "
+    >
       <FileText
         size={32}
         className="mx-auto text-slate-300"
@@ -2290,6 +3297,10 @@ function EmptyReportState({
   );
 }
 
+/* =========================================================
+   DOCUMENT ROW
+========================================================= */
+
 function DocumentRow({
   title,
   type,
@@ -2300,20 +3311,43 @@ function DocumentRow({
   status: string;
 }) {
   const available =
-    status ===
-    "Available";
+    status === "Available";
 
   return (
-    <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
-      <div className="flex items-center gap-4">
-        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-slate-100 text-slate-500">
+    <div
+      className="
+        flex
+        min-w-0
+        flex-col
+        gap-4
+        p-4
+        sm:flex-row
+        sm:items-center
+        sm:justify-between
+        sm:p-5
+      "
+    >
+      <div className="flex min-w-0 items-center gap-4">
+        <div
+          className="
+            flex
+            h-10
+            w-10
+            shrink-0
+            items-center
+            justify-center
+            rounded-lg
+            bg-slate-100
+            text-slate-500
+          "
+        >
           <FileText
             size={19}
           />
         </div>
 
-        <div>
-          <p className="font-semibold text-slate-800">
+        <div className="min-w-0">
+          <p className="break-words font-semibold text-slate-800">
             {title}
           </p>
 
@@ -2325,13 +3359,19 @@ function DocumentRow({
 
       <span
         className={[
-          "w-fit rounded-full px-2.5 py-1 text-xs font-semibold",
+          `
+            w-fit
+            shrink-0
+            rounded-full
+            px-2.5
+            py-1
+            text-xs
+            font-semibold
+          `,
           available
             ? "bg-green-50 text-green-700"
             : "bg-red-50 text-red-700",
-        ].join(
-          " ",
-        )}
+        ].join(" ")}
       >
         {status}
       </span>
@@ -2339,9 +3379,73 @@ function DocumentRow({
   );
 }
 
-/* ========================================================= */
-/* UTILITIES */
-/* ========================================================= */
+/* =========================================================
+   EMPTY STATES
+========================================================= */
+
+function AttendanceEmptyState() {
+  return (
+    <div className="px-4 py-10 text-center sm:p-12">
+      <ClipboardCheck
+        size={36}
+        className="mx-auto text-slate-300"
+      />
+
+      <p className="mt-4 font-medium text-slate-700">
+        No attendance recorded
+      </p>
+
+      <p className="mt-1 text-sm text-slate-500">
+        Attendance will appear here once
+        this player attends a session.
+      </p>
+    </div>
+  );
+}
+
+function InvoiceEmptyState() {
+  return (
+    <div className="px-4 py-10 text-center sm:p-12">
+      <CreditCard
+        size={36}
+        className="mx-auto text-slate-300"
+      />
+
+      <p className="mt-4 font-medium text-slate-700">
+        No invoices found
+      </p>
+
+      <p className="mt-1 text-sm text-slate-500">
+        No academy fee invoice has been
+        created for this player.
+      </p>
+    </div>
+  );
+}
+
+function PaymentEmptyState() {
+  return (
+    <div className="px-4 py-10 text-center sm:p-12">
+      <CreditCard
+        size={36}
+        className="mx-auto text-slate-300"
+      />
+
+      <p className="mt-4 font-medium text-slate-700">
+        No payments recorded
+      </p>
+
+      <p className="mt-1 text-sm text-slate-500">
+        Payments made for this player
+        will appear here.
+      </p>
+    </div>
+  );
+}
+
+/* =========================================================
+   UTILITIES
+========================================================= */
 
 function calculateAge(
   dateOfBirth: string,
@@ -2363,10 +3467,8 @@ function calculateAge(
     birthDate.getMonth();
 
   if (
-    monthDifference <
-      0 ||
-    (monthDifference ===
-      0 &&
+    monthDifference < 0 ||
+    (monthDifference === 0 &&
       today.getDate() <
         birthDate.getDate())
   ) {

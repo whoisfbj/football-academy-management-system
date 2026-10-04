@@ -32,9 +32,9 @@ function PlayerStatusBadge({
 
   return (
     <span
-      className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${styles[status]}`}
+      className={`inline-flex max-w-full items-center rounded-full px-2.5 py-1 text-xs font-semibold ${styles[status]}`}
     >
-      {status}
+      <span className="truncate">{status}</span>
     </span>
   );
 }

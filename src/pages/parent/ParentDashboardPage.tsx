@@ -51,9 +51,9 @@ function ParentDashboardPage() {
 
   if (!linkedPlayer) {
     return (
-      <div className="p-5 lg:p-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center shadow-sm">
+      <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+        <div className="mx-auto w-full max-w-7xl min-w-0">
+          <div className="rounded-2xl border border-slate-200 bg-white px-4 py-8 text-center shadow-sm sm:p-12">
             <UserRound
               size={38}
               className="mx-auto text-slate-300"
@@ -189,8 +189,8 @@ function ParentDashboardPage() {
       )[0];
 
   return (
-    <div className="p-5 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
         {/* HEADER */}
 
         <div>
@@ -212,7 +212,7 @@ function ParentDashboardPage() {
 
         {/* PLAYER HERO */}
 
-        <section className="mt-6 rounded-2xl bg-slate-950 p-6 text-white shadow-sm">
+        <section className="mt-6 rounded-2xl bg-slate-950 p-4 sm:p-6 text-white shadow-sm">
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-center">
             <div>
               <p className="text-sm text-slate-400">
@@ -525,7 +525,7 @@ function SummaryCard({
   icon: ReactNode;
 }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="min-w-0 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
       <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-50 text-green-600">
         {icon}
       </div>
@@ -555,8 +555,8 @@ function DashboardSection({
   linkText?: string;
 }) {
   return (
-    <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-      <div className="flex items-center justify-between gap-4">
+    <section className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 shadow-sm">
+      <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-50 text-green-600">
             {icon}

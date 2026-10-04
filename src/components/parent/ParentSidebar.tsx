@@ -77,20 +77,20 @@ function ParentSidebar() {
   }
 
   return (
-    <aside className="flex h-screen w-64 flex-col bg-slate-950 text-white">
+    <aside className="flex h-full min-h-0 w-full flex-col overflow-hidden bg-slate-950 text-white">
       {/* LOGO */}
-      <div className="border-b border-slate-800 px-6 py-6">
-        <div className="flex items-center gap-3">
+      <div className="shrink-0 border-b border-slate-800 px-4 py-5 sm:px-5 lg:px-6 lg:py-6">
+        <div className="flex min-w-0 items-center gap-3">
           <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-green-600">
             <Trophy size={22} />
           </div>
 
-          <div>
-            <h1 className="font-bold text-white">
+          <div className="min-w-0">
+            <h1 className="truncate font-bold text-white">
               Elite Academy
             </h1>
 
-            <p className="mt-1 text-xs text-slate-400">
+            <p className="mt-1 truncate text-xs text-slate-400">
               Parent / Guardian Portal
             </p>
           </div>
@@ -98,7 +98,7 @@ function ParentSidebar() {
       </div>
 
       {/* NAVIGATION */}
-      <nav className="flex-1 overflow-y-auto px-3 py-5">
+      <nav className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 py-4 lg:py-5">
         <p className="mb-3 px-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
           Portal
         </p>
@@ -113,16 +113,16 @@ function ParentSidebar() {
                 to={item.path}
                 className={({ isActive }) =>
                   [
-                    "flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition",
+                    "flex min-w-0 items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition",
                     isActive
                       ? "bg-green-600 text-white"
                       : "text-slate-300 hover:bg-slate-900 hover:text-white",
                   ].join(" ")
                 }
               >
-                <Icon size={18} />
+                <Icon size={18} className="shrink-0" />
 
-                <span>{item.label}</span>
+                <span className="min-w-0 truncate">{item.label}</span>
               </NavLink>
             );
           })}
@@ -130,15 +130,15 @@ function ParentSidebar() {
       </nav>
 
       {/* LOGOUT */}
-      <div className="border-t border-slate-800 p-3">
+      <div className="shrink-0 border-t border-slate-800 p-3">
         <button
           type="button"
           onClick={handleLogout}
-          className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-slate-300 transition hover:bg-red-500/10 hover:text-red-400"
+          className="flex w-full min-w-0 items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-slate-300 transition hover:bg-red-500/10 hover:text-red-400"
         >
-          <LogOut size={18} />
+          <LogOut size={18} className="shrink-0" />
 
-          Logout
+          <span className="truncate">Logout</span>
         </button>
       </div>
     </aside>

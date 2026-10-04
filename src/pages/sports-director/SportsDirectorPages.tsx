@@ -96,8 +96,8 @@ export function SportsDirectorDashboardPage() {
     );
 
   return (
-    <div className="p-5 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
         <PortalPageHeader
           eyebrow="Sports Director Portal"
           title="Dashboard"
@@ -211,8 +211,8 @@ export function SportsDirectorProgramsPage() {
     );
 
   return (
-    <div className="p-5 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
         <PortalPageHeader
           eyebrow="Sports Director Portal"
           title="Programs"
@@ -253,7 +253,7 @@ export function SportsDirectorProgramsPage() {
               return (
                 <article
                   key={program}
-                  className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+                  className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 shadow-sm"
                 >
                   <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-green-50 text-green-600">
                     <Workflow
@@ -376,8 +376,8 @@ export function SportsDirectorTeamsPage() {
   }
 
   return (
-    <div className="p-5 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
         <PortalPageHeader
           eyebrow="Sports Director Portal"
           title="Academy Teams"
@@ -397,7 +397,7 @@ export function SportsDirectorTeamsPage() {
               return (
                 <article
                   key={team.id}
-                  className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+                  className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 shadow-sm"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div>
@@ -737,8 +737,8 @@ export function SportsDirectorTournamentsPage() {
   }
 
   return (
-    <div className="p-5 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
         <PortalPageHeader
           eyebrow="Sports Director Portal"
           title="Tournaments"
@@ -748,7 +748,7 @@ export function SportsDirectorTournamentsPage() {
         <div className="mt-6 grid gap-6 xl:grid-cols-3">
           {/* CREATE TOURNAMENT */}
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <section className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 shadow-sm">
             <div className="flex items-center gap-2">
               <Plus
                 size={20}
@@ -979,7 +979,7 @@ export function SportsDirectorTournamentsPage() {
                   key={
                     tournament.id
                   }
-                  className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+                  className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 shadow-sm"
                 >
                   <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
                     <div>
@@ -1112,7 +1112,7 @@ export function SportsDirectorTournamentsPage() {
                       Update Status
                     </p>
 
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap">
                       <PortalButton
                         variant="secondary"
                         onClick={() =>
@@ -1280,8 +1280,8 @@ export function SportsDirectorFinancePage() {
   }
 
   return (
-    <div className="p-5 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
         <PortalPageHeader
           eyebrow="Sports Director Portal"
           title="Finance Overview"
@@ -1384,8 +1384,60 @@ export function SportsDirectorFinancePage() {
           >
             {invoices.length >
             0 ? (
-              <div className="overflow-x-auto">
-                <table className="w-full text-left">
+              <div className="min-w-0">
+                <div className="space-y-3 bg-slate-50/50 p-3 md:hidden">
+                  {invoices.map((invoice) => {
+                    const balance = calculateInvoiceBalance(invoice);
+
+                    return (
+                      <article
+                        key={invoice.id}
+                        className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
+                      >
+                        <div className="flex min-w-0 items-start justify-between gap-3">
+                          <div className="min-w-0">
+                            <p className="break-all font-semibold text-slate-900">
+                              {invoice.invoiceNumber ?? invoice.id}
+                            </p>
+                            <p className="mt-1 break-words text-sm text-slate-600">
+                              {getPlayerName(invoice.playerId)}
+                            </p>
+                          </div>
+
+                          <div className="shrink-0">
+                            <StatusBadge status={invoice.status ?? "Pending"} />
+                          </div>
+                        </div>
+
+                        <div className="mt-4 grid grid-cols-2 gap-3 border-t border-slate-100 pt-4">
+                          <div className="min-w-0">
+                            <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Amount</p>
+                            <p className="mt-1 break-words text-sm font-bold text-slate-800">
+                              {formatPortalCurrency(invoice.amount)}
+                            </p>
+                          </div>
+
+                          <div className="min-w-0">
+                            <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Paid</p>
+                            <p className="mt-1 break-words text-sm font-bold text-green-600">
+                              {formatPortalCurrency(invoice.amountPaid)}
+                            </p>
+                          </div>
+
+                          <div className="col-span-2 min-w-0">
+                            <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Balance</p>
+                            <p className="mt-1 break-words text-sm font-bold text-slate-900">
+                              {formatPortalCurrency(balance)}
+                            </p>
+                          </div>
+                        </div>
+                      </article>
+                    );
+                  })}
+                </div>
+
+                <div className="hidden w-full overflow-x-auto md:block">
+                  <table className="w-full min-w-[760px] text-left">
                   <thead className="bg-slate-50 text-xs uppercase text-slate-500">
                     <tr>
                       <th className="px-6 py-4">
@@ -1467,7 +1519,8 @@ export function SportsDirectorFinancePage() {
                       ),
                     )}
                   </tbody>
-                </table>
+                  </table>
+                </div>
               </div>
             ) : (
               <PortalEmptyState
@@ -1760,8 +1813,8 @@ export function SportsDirectorAnnouncementsPage() {
   }
 
   return (
-    <div className="p-5 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
         <PortalPageHeader
           eyebrow="Sports Director Portal"
           title="Announcements"
@@ -1771,7 +1824,7 @@ export function SportsDirectorAnnouncementsPage() {
         <div className="mt-6 grid gap-6 xl:grid-cols-3">
           {/* PUBLISH */}
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <section className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 shadow-sm">
             <div className="flex items-center gap-2">
               <Send
                 size={19}
@@ -1924,7 +1977,7 @@ export function SportsDirectorAnnouncementsPage() {
           {/* HISTORY */}
 
           <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm xl:col-span-2">
-            <div className="border-b border-slate-200 p-6">
+            <div className="border-b border-slate-200 p-4 sm:p-6">
               <h2 className="font-bold text-slate-900">
                 Announcement History
               </h2>
@@ -1944,7 +1997,7 @@ export function SportsDirectorAnnouncementsPage() {
                       key={
                         item.id
                       }
-                      className="p-5 lg:p-6"
+                      className="p-4 sm:p-5 lg:p-6"
                     >
                       <div className="flex gap-3">
                         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-green-50 text-green-600">
@@ -2071,8 +2124,8 @@ export function SportsDirectorReportsPage() {
     );
 
   return (
-    <div className="p-5 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
         <PortalPageHeader
           eyebrow="Sports Director Portal"
           title="Operational Reports"
@@ -2553,7 +2606,7 @@ function FinanceSection({
 }) {
   return (
     <section className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-      <div className="border-b border-slate-200 p-6">
+      <div className="border-b border-slate-200 p-4 sm:p-6">
         <h2 className="font-bold text-slate-900">
           {title}
         </h2>
@@ -2579,7 +2632,7 @@ function ReportSection({
 }) {
   return (
     <section className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-      <div className="border-b border-slate-200 p-6">
+      <div className="border-b border-slate-200 p-4 sm:p-6">
         <h2 className="font-bold text-slate-900">
           {title}
         </h2>

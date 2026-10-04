@@ -1,6 +1,6 @@
 import {
   ChevronDown,
-  UserRound,
+  Users,
 } from "lucide-react";
 
 import {
@@ -8,8 +8,7 @@ import {
 } from "../../services/parentService";
 
 type ParentPlayerSwitcherProps = {
-  selectedPlayerId?: string;
-
+  selectedPlayerId: string;
   onPlayerChange: (
     playerId: string,
   ) => void;
@@ -19,24 +18,48 @@ function ParentPlayerSwitcher({
   selectedPlayerId,
   onPlayerChange,
 }: ParentPlayerSwitcherProps) {
-  const players =
+  const linkedPlayers =
     getLinkedPlayersForCurrentParent();
 
-  if (players.length === 0) {
+  if (linkedPlayers.length === 0) {
     return (
-      <div className="rounded-xl border border-slate-200 bg-white px-4 py-3">
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-100 text-slate-400">
-            <UserRound size={18} />
+      <div
+        className="
+          w-full
+          min-w-0
+          rounded-xl
+          border
+          border-slate-200
+          bg-white
+          p-3
+          sm:p-4
+        "
+      >
+        <div className="flex min-w-0 items-center gap-3">
+          <div
+            className="
+              flex
+              h-10
+              w-10
+              shrink-0
+              items-center
+              justify-center
+              rounded-lg
+              bg-slate-100
+              text-slate-500
+            "
+          >
+            <Users size={19} />
           </div>
 
-          <div>
-            <p className="text-xs text-slate-400">
-              Linked Player
+          <div className="min-w-0">
+            <p className="text-sm font-semibold text-slate-800">
+              No linked players
             </p>
 
-            <p className="text-sm font-semibold text-slate-700">
-              No player linked
+            <p className="mt-0.5 text-xs text-slate-500">
+              No player profile is currently linked to this
+              parent account.
             </p>
           </div>
         </div>
@@ -44,79 +67,102 @@ function ParentPlayerSwitcher({
     );
   }
 
+  /*
+    If the account only has one player, we can still show
+    the switcher information without making the interface
+    unnecessarily complicated.
+  */
   const selectedPlayer =
-    players.find(
+    linkedPlayers.find(
       (player) =>
         player.id ===
         selectedPlayerId,
-    ) ?? players[0];
+    ) ??
+    linkedPlayers[0];
 
-  /*
-   * If only one child exists,
-   * display the player without
-   * showing a dropdown.
-   */
-  if (players.length === 1) {
-    return (
-      <div className="rounded-xl border border-slate-200 bg-white px-4 py-3">
-        <div className="flex items-center gap-3">
-          <PlayerPhoto
-            playerName={
-              selectedPlayer.fullName
-            }
-            photo={
-              selectedPlayer.passportPhoto
-            }
-          />
+  return (
+    <div
+      className="
+        w-full
+        min-w-0
+        rounded-xl
+        border
+        border-slate-200
+        bg-white
+        p-3
+        shadow-sm
+        sm:p-4
+      "
+    >
+      <div
+        className="
+          flex
+          min-w-0
+          flex-col
+          gap-3
+          sm:flex-row
+          sm:items-center
+        "
+      >
+        {/* ICON + LABEL */}
+
+        <div className="flex min-w-0 items-center gap-3 sm:flex-1">
+          <div
+            className="
+              flex
+              h-10
+              w-10
+              shrink-0
+              items-center
+              justify-center
+              rounded-lg
+              bg-green-50
+              text-green-700
+            "
+          >
+            <Users size={19} />
+          </div>
 
           <div className="min-w-0">
-            <p className="text-xs text-slate-400">
+            <p
+              className="
+                text-xs
+                font-semibold
+                uppercase
+                tracking-wide
+                text-slate-400
+              "
+            >
               Viewing Player
             </p>
 
-            <p className="truncate text-sm font-semibold text-slate-800">
-              {
-                selectedPlayer.fullName
-              }
-            </p>
-
-            <p className="mt-0.5 truncate text-xs text-green-600">
-              {
-                selectedPlayer.playerId
-              }{" "}
-              •{" "}
-              {
-                selectedPlayer.ageCategory
-              }
+            <p
+              className="
+                mt-0.5
+                truncate
+                text-sm
+                font-bold
+                text-slate-900
+              "
+            >
+              {selectedPlayer.fullName}
             </p>
           </div>
         </div>
-      </div>
-    );
-  }
 
-  return (
-    <div className="rounded-xl border border-slate-200 bg-white p-3">
-      <label
-        htmlFor="parent-player-switcher"
-        className="mb-2 block text-xs font-semibold uppercase tracking-wide text-slate-400"
-      >
-        Viewing Player
-      </label>
+        {/* SELECT */}
 
-      <div className="flex items-center gap-3">
-        <PlayerPhoto
-          playerName={
-            selectedPlayer.fullName
-          }
-          photo={
-            selectedPlayer.passportPhoto
-          }
-        />
-
-        <div className="relative min-w-0 flex-1">
+        <div
+          className="
+            relative
+            w-full
+            min-w-0
+            sm:w-auto
+            sm:min-w-[220px]
+            md:min-w-[260px]
+          "
+        >
           <select
-            id="parent-player-switcher"
             value={
               selectedPlayer.id
             }
@@ -125,60 +171,98 @@ function ParentPlayerSwitcher({
                 event.target.value,
               )
             }
-            className="w-full appearance-none rounded-lg border border-slate-200 bg-slate-50 py-2 pl-3 pr-9 text-sm font-semibold text-slate-800 outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-500/10"
+            aria-label="Select player"
+            className="
+              w-full
+              min-w-0
+              appearance-none
+              truncate
+              rounded-lg
+              border
+              border-slate-200
+              bg-slate-50
+              py-2.5
+              pl-3
+              pr-10
+              text-sm
+              font-semibold
+              text-slate-800
+              outline-none
+              transition
+
+              hover:border-slate-300
+
+              focus:border-green-500
+              focus:bg-white
+              focus:ring-2
+              focus:ring-green-500/10
+            "
           >
-            {players.map(
+            {linkedPlayers.map(
               (player) => (
                 <option
                   key={player.id}
                   value={player.id}
                 >
-                  {player.fullName} -{" "}
-                  {player.playerId}
+                  {player.fullName}
+                  {player.ageCategory
+                    ? ` — ${player.ageCategory}`
+                    : ""}
                 </option>
               ),
             )}
           </select>
 
           <ChevronDown
-            size={16}
-            className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-400"
+            size={17}
+            className="
+              pointer-events-none
+              absolute
+              right-3
+              top-1/2
+              -translate-y-1/2
+              text-slate-400
+            "
           />
         </div>
       </div>
 
-      <p className="mt-2 truncate pl-12 text-xs text-slate-500">
-        {
-          selectedPlayer.ageCategory
-        }{" "}
-        •{" "}
-        {selectedPlayer.academyTeam ??
-          "No team assigned"}
-      </p>
-    </div>
-  );
-}
+      {/* SMALL MOBILE PLAYER INFORMATION */}
 
-function PlayerPhoto({
-  playerName,
-  photo,
-}: {
-  playerName: string;
-  photo?: string;
-}) {
-  if (photo) {
-    return (
-      <img
-        src={photo}
-        alt={playerName}
-        className="h-10 w-10 shrink-0 rounded-lg object-cover"
-      />
-    );
-  }
+      <div
+        className="
+          mt-3
+          grid
+          grid-cols-2
+          gap-2
+          border-t
+          border-slate-100
+          pt-3
+          text-xs
+          sm:hidden
+        "
+      >
+        <div className="min-w-0">
+          <p className="text-slate-400">
+            Player ID
+          </p>
 
-  return (
-    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-green-50 text-green-600">
-      <UserRound size={19} />
+          <p className="mt-0.5 truncate font-semibold text-slate-700">
+            {selectedPlayer.playerId}
+          </p>
+        </div>
+
+        <div className="min-w-0">
+          <p className="text-slate-400">
+            Age Category
+          </p>
+
+          <p className="mt-0.5 truncate font-semibold text-slate-700">
+            {selectedPlayer.ageCategory ||
+              "Not assigned"}
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

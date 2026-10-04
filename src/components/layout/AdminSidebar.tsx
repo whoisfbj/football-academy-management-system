@@ -21,7 +21,9 @@ import {
   useNavigate,
 } from "react-router";
 
-import { logout } from "../../services/authService";
+import {
+  logout,
+} from "../../services/authService";
 
 const menuItems = [
   {
@@ -34,11 +36,11 @@ const menuItems = [
     path: "/admin/players",
     icon: Users,
   },
-{
+  {
     label: "Pending Registrations",
     path: "/admin/players/pending",
-    icon:Clock3,
-},
+    icon: Clock3,
+  },
   {
     label: "Academy Teams",
     path: "/admin/teams",
@@ -70,10 +72,10 @@ const menuItems = [
     icon: CreditCard,
   },
   {
-  label: "Finance Records",
-  path: "/admin/finance/records",
-  icon: WalletCards,
-},
+    label: "Finance Records",
+    path: "/admin/finance/records",
+    icon: WalletCards,
+  },
   {
     label: "Communication",
     path: "/admin/communication",
@@ -97,75 +99,241 @@ const menuItems = [
 ];
 
 function AdminSidebar() {
-  const navigate = useNavigate();
+  const navigate =
+    useNavigate();
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
+
+    navigate(
+      "/login",
+      {
+        replace: true,
+      },
+    );
   };
 
   return (
-    <aside className="flex h-screen w-64 flex-col bg-slate-950 text-white">
-      <div className="border-b border-white/10 px-6 py-6">
-        <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-600 font-bold text-white">
+    <div
+      className="
+        flex
+        h-full
+        min-h-0
+        w-full
+        flex-col
+        overflow-hidden
+        bg-slate-950
+        text-white
+      "
+    >
+      {/* =====================================
+          ACADEMY BRANDING
+      ====================================== */}
+
+      <div
+        className="
+          shrink-0
+          border-b
+          border-white/10
+          px-4
+          py-5
+          sm:px-5
+          lg:px-6
+          lg:py-6
+        "
+      >
+        <div
+          className="
+            flex
+            min-w-0
+            items-center
+            gap-3
+          "
+        >
+          <div
+            className="
+              flex
+              h-10
+              w-10
+              shrink-0
+              items-center
+              justify-center
+              rounded-xl
+              bg-green-600
+              font-bold
+              text-white
+            "
+          >
             FA
           </div>
 
-          <div>
-            <h1 className="font-bold">
+          <div className="min-w-0">
+            <h1
+              className="
+                truncate
+                font-bold
+              "
+            >
               Elite Academy
             </h1>
 
-            <p className="text-xs text-slate-400">
+            <p
+              className="
+                mt-0.5
+                truncate
+                text-xs
+                text-slate-400
+              "
+            >
               Management System
             </p>
           </div>
         </div>
       </div>
 
-      <nav className="flex-1 overflow-y-auto px-3 py-5">
-        <p className="mb-3 px-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
+      {/* =====================================
+          NAVIGATION
+      ====================================== */}
+
+      <nav
+        className="
+          min-h-0
+          flex-1
+          overflow-y-auto
+          overscroll-contain
+          px-3
+          py-4
+          lg:py-5
+        "
+      >
+        <p
+          className="
+            mb-3
+            px-3
+            text-xs
+            font-semibold
+            uppercase
+            tracking-wider
+            text-slate-500
+          "
+        >
           Academy Management
         </p>
 
         <div className="space-y-1">
-          {menuItems.map((item) => {
-            const Icon = item.icon;
+          {menuItems.map(
+            (item) => {
+              const Icon =
+                item.icon;
 
-            return (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                className={({ isActive }) =>
-                  [
-                    "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition",
-                    isActive
-                      ? "bg-green-600 text-white"
-                      : "text-slate-300 hover:bg-white/10 hover:text-white",
-                  ].join(" ")
-                }
-              >
-                <Icon size={19} />
+              return (
+                <NavLink
+                  key={
+                    item.path
+                  }
+                  to={item.path}
+                  className={({
+                    isActive,
+                  }) =>
+                    [
+                      `
+                        flex
+                        min-w-0
+                        items-center
+                        gap-3
+                        rounded-lg
+                        px-3
+                        py-2.5
+                        text-sm
+                        font-medium
+                        transition
+                      `,
+                      isActive
+                        ? `
+                            bg-green-600
+                            text-white
+                            shadow-sm
+                          `
+                        : `
+                            text-slate-300
+                            hover:bg-white/10
+                            hover:text-white
+                          `,
+                    ].join(
+                      " ",
+                    )
+                  }
+                >
+                  <Icon
+                    size={
+                      19
+                    }
+                    className="shrink-0"
+                  />
 
-                {item.label}
-              </NavLink>
-            );
-          })}
+                  <span
+                    className="
+                      min-w-0
+                      truncate
+                    "
+                  >
+                    {
+                      item.label
+                    }
+                  </span>
+                </NavLink>
+              );
+            },
+          )}
         </div>
       </nav>
 
-      <div className="border-t border-white/10 p-3">
-        <button
-          onClick={handleLogout}
-          className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-slate-300 transition hover:bg-red-500/10 hover:text-red-300"
-        >
-          <LogOut size={19} />
+      {/* =====================================
+          LOGOUT
+      ====================================== */}
 
-          Logout
+      <div
+        className="
+          shrink-0
+          border-t
+          border-white/10
+          p-3
+        "
+      >
+        <button
+          type="button"
+          onClick={
+            handleLogout
+          }
+          className="
+            flex
+            w-full
+            min-w-0
+            items-center
+            gap-3
+            rounded-lg
+            px-3
+            py-3
+            text-sm
+            font-medium
+            text-slate-300
+            transition
+
+            hover:bg-red-500/10
+            hover:text-red-300
+          "
+        >
+          <LogOut
+            size={19}
+            className="shrink-0"
+          />
+
+          <span className="truncate">
+            Logout
+          </span>
         </button>
       </div>
-    </aside>
+    </div>
   );
 }
 

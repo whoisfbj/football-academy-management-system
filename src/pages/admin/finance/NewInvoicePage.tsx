@@ -29,7 +29,7 @@ import {
 } from "../../../services/playerService";
 
 const inputClass =
-  "w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100";
+  "w-full min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-base outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100 sm:text-sm";
 
 const labelClass =
   "mb-2 block text-sm font-medium text-slate-700";
@@ -224,7 +224,7 @@ function NewInvoicePage() {
   };
 
   return (
-    <div>
+    <div className="w-full min-w-0">
       <Link
         to="/admin/finance"
         className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition hover:text-green-600"
@@ -236,16 +236,16 @@ function NewInvoicePage() {
         Back to Finance
       </Link>
 
-      <div className="mt-5">
+      <div className="mt-5 min-w-0">
         <p className="text-sm font-semibold text-green-600">
           Financial Management
         </p>
 
-        <h1 className="mt-1 text-3xl font-bold text-slate-900">
+        <h1 className="mt-1 break-words text-2xl font-bold leading-tight text-slate-900 sm:text-3xl">
           Create Invoice
         </h1>
 
-        <p className="mt-2 text-slate-500">
+        <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-500 sm:text-base">
           Create a new academy fee
           invoice for a registered
           player.
@@ -259,7 +259,7 @@ function NewInvoicePage() {
         className="mt-7 space-y-6"
       >
         {/* INVOICE INFORMATION */}
-        <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+        <section className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
           <div className="flex items-center gap-3">
             <FilePlus2
               size={21}
@@ -465,7 +465,7 @@ function NewInvoicePage() {
 
         {/* PLAYER INFORMATION */}
         {selectedPlayer && (
-          <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+          <section className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
             <h2 className="font-bold text-slate-900">
               Player Information
             </h2>
@@ -504,7 +504,7 @@ function NewInvoicePage() {
         )}
 
         {/* AMOUNT */}
-        <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+        <section className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
           <h2 className="font-bold text-slate-900">
             Invoice Amount
           </h2>
@@ -668,7 +668,7 @@ function NewInvoicePage() {
         <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
           <Link
             to="/admin/finance"
-            className="rounded-lg border border-slate-300 bg-white px-5 py-3 text-center text-sm font-semibold text-slate-700 hover:bg-slate-50"
+            className="inline-flex w-full items-center justify-center rounded-lg border border-slate-300 bg-white px-5 py-3 text-center text-sm font-semibold text-slate-700 transition hover:bg-slate-50 sm:w-auto"
           >
             Cancel
           </Link>
@@ -684,7 +684,7 @@ function NewInvoicePage() {
               totalAdjustments >
                 invoiceAmount
             }
-            className="inline-flex items-center justify-center gap-2 rounded-lg bg-green-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-green-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
           >
             <Save
               size={18}
@@ -706,7 +706,7 @@ function Detail({
   value: string;
 }) {
   return (
-    <div>
+    <div className="w-full min-w-0">
       <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
         {label}
       </p>

@@ -12,6 +12,7 @@ import {
 import type {
   ChangeEvent,
   FormEvent,
+  ReactNode,
 } from "react";
 
 import {
@@ -32,11 +33,43 @@ import type {
   RegistrationStatus,
 } from "../../../shared/types/player";
 
-const inputClass =
-  "w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100";
+/* =========================================================
+   SHARED STYLES
+========================================================= */
 
-const labelClass =
-  "mb-2 block text-sm font-medium text-slate-700";
+const inputClass = `
+  w-full
+  min-w-0
+  rounded-lg
+  border
+  border-slate-200
+  bg-white
+  px-3
+  py-2.5
+  text-base
+  text-slate-800
+  outline-none
+  transition
+  placeholder:text-slate-400
+
+  focus:border-green-500
+  focus:ring-2
+  focus:ring-green-100
+
+  sm:text-sm
+`;
+
+const labelClass = `
+  mb-2
+  block
+  text-sm
+  font-medium
+  text-slate-700
+`;
+
+/* =========================================================
+   OPTIONS
+========================================================= */
 
 const positions: PlayingPosition[] = [
   "Goalkeeper",
@@ -108,13 +141,23 @@ const trainingCentres = [
   "Main Training Centre",
 ];
 
+/* =========================================================
+   PAGE
+========================================================= */
+
 function RegisterPlayerPage() {
-  const navigate = useNavigate();
+  const navigate =
+    useNavigate();
 
-  const [passportPhoto, setPassportPhoto] =
-    useState<string>("");
+  const [
+    passportPhoto,
+    setPassportPhoto,
+  ] = useState<string>("");
 
-  const [formData, setFormData] = useState({
+  const [
+    formData,
+    setFormData,
+  ] = useState({
     fullName: "",
     dateOfBirth: "",
     gender: "Male" as Gender,
@@ -129,7 +172,8 @@ function RegisterPlayerPage() {
     playingPosition:
       "Central Midfielder" as PlayingPosition,
 
-    preferredFoot: "Right" as PreferredFoot,
+    preferredFoot:
+      "Right" as PreferredFoot,
 
     height: "",
     weight: "",
@@ -137,9 +181,14 @@ function RegisterPlayerPage() {
     previousClub: "",
     academyTeam: "",
 
-    program: "Elite Football Development",
-    academyBranch: "Lagos Branch",
-    trainingCentre: "Lekki Training Centre",
+    program:
+      "Elite Football Development",
+
+    academyBranch:
+      "Lagos Branch",
+
+    trainingCentre:
+      "Lekki Training Centre",
 
     guardianName: "",
     guardianRelationship: "",
@@ -170,7 +219,14 @@ function RegisterPlayerPage() {
     parentConsent: false,
   });
 
-  const [error, setError] = useState("");
+  const [
+    error,
+    setError,
+  ] = useState("");
+
+  /* =======================================================
+     INPUT CHANGE
+  ======================================================= */
 
   const handleChange = (
     event:
@@ -185,18 +241,26 @@ function RegisterPlayerPage() {
     } = event.target;
 
     const checked =
-      event.target instanceof HTMLInputElement
+      event.target instanceof
+      HTMLInputElement
         ? event.target.checked
         : false;
 
-    setFormData((current) => ({
-      ...current,
-      [name]:
-        type === "checkbox"
-          ? checked
-          : value,
-    }));
+    setFormData(
+      (current) => ({
+        ...current,
+
+        [name]:
+          type === "checkbox"
+            ? checked
+            : value,
+      }),
+    );
   };
+
+  /* =======================================================
+     PHOTO
+  ======================================================= */
 
   const handlePhotoChange = (
     event: ChangeEvent<HTMLInputElement>,
@@ -208,18 +272,27 @@ function RegisterPlayerPage() {
       return;
     }
 
-    if (!file.type.startsWith("image/")) {
+    if (
+      !file.type.startsWith(
+        "image/",
+      )
+    ) {
       setError(
         "Please select a valid image file.",
       );
+
       return;
     }
 
-    const reader = new FileReader();
+    setError("");
+
+    const reader =
+      new FileReader();
 
     reader.onload = () => {
       if (
-        typeof reader.result === "string"
+        typeof reader.result ===
+        "string"
       ) {
         setPassportPhoto(
           reader.result,
@@ -227,8 +300,14 @@ function RegisterPlayerPage() {
       }
     };
 
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(
+      file,
+    );
   };
+
+  /* =======================================================
+     SUBMIT
+  ======================================================= */
 
   const handleSubmit = (
     event: FormEvent<HTMLFormElement>,
@@ -237,10 +316,13 @@ function RegisterPlayerPage() {
 
     setError("");
 
-    if (!formData.parentConsent) {
+    if (
+      !formData.parentConsent
+    ) {
       setError(
         "Parent or guardian consent is required.",
       );
+
       return;
     }
 
@@ -257,19 +339,22 @@ function RegisterPlayerPage() {
       setError(
         "Please complete all required fields.",
       );
+
       return;
     }
 
     const newPlayer = {
       id: `player-${Date.now()}`,
 
-      playerId: generatePlayerId(),
+      playerId:
+        generatePlayerId(),
 
       fullName:
         formData.fullName.trim(),
 
       passportPhoto:
-        passportPhoto || undefined,
+        passportPhoto ||
+        undefined,
 
       dateOfBirth:
         formData.dateOfBirth,
@@ -301,10 +386,14 @@ function RegisterPlayerPage() {
         formData.preferredFoot,
 
       height:
-        Number(formData.height),
+        Number(
+          formData.height,
+        ),
 
       weight:
-        Number(formData.weight),
+        Number(
+          formData.weight,
+        ),
 
       previousClub:
         formData.previousClub ||
@@ -390,67 +479,166 @@ function RegisterPlayerPage() {
         new Date().toISOString(),
     };
 
-    addPlayer(newPlayer);
+    addPlayer(
+      newPlayer,
+    );
 
-    navigate("/admin/players");
+    navigate(
+      "/admin/players",
+    );
   };
 
   return (
-    <div>
-      <div className="mb-7">
+    <div className="w-full min-w-0">
+      {/* ===================================================
+          PAGE HEADER
+      ==================================================== */}
+
+      <div className="mb-6 min-w-0 sm:mb-7">
         <Link
           to="/admin/players"
-          className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition hover:text-green-600"
+          className="
+            inline-flex
+            items-center
+            gap-2
+            text-sm
+            font-medium
+            text-slate-500
+            transition
+            hover:text-green-600
+          "
         >
-          <ArrowLeft size={17} />
+          <ArrowLeft
+            size={17}
+          />
 
           Back to Players
         </Link>
 
-        <div className="mt-5">
-          <p className="text-sm font-semibold text-green-600">
+        <div className="mt-5 min-w-0">
+          <p
+            className="
+              text-xs
+              font-semibold
+              uppercase
+              tracking-wide
+              text-green-600
+              sm:text-sm
+            "
+          >
             Player Management
           </p>
 
-          <h1 className="mt-1 text-3xl font-bold text-slate-900">
+          <h1
+            className="
+              mt-1
+              break-words
+              text-2xl
+              font-bold
+              leading-tight
+              text-slate-900
+              sm:text-3xl
+            "
+          >
             Register Player
           </h1>
 
-          <p className="mt-2 text-slate-500">
-            Create a complete academy player
-            profile.
+          <p
+            className="
+              mt-2
+              max-w-2xl
+              text-sm
+              leading-6
+              text-slate-500
+              sm:text-base
+            "
+          >
+            Create a complete academy
+            player profile.
           </p>
         </div>
       </div>
 
+      {/* ===================================================
+          ERROR
+      ==================================================== */}
+
       {error && (
-        <div className="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div
+          role="alert"
+          className="
+            mb-6
+            break-words
+            rounded-lg
+            border
+            border-red-200
+            bg-red-50
+            px-4
+            py-3
+            text-sm
+            leading-6
+            text-red-700
+          "
+        >
           {error}
         </div>
       )}
 
+      {/* ===================================================
+          FORM
+      ==================================================== */}
+
       <form
-        onSubmit={handleSubmit}
-        className="space-y-6"
+        onSubmit={
+          handleSubmit
+        }
+        className="min-w-0 space-y-6"
       >
-        {/* PERSONAL INFORMATION */}
+        {/* =================================================
+            PERSONAL INFORMATION
+        ================================================== */}
 
-        <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-          <div className="mb-6">
-            <h2 className="text-lg font-bold text-slate-900">
-              Personal Information
-            </h2>
+        <FormSection
+          title="Personal Information"
+          description="Basic information about the player."
+        >
+          {/* PHOTO */}
 
-            <p className="mt-1 text-sm text-slate-500">
-              Basic information about the player.
-            </p>
-          </div>
-
-          <div className="mb-7 flex flex-col gap-5 sm:flex-row sm:items-center">
-            <div className="flex h-28 w-28 items-center justify-center overflow-hidden rounded-xl border border-dashed border-slate-300 bg-slate-50">
+          <div
+            className="
+              mb-7
+              flex
+              min-w-0
+              flex-col
+              items-start
+              gap-5
+              sm:flex-row
+              sm:items-center
+            "
+          >
+            <div
+              className="
+                flex
+                h-24
+                w-24
+                shrink-0
+                items-center
+                justify-center
+                overflow-hidden
+                rounded-xl
+                border
+                border-dashed
+                border-slate-300
+                bg-slate-50
+                sm:h-28
+                sm:w-28
+              "
+            >
               {passportPhoto ? (
                 <img
-                  src={passportPhoto}
+                  src={
+                    passportPhoto
+                  }
                   alt="Player"
                   className="h-full w-full object-cover"
                 />
@@ -462,71 +650,143 @@ function RegisterPlayerPage() {
               )}
             </div>
 
-            <div>
+            <div className="w-full min-w-0 sm:w-auto">
               <label
                 htmlFor="passportPhoto"
-                className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
-              >
-                <Camera size={17} />
+                className="
+                  inline-flex
+                  w-full
+                  cursor-pointer
+                  items-center
+                  justify-center
+                  gap-2
+                  rounded-lg
+                  border
+                  border-slate-300
+                  bg-white
+                  px-4
+                  py-2.5
+                  text-center
+                  text-sm
+                  font-semibold
+                  text-slate-700
+                  transition
 
-                Upload Passport Photograph
+                  hover:bg-slate-50
+
+                  sm:w-auto
+                "
+              >
+                <Camera
+                  size={17}
+                  className="shrink-0"
+                />
+
+                <span className="break-words">
+                  Upload Passport
+                  Photograph
+                </span>
               </label>
 
               <input
                 id="passportPhoto"
                 type="file"
                 accept="image/*"
-                onChange={handlePhotoChange}
+                onChange={
+                  handlePhotoChange
+                }
                 className="hidden"
               />
 
-              <p className="mt-2 text-xs text-slate-400">
-                JPG, PNG or similar image format.
+              <p className="mt-2 text-xs leading-5 text-slate-400">
+                JPG, PNG or similar
+                image format.
               </p>
             </div>
           </div>
 
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            <div className="xl:col-span-2">
-              <label className={labelClass}>
+          {/* PERSONAL FIELDS */}
+
+          <div
+            className="
+              grid
+              min-w-0
+              grid-cols-1
+              gap-5
+              md:grid-cols-2
+              xl:grid-cols-3
+            "
+          >
+            <div className="min-w-0 xl:col-span-2">
+              <label
+                className={
+                  labelClass
+                }
+              >
                 Full Name *
               </label>
 
               <input
                 name="fullName"
-                value={formData.fullName}
-                onChange={handleChange}
-                className={inputClass}
+                value={
+                  formData.fullName
+                }
+                onChange={
+                  handleChange
+                }
+                className={
+                  inputClass
+                }
                 placeholder="Player full name"
                 required
               />
             </div>
 
-            <div>
-              <label className={labelClass}>
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
                 Date of Birth *
               </label>
 
               <input
                 type="date"
                 name="dateOfBirth"
-                value={formData.dateOfBirth}
-                onChange={handleChange}
-                className={inputClass}
+                value={
+                  formData.dateOfBirth
+                }
+                onChange={
+                  handleChange
+                }
+                className={
+                  inputClass
+                }
                 required
               />
             </div>
 
-            <div>
-              <label className={labelClass}>
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
                 Gender *
               </label>
 
               <select
                 name="gender"
-                value={formData.gender}
-                onChange={handleChange}
-                className={inputClass}
+                value={
+                  formData.gender
+                }
+                onChange={
+                  handleChange
+                }
+                className={
+                  inputClass
+                }
               >
                 <option value="Male">
                   Male
@@ -538,8 +798,12 @@ function RegisterPlayerPage() {
               </select>
             </div>
 
-            <div>
-              <label className={labelClass}>
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
                 Age Category *
               </label>
 
@@ -548,71 +812,117 @@ function RegisterPlayerPage() {
                 value={
                   formData.ageCategory
                 }
-                onChange={handleChange}
-                className={inputClass}
+                onChange={
+                  handleChange
+                }
+                className={
+                  inputClass
+                }
               >
                 {ageCategories.map(
-                  (category) => (
+                  (
+                    category,
+                  ) => (
                     <option
-                      key={category}
-                      value={category}
+                      key={
+                        category
+                      }
+                      value={
+                        category
+                      }
                     >
-                      {category}
+                      {
+                        category
+                      }
                     </option>
                   ),
                 )}
               </select>
             </div>
 
-            <div>
-              <label className={labelClass}>
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
                 Phone Number
               </label>
 
               <input
+                type="tel"
                 name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                className={inputClass}
+                value={
+                  formData.phone
+                }
+                onChange={
+                  handleChange
+                }
+                className={
+                  inputClass
+                }
                 placeholder="Player phone number"
               />
             </div>
 
-            <div className="md:col-span-2 xl:col-span-3">
-              <label className={labelClass}>
+            <div
+              className="
+                min-w-0
+                md:col-span-2
+                xl:col-span-3
+              "
+            >
+              <label
+                className={
+                  labelClass
+                }
+              >
                 Address *
               </label>
 
               <textarea
                 name="address"
-                value={formData.address}
-                onChange={handleChange}
+                value={
+                  formData.address
+                }
+                onChange={
+                  handleChange
+                }
                 rows={3}
-                className={inputClass}
+                className={
+                  inputClass
+                }
                 placeholder="Residential address"
                 required
               />
             </div>
           </div>
-        </section>
+        </FormSection>
 
-        {/* FOOTBALL INFORMATION */}
+        {/* =================================================
+            FOOTBALL INFORMATION
+        ================================================== */}
 
-        <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-          <div className="mb-6">
-            <h2 className="text-lg font-bold text-slate-900">
-              Football Information
-            </h2>
-
-            <p className="mt-1 text-sm text-slate-500">
-              Playing profile and academy
-              assignment.
-            </p>
-          </div>
-
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            <div>
-              <label className={labelClass}>
+        <FormSection
+          title="Football Information"
+          description="Playing profile and academy assignment."
+        >
+          <div
+            className="
+              grid
+              min-w-0
+              grid-cols-1
+              gap-5
+              md:grid-cols-2
+              xl:grid-cols-3
+            "
+          >
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
                 Playing Position *
               </label>
 
@@ -621,24 +931,40 @@ function RegisterPlayerPage() {
                 value={
                   formData.playingPosition
                 }
-                onChange={handleChange}
-                className={inputClass}
+                onChange={
+                  handleChange
+                }
+                className={
+                  inputClass
+                }
               >
                 {positions.map(
-                  (position) => (
+                  (
+                    position,
+                  ) => (
                     <option
-                      key={position}
-                      value={position}
+                      key={
+                        position
+                      }
+                      value={
+                        position
+                      }
                     >
-                      {position}
+                      {
+                        position
+                      }
                     </option>
                   ),
                 )}
               </select>
             </div>
 
-            <div>
-              <label className={labelClass}>
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
                 Preferred Foot *
               </label>
 
@@ -647,8 +973,12 @@ function RegisterPlayerPage() {
                 value={
                   formData.preferredFoot
                 }
-                onChange={handleChange}
-                className={inputClass}
+                onChange={
+                  handleChange
+                }
+                className={
+                  inputClass
+                }
               >
                 <option value="Right">
                   Right
@@ -664,9 +994,14 @@ function RegisterPlayerPage() {
               </select>
             </div>
 
-            <div>
-              <label className={labelClass}>
-                Previous Club / Academy
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
+                Previous Club /
+                Academy
               </label>
 
               <input
@@ -674,14 +1009,22 @@ function RegisterPlayerPage() {
                 value={
                   formData.previousClub
                 }
-                onChange={handleChange}
-                className={inputClass}
+                onChange={
+                  handleChange
+                }
+                className={
+                  inputClass
+                }
                 placeholder="Previous club"
               />
             </div>
 
-            <div>
-              <label className={labelClass}>
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
                 Height (cm) *
               </label>
 
@@ -689,16 +1032,26 @@ function RegisterPlayerPage() {
                 type="number"
                 min="1"
                 name="height"
-                value={formData.height}
-                onChange={handleChange}
-                className={inputClass}
+                value={
+                  formData.height
+                }
+                onChange={
+                  handleChange
+                }
+                className={
+                  inputClass
+                }
                 placeholder="e.g. 168"
                 required
               />
             </div>
 
-            <div>
-              <label className={labelClass}>
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
                 Weight (kg) *
               </label>
 
@@ -706,16 +1059,26 @@ function RegisterPlayerPage() {
                 type="number"
                 min="1"
                 name="weight"
-                value={formData.weight}
-                onChange={handleChange}
-                className={inputClass}
-                placeholder="e.g. 58"
+                value={
+                  formData.weight
+                }
+                onChange={
+                  handleChange
+                }
+                className={
+                  inputClass
+                }
+                placeholder="e.g. 60"
                 required
               />
             </div>
 
-            <div>
-              <label className={labelClass}>
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
                 Academy Team
               </label>
 
@@ -724,50 +1087,78 @@ function RegisterPlayerPage() {
                 value={
                   formData.academyTeam
                 }
-                onChange={handleChange}
-                className={inputClass}
+                onChange={
+                  handleChange
+                }
+                className={
+                  inputClass
+                }
               >
                 <option value="">
                   Not Assigned
                 </option>
 
-                {teams.map((team) => (
-                  <option
-                    key={team}
-                    value={team}
-                  >
-                    {team}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className={labelClass}>
-                Program *
-              </label>
-
-              <select
-                name="program"
-                value={formData.program}
-                onChange={handleChange}
-                className={inputClass}
-              >
-                {programs.map(
-                  (program) => (
+                {teams.map(
+                  (team) => (
                     <option
-                      key={program}
-                      value={program}
+                      key={team}
+                      value={team}
                     >
-                      {program}
+                      {team}
                     </option>
                   ),
                 )}
               </select>
             </div>
 
-            <div>
-              <label className={labelClass}>
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
+                Program *
+              </label>
+
+              <select
+                name="program"
+                value={
+                  formData.program
+                }
+                onChange={
+                  handleChange
+                }
+                className={
+                  inputClass
+                }
+              >
+                {programs.map(
+                  (
+                    program,
+                  ) => (
+                    <option
+                      key={
+                        program
+                      }
+                      value={
+                        program
+                      }
+                    >
+                      {
+                        program
+                      }
+                    </option>
+                  ),
+                )}
+              </select>
+            </div>
+
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
                 Academy Branch *
               </label>
 
@@ -776,24 +1167,40 @@ function RegisterPlayerPage() {
                 value={
                   formData.academyBranch
                 }
-                onChange={handleChange}
-                className={inputClass}
+                onChange={
+                  handleChange
+                }
+                className={
+                  inputClass
+                }
               >
                 {branches.map(
-                  (branch) => (
+                  (
+                    branch,
+                  ) => (
                     <option
-                      key={branch}
-                      value={branch}
+                      key={
+                        branch
+                      }
+                      value={
+                        branch
+                      }
                     >
-                      {branch}
+                      {
+                        branch
+                      }
                     </option>
                   ),
                 )}
               </select>
             </div>
 
-            <div>
-              <label className={labelClass}>
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
                 Training Centre *
               </label>
 
@@ -802,34 +1209,59 @@ function RegisterPlayerPage() {
                 value={
                   formData.trainingCentre
                 }
-                onChange={handleChange}
-                className={inputClass}
+                onChange={
+                  handleChange
+                }
+                className={
+                  inputClass
+                }
               >
                 {trainingCentres.map(
-                  (centre) => (
+                  (
+                    centre,
+                  ) => (
                     <option
-                      key={centre}
-                      value={centre}
+                      key={
+                        centre
+                      }
+                      value={
+                        centre
+                      }
                     >
-                      {centre}
+                      {
+                        centre
+                      }
                     </option>
                   ),
                 )}
               </select>
             </div>
           </div>
-        </section>
+        </FormSection>
 
-        {/* ACADEMIC INFORMATION */}
+        {/* =================================================
+            ACADEMIC INFORMATION
+        ================================================== */}
 
-        <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 className="text-lg font-bold text-slate-900">
-            Academic Information
-          </h2>
-
-          <div className="mt-6 grid gap-5 md:grid-cols-2">
-            <div>
-              <label className={labelClass}>
+        <FormSection
+          title="Academic Information"
+          description="School and academic information for the player."
+        >
+          <div
+            className="
+              grid
+              min-w-0
+              grid-cols-1
+              gap-5
+              md:grid-cols-2
+            "
+          >
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
                 School Attended *
               </label>
 
@@ -838,14 +1270,23 @@ function RegisterPlayerPage() {
                 value={
                   formData.schoolAttended
                 }
-                onChange={handleChange}
-                className={inputClass}
+                onChange={
+                  handleChange
+                }
+                className={
+                  inputClass
+                }
+                placeholder="School name"
                 required
               />
             </div>
 
-            <div>
-              <label className={labelClass}>
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
                 Academic Information
               </label>
 
@@ -854,31 +1295,42 @@ function RegisterPlayerPage() {
                 value={
                   formData.academicInformation
                 }
-                onChange={handleChange}
-                className={inputClass}
+                onChange={
+                  handleChange
+                }
+                className={
+                  inputClass
+                }
                 placeholder="Class, grade or notes"
               />
             </div>
           </div>
-        </section>
+        </FormSection>
 
-        {/* GUARDIAN */}
+        {/* =================================================
+            GUARDIAN
+        ================================================== */}
 
-        <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-          <div className="mb-6">
-            <h2 className="text-lg font-bold text-slate-900">
-              Parent / Guardian Details
-            </h2>
-
-            <p className="mt-1 text-sm text-slate-500">
-              Primary contact responsible for the
-              player.
-            </p>
-          </div>
-
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            <div>
-              <label className={labelClass}>
+        <FormSection
+          title="Parent / Guardian Details"
+          description="Primary contact responsible for the player."
+        >
+          <div
+            className="
+              grid
+              min-w-0
+              grid-cols-1
+              gap-5
+              md:grid-cols-2
+              xl:grid-cols-3
+            "
+          >
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
                 Full Name *
               </label>
 
@@ -887,14 +1339,23 @@ function RegisterPlayerPage() {
                 value={
                   formData.guardianName
                 }
-                onChange={handleChange}
-                className={inputClass}
+                onChange={
+                  handleChange
+                }
+                className={
+                  inputClass
+                }
+                placeholder="Parent or guardian name"
                 required
               />
             </div>
 
-            <div>
-              <label className={labelClass}>
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
                 Relationship *
               </label>
 
@@ -903,46 +1364,74 @@ function RegisterPlayerPage() {
                 value={
                   formData.guardianRelationship
                 }
-                onChange={handleChange}
-                className={inputClass}
+                onChange={
+                  handleChange
+                }
+                className={
+                  inputClass
+                }
                 placeholder="Father, Mother, Guardian..."
                 required
               />
             </div>
 
-            <div>
-              <label className={labelClass}>
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
                 Phone Number *
               </label>
 
               <input
+                type="tel"
                 name="guardianPhone"
                 value={
                   formData.guardianPhone
                 }
-                onChange={handleChange}
-                className={inputClass}
+                onChange={
+                  handleChange
+                }
+                className={
+                  inputClass
+                }
+                placeholder="Primary phone number"
                 required
               />
             </div>
 
-            <div>
-              <label className={labelClass}>
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
                 Alternative Phone
               </label>
 
               <input
+                type="tel"
                 name="guardianAlternativePhone"
                 value={
                   formData.guardianAlternativePhone
                 }
-                onChange={handleChange}
-                className={inputClass}
+                onChange={
+                  handleChange
+                }
+                className={
+                  inputClass
+                }
+                placeholder="Alternative number"
               />
             </div>
 
-            <div>
-              <label className={labelClass}>
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
                 Email
               </label>
 
@@ -952,13 +1441,22 @@ function RegisterPlayerPage() {
                 value={
                   formData.guardianEmail
                 }
-                onChange={handleChange}
-                className={inputClass}
+                onChange={
+                  handleChange
+                }
+                className={
+                  inputClass
+                }
+                placeholder="guardian@example.com"
               />
             </div>
 
-            <div>
-              <label className={labelClass}>
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
                 Address *
               </label>
 
@@ -967,31 +1465,42 @@ function RegisterPlayerPage() {
                 value={
                   formData.guardianAddress
                 }
-                onChange={handleChange}
-                className={inputClass}
+                onChange={
+                  handleChange
+                }
+                className={
+                  inputClass
+                }
+                placeholder="Parent / guardian address"
                 required
               />
             </div>
           </div>
-        </section>
+        </FormSection>
 
-        {/* MEDICAL */}
+        {/* =================================================
+            MEDICAL
+        ================================================== */}
 
-        <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-          <div className="mb-6">
-            <h2 className="text-lg font-bold text-slate-900">
-              Medical & Emergency Information
-            </h2>
-
-            <p className="mt-1 text-sm text-slate-500">
-              Health notes and emergency contact
-              details.
-            </p>
-          </div>
-
-          <div className="grid gap-5 md:grid-cols-2">
-            <div>
-              <label className={labelClass}>
+        <FormSection
+          title="Medical & Emergency Information"
+          description="Health notes and emergency contact details."
+        >
+          <div
+            className="
+              grid
+              min-w-0
+              grid-cols-1
+              gap-5
+              md:grid-cols-2
+            "
+          >
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
                 Medical Conditions
               </label>
 
@@ -1000,28 +1509,48 @@ function RegisterPlayerPage() {
                 value={
                   formData.medicalConditions
                 }
-                onChange={handleChange}
+                onChange={
+                  handleChange
+                }
                 rows={3}
-                className={inputClass}
+                className={
+                  inputClass
+                }
+                placeholder="Known medical conditions"
               />
             </div>
 
-            <div>
-              <label className={labelClass}>
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
                 Allergies
               </label>
 
               <textarea
                 name="allergies"
-                value={formData.allergies}
-                onChange={handleChange}
+                value={
+                  formData.allergies
+                }
+                onChange={
+                  handleChange
+                }
                 rows={3}
-                className={inputClass}
+                className={
+                  inputClass
+                }
+                placeholder="Known allergies"
               />
             </div>
 
-            <div>
-              <label className={labelClass}>
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
                 Injury History
               </label>
 
@@ -1030,15 +1559,25 @@ function RegisterPlayerPage() {
                 value={
                   formData.injuryHistory
                 }
-                onChange={handleChange}
+                onChange={
+                  handleChange
+                }
                 rows={3}
-                className={inputClass}
+                className={
+                  inputClass
+                }
+                placeholder="Previous injuries"
               />
             </div>
 
-            <div>
-              <label className={labelClass}>
-                Additional Medical Notes
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
+                Additional Medical
+                Notes
               </label>
 
               <textarea
@@ -1046,21 +1585,53 @@ function RegisterPlayerPage() {
                 value={
                   formData.medicalNotes
                 }
-                onChange={handleChange}
+                onChange={
+                  handleChange
+                }
                 rows={3}
-                className={inputClass}
+                className={
+                  inputClass
+                }
+                placeholder="Additional notes"
               />
             </div>
           </div>
 
-          <div className="mt-7 border-t border-slate-100 pt-6">
+          {/* EMERGENCY CONTACT */}
+
+          <div
+            className="
+              mt-7
+              border-t
+              border-slate-100
+              pt-6
+            "
+          >
             <h3 className="font-semibold text-slate-800">
               Emergency Contact
             </h3>
 
-            <div className="mt-4 grid gap-5 md:grid-cols-3">
-              <div>
-                <label className={labelClass}>
+            <p className="mt-1 text-sm leading-6 text-slate-500">
+              Person to contact in an
+              emergency.
+            </p>
+
+            <div
+              className="
+                mt-4
+                grid
+                min-w-0
+                grid-cols-1
+                gap-5
+                md:grid-cols-3
+              "
+            >
+              <div className="min-w-0">
+                <label
+                  className={
+                    labelClass
+                  }
+                >
                   Full Name *
                 </label>
 
@@ -1069,14 +1640,23 @@ function RegisterPlayerPage() {
                   value={
                     formData.emergencyName
                   }
-                  onChange={handleChange}
-                  className={inputClass}
+                  onChange={
+                    handleChange
+                  }
+                  className={
+                    inputClass
+                  }
+                  placeholder="Emergency contact"
                   required
                 />
               </div>
 
-              <div>
-                <label className={labelClass}>
+              <div className="min-w-0">
+                <label
+                  className={
+                    labelClass
+                  }
+                >
                   Relationship *
                 </label>
 
@@ -1085,48 +1665,69 @@ function RegisterPlayerPage() {
                   value={
                     formData.emergencyRelationship
                   }
-                  onChange={handleChange}
-                  className={inputClass}
+                  onChange={
+                    handleChange
+                  }
+                  className={
+                    inputClass
+                  }
+                  placeholder="Relationship"
                   required
                 />
               </div>
 
-              <div>
-                <label className={labelClass}>
+              <div className="min-w-0">
+                <label
+                  className={
+                    labelClass
+                  }
+                >
                   Phone *
                 </label>
 
                 <input
+                  type="tel"
                   name="emergencyPhone"
                   value={
                     formData.emergencyPhone
                   }
-                  onChange={handleChange}
-                  className={inputClass}
+                  onChange={
+                    handleChange
+                  }
+                  className={
+                    inputClass
+                  }
+                  placeholder="Emergency phone"
                   required
                 />
               </div>
             </div>
           </div>
-        </section>
+        </FormSection>
 
-        {/* REGISTRATION */}
+        {/* =================================================
+            REGISTRATION
+        ================================================== */}
 
-        <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-          <div className="mb-6">
-            <h2 className="text-lg font-bold text-slate-900">
-              Registration Information
-            </h2>
-
-            <p className="mt-1 text-sm text-slate-500">
-              Academy registration and player
-              status.
-            </p>
-          </div>
-
-          <div className="grid gap-5 md:grid-cols-3">
-            <div>
-              <label className={labelClass}>
+        <FormSection
+          title="Registration Information"
+          description="Academy registration and player status."
+        >
+          <div
+            className="
+              grid
+              min-w-0
+              grid-cols-1
+              gap-5
+              md:grid-cols-3
+            "
+          >
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
                 Date Joined *
               </label>
 
@@ -1136,38 +1737,64 @@ function RegisterPlayerPage() {
                 value={
                   formData.dateJoined
                 }
-                onChange={handleChange}
-                className={inputClass}
+                onChange={
+                  handleChange
+                }
+                className={
+                  inputClass
+                }
                 required
               />
             </div>
 
-            <div>
-              <label className={labelClass}>
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
                 Player Status *
               </label>
 
               <select
                 name="status"
-                value={formData.status}
-                onChange={handleChange}
-                className={inputClass}
+                value={
+                  formData.status
+                }
+                onChange={
+                  handleChange
+                }
+                className={
+                  inputClass
+                }
               >
                 {playerStatuses.map(
-                  (status) => (
+                  (
+                    status,
+                  ) => (
                     <option
-                      key={status}
-                      value={status}
+                      key={
+                        status
+                      }
+                      value={
+                        status
+                      }
                     >
-                      {status}
+                      {
+                        status
+                      }
                     </option>
                   ),
                 )}
               </select>
             </div>
 
-            <div>
-              <label className={labelClass}>
+            <div className="min-w-0">
+              <label
+                className={
+                  labelClass
+                }
+              >
                 Registration Status *
               </label>
 
@@ -1176,8 +1803,12 @@ function RegisterPlayerPage() {
                 value={
                   formData.registrationStatus
                 }
-                onChange={handleChange}
-                className={inputClass}
+                onChange={
+                  handleChange
+                }
+                className={
+                  inputClass
+                }
               >
                 <option value="Pending Registration">
                   Pending Registration
@@ -1190,50 +1821,181 @@ function RegisterPlayerPage() {
             </div>
           </div>
 
-          <label className="mt-6 flex cursor-pointer items-start gap-3 rounded-lg border border-slate-200 bg-slate-50 p-4">
+          {/* CONSENT */}
+
+          <label
+            className="
+              mt-6
+              flex
+              min-w-0
+              cursor-pointer
+              items-start
+              gap-3
+              rounded-lg
+              border
+              border-slate-200
+              bg-slate-50
+              p-4
+            "
+          >
             <input
               type="checkbox"
               name="parentConsent"
               checked={
                 formData.parentConsent
               }
-              onChange={handleChange}
-              className="mt-1 h-4 w-4 accent-green-600"
+              onChange={
+                handleChange
+              }
+              className="
+                mt-1
+                h-4
+                w-4
+                shrink-0
+                accent-green-600
+              "
             />
 
-            <div>
-              <p className="text-sm font-semibold text-slate-800">
+            <div className="min-w-0">
+              <p className="break-words text-sm font-semibold text-slate-800">
                 Parent / Guardian Consent
               </p>
 
-              <p className="mt-1 text-xs leading-5 text-slate-500">
+              <p className="mt-1 break-words text-xs leading-5 text-slate-500">
                 Confirm that appropriate
-                registration and participation
-                consent has been provided.
+                registration and
+                participation consent has
+                been provided.
               </p>
             </div>
           </label>
-        </section>
+        </FormSection>
 
-        <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+        {/* =================================================
+            ACTIONS
+        ================================================== */}
+
+        <div
+          className="
+            flex
+            min-w-0
+            flex-col-reverse
+            gap-3
+            pb-2
+            sm:flex-row
+            sm:justify-end
+          "
+        >
           <Link
             to="/admin/players"
-            className="rounded-lg border border-slate-300 px-5 py-3 text-center text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+            className="
+              inline-flex
+              w-full
+              items-center
+              justify-center
+              rounded-lg
+              border
+              border-slate-300
+              bg-white
+              px-5
+              py-3
+              text-center
+              text-sm
+              font-semibold
+              text-slate-700
+              transition
+
+              hover:bg-slate-50
+
+              sm:w-auto
+            "
           >
             Cancel
           </Link>
 
           <button
             type="submit"
-            className="inline-flex items-center justify-center gap-2 rounded-lg bg-green-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-green-700"
+            className="
+              inline-flex
+              w-full
+              items-center
+              justify-center
+              gap-2
+              rounded-lg
+              bg-green-600
+              px-5
+              py-3
+              text-sm
+              font-semibold
+              text-white
+              transition
+
+              hover:bg-green-700
+
+              focus:outline-none
+              focus:ring-2
+              focus:ring-green-500
+              focus:ring-offset-2
+
+              sm:w-auto
+            "
           >
-            <Save size={18} />
+            <Save
+              size={18}
+              className="shrink-0"
+            />
 
             Register Player
           </button>
         </div>
       </form>
     </div>
+  );
+}
+
+/* =========================================================
+   FORM SECTION
+========================================================= */
+
+function FormSection({
+  title,
+  description,
+  children,
+}: {
+  title: string;
+  description?: string;
+  children: ReactNode;
+}) {
+  return (
+    <section
+      className="
+        w-full
+        min-w-0
+        rounded-xl
+        border
+        border-slate-200
+        bg-white
+        p-4
+        shadow-sm
+        sm:p-6
+      "
+    >
+      <div className="mb-6 min-w-0">
+        <h2 className="break-words text-lg font-bold text-slate-900">
+          {title}
+        </h2>
+
+        {description && (
+          <p className="mt-1 max-w-3xl text-sm leading-6 text-slate-500">
+            {description}
+          </p>
+        )}
+      </div>
+
+      <div className="min-w-0">
+        {children}
+      </div>
+    </section>
   );
 }
 

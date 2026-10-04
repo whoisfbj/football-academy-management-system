@@ -41,16 +41,16 @@ function AcademySettingsPage() {
     getPrograms();
 
   return (
-    <div>
-      <p className="text-sm font-semibold text-green-600">
+    <div className="w-full min-w-0">
+      <p className="text-xs font-semibold uppercase tracking-wide text-green-600 sm:text-sm">
         Academy Administration
       </p>
 
-      <h1 className="mt-1 text-3xl font-bold text-slate-900">
+      <h1 className="mt-1 break-words text-2xl font-bold leading-tight text-slate-900 sm:text-3xl">
         Academy Settings
       </h1>
 
-      <section className="mt-7 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+      <section className="mt-7 min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
         <div className="flex items-center gap-3">
           <Building2 className="text-green-600" />
 
@@ -113,7 +113,7 @@ function AcademySettingsPage() {
                       },
                     );
                   }}
-                  className="w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm"
+                  className="w-full min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-base outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100 sm:text-sm"
                 />
               </div>
             ),
@@ -128,7 +128,7 @@ function AcademySettingsPage() {
 
             setSaved(true);
           }}
-          className="mt-6 inline-flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white"
+          className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-green-700 sm:w-auto"
         >
           <Save size={17} />
           Save Academy Profile
@@ -141,7 +141,7 @@ function AcademySettingsPage() {
         )}
       </section>
 
-      <div className="mt-6 grid gap-6 xl:grid-cols-3">
+      <div className="mt-6 grid grid-cols-1 gap-6 xl:grid-cols-3">
         <ListCard
           title="Academy Branches"
           icon={<Building2 />}
@@ -183,8 +183,8 @@ function ListCard({
   values: string[];
 }) {
   return (
-    <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-      <div className="flex items-center gap-3 text-green-600">
+    <section className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+      <div className="flex min-w-0 items-center gap-3 text-green-600">
         {icon}
 
         <h2 className="font-bold text-slate-900">
@@ -197,7 +197,7 @@ function ListCard({
           (value) => (
             <div
               key={value}
-              className="rounded-lg bg-slate-50 p-3 text-sm font-medium text-slate-700"
+              className="min-w-0 break-words rounded-lg bg-slate-50 p-3 text-sm font-medium text-slate-700"
             >
               {value}
             </div>

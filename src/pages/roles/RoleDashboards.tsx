@@ -52,18 +52,18 @@ function BaseDashboard({
     getCurrentUser();
 
   return (
-    <div className="min-h-screen bg-slate-100 p-6 lg:p-8">
+    <div className="min-h-dvh w-full min-w-0 bg-slate-100 p-4 sm:p-6 lg:p-8">
       <p className="text-sm font-semibold text-green-600">
         {
           user?.name
         }
       </p>
 
-      <h1 className="mt-1 text-3xl font-bold text-slate-900">
+      <h1 className="mt-1 break-words text-2xl font-bold leading-tight text-slate-900 sm:text-3xl">
         {title}
       </h1>
 
-      <p className="mt-2 text-slate-500">
+      <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-500 sm:text-base">
         {description}
       </p>
 
@@ -103,7 +103,7 @@ function BaseDashboard({
         />
       </div>
 
-      <section className="mt-6 rounded-xl bg-white p-6 shadow-sm">
+      <section className="mt-6 rounded-xl bg-white p-4 sm:p-6 shadow-sm">
         <h2 className="font-bold text-slate-900">
           Upcoming Training
         </h2>

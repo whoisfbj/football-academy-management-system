@@ -123,46 +123,87 @@ const recentRegistrations = [
 
 function AdminDashboard() {
   return (
-    <div>
-      <div className="mb-8">
-        <p className="text-sm font-medium text-green-600">
+    <div className="w-full min-w-0">
+      {/* =========================================
+          PAGE HEADER
+      ========================================== */}
+
+      <div className="mb-6 min-w-0 sm:mb-8">
+        <p className="text-xs font-semibold uppercase tracking-wide text-green-600 sm:text-sm">
           Academy Overview
         </p>
 
-        <h1 className="mt-1 text-3xl font-bold text-slate-900">
+        <h1 className="mt-1 break-words text-2xl font-bold leading-tight text-slate-900 sm:text-3xl">
           Administrator Dashboard
         </h1>
 
-        <p className="mt-2 text-slate-500">
-          Monitor academy operations, players,
-          development and financial activity.
+        <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-500 sm:text-base">
+          Monitor academy operations, players, development and
+          financial activity.
         </p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6">
+      {/* =========================================
+          STATISTICS
+      ========================================== */}
+
+      <div
+        className="
+          grid
+          grid-cols-1
+          gap-4
+          sm:grid-cols-2
+          lg:grid-cols-3
+          2xl:grid-cols-6
+        "
+      >
         {statistics.map((stat) => {
           const Icon = stat.icon;
 
           return (
             <div
               key={stat.title}
-              className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
+              className="
+                min-w-0
+                rounded-xl
+                border
+                border-slate-200
+                bg-white
+                p-4
+                shadow-sm
+                transition
+                hover:border-slate-300
+                hover:shadow-md
+                sm:p-5
+              "
             >
-              <div className="mb-5 flex items-center justify-between">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-50 text-green-600">
+              <div className="mb-4 flex items-center justify-between sm:mb-5">
+                <div
+                  className="
+                    flex
+                    h-10
+                    w-10
+                    shrink-0
+                    items-center
+                    justify-center
+                    rounded-lg
+                    bg-green-50
+                    text-green-600
+                  "
+                >
                   <Icon size={21} />
                 </div>
               </div>
 
-              <p className="text-sm text-slate-500">
+              <p className="truncate text-sm text-slate-500">
                 {stat.title}
               </p>
 
-              <p className="mt-1 text-2xl font-bold text-slate-900">
+              <p className="mt-1 break-words text-xl font-bold text-slate-900 sm:text-2xl">
                 {stat.value}
               </p>
 
-              <p className="mt-2 text-xs text-slate-400">
+              <p className="mt-2 break-words text-xs leading-5 text-slate-400">
                 {stat.change}
               </p>
             </div>
@@ -170,10 +211,49 @@ function AdminDashboard() {
         })}
       </div>
 
-      <div className="mt-6 grid gap-6 xl:grid-cols-3">
-        <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm xl:col-span-2">
-          <div className="mb-6 flex items-center justify-between">
-            <div>
+      {/* =========================================
+          AGE CATEGORIES + ATTENDANCE
+      ========================================== */}
+
+      <div
+        className="
+          mt-6
+          grid
+          min-w-0
+          grid-cols-1
+          gap-6
+          xl:grid-cols-3
+        "
+      >
+        {/* PLAYERS BY AGE */}
+
+        <section
+          className="
+            min-w-0
+            rounded-xl
+            border
+            border-slate-200
+            bg-white
+            p-4
+            shadow-sm
+            sm:p-6
+            xl:col-span-2
+          "
+        >
+          <div
+            className="
+              mb-6
+              flex
+              min-w-0
+              flex-col
+              gap-2
+              sm:flex-row
+              sm:items-start
+              sm:justify-between
+              sm:gap-4
+            "
+          >
+            <div className="min-w-0">
               <h2 className="font-bold text-slate-900">
                 Players by Age Category
               </h2>
@@ -183,7 +263,7 @@ function AdminDashboard() {
               </p>
             </div>
 
-            <span className="text-sm font-semibold text-green-600">
+            <span className="shrink-0 text-sm font-semibold text-green-600">
               428 Players
             </span>
           </div>
@@ -194,18 +274,21 @@ function AdminDashboard() {
                 (item.players / 96) * 100;
 
               return (
-                <div key={item.category}>
-                  <div className="mb-2 flex items-center justify-between">
+                <div
+                  key={item.category}
+                  className="min-w-0"
+                >
+                  <div className="mb-2 flex items-center justify-between gap-3">
                     <span className="text-sm font-medium text-slate-700">
                       {item.category}
                     </span>
 
-                    <span className="text-sm text-slate-500">
+                    <span className="shrink-0 text-sm text-slate-500">
                       {item.players}
                     </span>
                   </div>
 
-                  <div className="h-2 overflow-hidden rounded-full bg-slate-100">
+                  <div className="h-2 w-full overflow-hidden rounded-full bg-slate-100">
                     <div
                       className="h-full rounded-full bg-green-600"
                       style={{
@@ -219,7 +302,20 @@ function AdminDashboard() {
           </div>
         </section>
 
-        <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+        {/* ATTENDANCE */}
+
+        <section
+          className="
+            min-w-0
+            rounded-xl
+            border
+            border-slate-200
+            bg-white
+            p-4
+            shadow-sm
+            sm:p-6
+          "
+        >
           <h2 className="font-bold text-slate-900">
             Attendance Overview
           </h2>
@@ -228,10 +324,25 @@ function AdminDashboard() {
             This month
           </p>
 
-          <div className="my-8 text-center">
-            <div className="mx-auto flex h-36 w-36 items-center justify-center rounded-full border-[12px] border-green-100">
+          <div className="my-6 text-center sm:my-8">
+            <div
+              className="
+                mx-auto
+                flex
+                h-32
+                w-32
+                items-center
+                justify-center
+                rounded-full
+                border-[10px]
+                border-green-100
+                sm:h-36
+                sm:w-36
+                sm:border-[12px]
+              "
+            >
               <div>
-                <p className="text-3xl font-bold text-green-600">
+                <p className="text-2xl font-bold text-green-600 sm:text-3xl">
                   87%
                 </p>
 
@@ -243,22 +354,22 @@ function AdminDashboard() {
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-            <div className="rounded-lg bg-green-50 p-4">
-              <p className="text-xl font-bold text-green-700">
+            <div className="min-w-0 rounded-lg bg-green-50 p-3 sm:p-4">
+              <p className="break-words text-lg font-bold text-green-700 sm:text-xl">
                 349
               </p>
 
-              <p className="text-xs text-green-700">
+              <p className="mt-1 text-xs text-green-700">
                 Present
               </p>
             </div>
 
-            <div className="rounded-lg bg-red-50 p-4">
-              <p className="text-xl font-bold text-red-700">
+            <div className="min-w-0 rounded-lg bg-red-50 p-3 sm:p-4">
+              <p className="break-words text-lg font-bold text-red-700 sm:text-xl">
                 52
               </p>
 
-              <p className="text-xs text-red-700">
+              <p className="mt-1 text-xs text-red-700">
                 Absent
               </p>
             </div>
@@ -266,10 +377,37 @@ function AdminDashboard() {
         </section>
       </div>
 
-      <div className="mt-6 grid gap-6 xl:grid-cols-3">
-        <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm xl:col-span-2">
-          <div className="mb-5 flex items-center justify-between">
-            <div>
+      {/* =========================================
+          UPCOMING TRAINING + EVENT
+      ========================================== */}
+
+      <div
+        className="
+          mt-6
+          grid
+          min-w-0
+          grid-cols-1
+          gap-6
+          xl:grid-cols-3
+        "
+      >
+        {/* TRAINING */}
+
+        <section
+          className="
+            min-w-0
+            rounded-xl
+            border
+            border-slate-200
+            bg-white
+            p-4
+            shadow-sm
+            sm:p-6
+            xl:col-span-2
+          "
+        >
+          <div className="mb-5 flex min-w-0 items-start justify-between gap-4">
+            <div className="min-w-0">
               <h2 className="font-bold text-slate-900">
                 Upcoming Training
               </h2>
@@ -281,7 +419,7 @@ function AdminDashboard() {
 
             <CalendarDays
               size={21}
-              className="text-slate-400"
+              className="shrink-0 text-slate-400"
             />
           </div>
 
@@ -289,38 +427,71 @@ function AdminDashboard() {
             {upcomingSessions.map((session) => (
               <div
                 key={`${session.team}-${session.date}`}
-                className="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:justify-between"
+                className="
+                  flex
+                  min-w-0
+                  flex-col
+                  gap-3
+                  py-4
+                  sm:flex-row
+                  sm:items-center
+                  sm:justify-between
+                  sm:gap-5
+                "
               >
-                <div>
-                  <p className="font-semibold text-slate-800">
+                <div className="min-w-0">
+                  <p className="break-words font-semibold text-slate-800">
                     {session.title}
                   </p>
 
-                  <p className="mt-1 text-sm text-slate-500">
+                  <p className="mt-1 break-words text-sm text-slate-500">
                     {session.team}
                   </p>
                 </div>
 
-                <div className="flex flex-col gap-1 text-sm text-slate-500 sm:text-right">
+                <div
+                  className="
+                    min-w-0
+                    text-sm
+                    text-slate-500
+                    sm:max-w-[45%]
+                    sm:text-right
+                  "
+                >
                   <p className="font-medium text-slate-700">
                     {session.date} • {session.time}
                   </p>
 
-                  <p>{session.centre}</p>
+                  <p className="mt-1 break-words">
+                    {session.centre}
+                  </p>
                 </div>
               </div>
             ))}
           </div>
         </section>
 
-        <section className="rounded-xl bg-slate-950 p-6 text-white shadow-sm">
+        {/* NEXT EVENT */}
+
+        <section
+          className="
+            min-w-0
+            overflow-hidden
+            rounded-xl
+            bg-slate-950
+            p-4
+            text-white
+            shadow-sm
+            sm:p-6
+          "
+        >
           <Clock3 className="text-green-400" />
 
-          <p className="mt-6 text-sm text-slate-400">
+          <p className="mt-5 text-sm text-slate-400 sm:mt-6">
             Next Academy Event
           </p>
 
-          <h2 className="mt-2 text-xl font-bold">
+          <h2 className="mt-2 break-words text-lg font-bold leading-7 sm:text-xl">
             U15 Academy Team vs Future Stars
           </h2>
 
@@ -328,20 +499,46 @@ function AdminDashboard() {
             Academy Friendly Match
           </p>
 
-          <div className="mt-6 rounded-lg bg-white/10 p-4">
-            <p className="font-semibold">
+          <div className="mt-5 min-w-0 rounded-lg bg-white/10 p-4 sm:mt-6">
+            <p className="break-words font-semibold">
               Saturday, 3 October
             </p>
 
-            <p className="mt-1 text-sm text-slate-300">
+            <p className="mt-1 break-words text-sm text-slate-300">
               10:00 AM • Main Stadium
             </p>
           </div>
         </section>
       </div>
 
-      <div className="mt-6 grid gap-6 xl:grid-cols-2">
-        <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+      {/* =========================================
+          REGISTRATIONS + DEVELOPMENT
+      ========================================== */}
+
+      <div
+        className="
+          mt-6
+          grid
+          min-w-0
+          grid-cols-1
+          gap-6
+          xl:grid-cols-2
+        "
+      >
+        {/* RECENT REGISTRATIONS */}
+
+        <section
+          className="
+            min-w-0
+            rounded-xl
+            border
+            border-slate-200
+            bg-white
+            p-4
+            shadow-sm
+            sm:p-6
+          "
+        >
           <div className="mb-5">
             <h2 className="font-bold text-slate-900">
               Recent Registrations
@@ -352,23 +549,51 @@ function AdminDashboard() {
             </p>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-0">
             {recentRegistrations.map((player) => (
               <div
                 key={player.name}
-                className="flex items-center justify-between border-b border-slate-100 pb-4 last:border-0"
+                className="
+                  flex
+                  min-w-0
+                  flex-col
+                  gap-3
+                  border-b
+                  border-slate-100
+                  py-4
+                  first:pt-0
+                  last:border-0
+                  last:pb-0
+                  sm:flex-row
+                  sm:items-center
+                  sm:justify-between
+                  sm:gap-4
+                "
               >
-                <div>
-                  <p className="font-medium text-slate-800">
+                <div className="min-w-0">
+                  <p className="break-words font-medium text-slate-800">
                     {player.name}
                   </p>
 
-                  <p className="text-sm text-slate-500">
+                  <p className="mt-0.5 text-sm text-slate-500">
                     {player.category}
                   </p>
                 </div>
 
-                <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
+                <span
+                  className="
+                    w-fit
+                    max-w-full
+                    rounded-full
+                    bg-slate-100
+                    px-3
+                    py-1
+                    text-xs
+                    font-medium
+                    text-slate-600
+                    sm:shrink-0
+                  "
+                >
                   {player.status}
                 </span>
               </div>
@@ -376,7 +601,20 @@ function AdminDashboard() {
           </div>
         </section>
 
-        <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+        {/* PLAYER DEVELOPMENT */}
+
+        <section
+          className="
+            min-w-0
+            rounded-xl
+            border
+            border-slate-200
+            bg-white
+            p-4
+            shadow-sm
+            sm:p-6
+          "
+        >
           <h2 className="font-bold text-slate-900">
             Player Development
           </h2>
@@ -385,43 +623,52 @@ function AdminDashboard() {
             Development activity this month
           </p>
 
-          <div className="mt-6 grid grid-cols-2 gap-4">
-            <div className="rounded-lg bg-slate-50 p-4">
-              <p className="text-2xl font-bold text-slate-900">
+          <div
+            className="
+              mt-6
+              grid
+              grid-cols-1
+              gap-3
+              sm:grid-cols-2
+              sm:gap-4
+            "
+          >
+            <div className="min-w-0 rounded-lg bg-slate-50 p-4">
+              <p className="text-xl font-bold text-slate-900 sm:text-2xl">
                 64
               </p>
 
-              <p className="mt-1 text-sm text-slate-500">
+              <p className="mt-1 break-words text-sm text-slate-500">
                 Player Evaluations
               </p>
             </div>
 
-            <div className="rounded-lg bg-slate-50 p-4">
-              <p className="text-2xl font-bold text-slate-900">
+            <div className="min-w-0 rounded-lg bg-slate-50 p-4">
+              <p className="text-xl font-bold text-slate-900 sm:text-2xl">
                 38
               </p>
 
-              <p className="mt-1 text-sm text-slate-500">
+              <p className="mt-1 break-words text-sm text-slate-500">
                 Active IDPs
               </p>
             </div>
 
-            <div className="rounded-lg bg-slate-50 p-4">
-              <p className="text-2xl font-bold text-slate-900">
+            <div className="min-w-0 rounded-lg bg-slate-50 p-4">
+              <p className="text-xl font-bold text-slate-900 sm:text-2xl">
                 51
               </p>
 
-              <p className="mt-1 text-sm text-slate-500">
+              <p className="mt-1 break-words text-sm text-slate-500">
                 Progress Reports
               </p>
             </div>
 
-            <div className="rounded-lg bg-slate-50 p-4">
-              <p className="text-2xl font-bold text-slate-900">
+            <div className="min-w-0 rounded-lg bg-slate-50 p-4">
+              <p className="text-xl font-bold text-slate-900 sm:text-2xl">
                 12
               </p>
 
-              <p className="mt-1 text-sm text-slate-500">
+              <p className="mt-1 break-words text-sm text-slate-500">
                 Scouting Reports
               </p>
             </div>

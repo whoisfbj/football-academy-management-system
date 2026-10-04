@@ -66,23 +66,23 @@ function TrainingSessionsPage() {
     ).length;
 
   return (
-    <div>
-      <div>
-        <p className="text-sm font-semibold text-green-600">
+    <div className="w-full min-w-0">
+      <div className="min-w-0">
+        <p className="text-xs font-semibold uppercase tracking-wide text-green-600 sm:text-sm">
           Academy Operations
         </p>
 
-        <h1 className="mt-1 text-3xl font-bold text-slate-900">
+        <h1 className="mt-1 break-words text-2xl font-bold leading-tight text-slate-900 sm:text-3xl">
           Training Sessions
         </h1>
 
-        <p className="mt-2 text-slate-500">
+        <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-500 sm:text-base">
           Manage scheduled training,
           team sessions and attendance.
         </p>
       </div>
 
-      <div className="mt-7 grid gap-4 sm:grid-cols-3">
+      <div className="mt-6 grid grid-cols-1 gap-4 sm:mt-7 sm:grid-cols-3">
         <SessionStat
           title="Total Sessions"
           value={sessions.length}
@@ -100,8 +100,8 @@ function TrainingSessionsPage() {
       </div>
 
       <section className="mt-6 rounded-xl border border-slate-200 bg-white shadow-sm">
-        <div className="border-b border-slate-200 p-5">
-          <div className="relative max-w-md">
+        <div className="border-b border-slate-200 p-4 sm:p-5">
+          <div className="relative w-full max-w-md">
             <Search
               size={17}
               className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
@@ -115,7 +115,7 @@ function TrainingSessionsPage() {
                 )
               }
               placeholder="Search sessions..."
-              className="w-full rounded-lg border border-slate-200 py-2.5 pl-10 pr-4 text-sm outline-none focus:border-green-500"
+              className="w-full min-w-0 rounded-lg border border-slate-200 bg-white py-2.5 pl-10 pr-4 text-base outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100 sm:text-sm"
             />
           </div>
         </div>
@@ -140,12 +140,12 @@ function TrainingSessionsPage() {
               return (
                 <div
                   key={session.id}
-                  className="p-5"
+                  className="min-w-0 p-4 sm:p-5"
                 >
                   <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
-                    <div>
-                      <div className="flex flex-wrap items-center gap-3">
-                        <h2 className="font-bold text-slate-900">
+                    <div className="min-w-0">
+                      <div className="flex min-w-0 flex-wrap items-center gap-3">
+                        <h2 className="break-words font-bold text-slate-900">
                           {
                             session.title
                           }
@@ -177,8 +177,8 @@ function TrainingSessionsPage() {
                         }
                       </p>
 
-                      <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-600">
-                        <span className="flex items-center gap-2">
+                      <div className="mt-4 grid min-w-0 grid-cols-1 gap-2 text-sm text-slate-600 sm:grid-cols-2 xl:flex xl:flex-wrap xl:gap-x-6">
+                        <span className="flex min-w-0 items-start gap-2">
                           <Users
                             size={15}
                           />
@@ -187,7 +187,7 @@ function TrainingSessionsPage() {
                             "Unknown Team"}
                         </span>
 
-                        <span className="flex items-center gap-2">
+                        <span className="flex min-w-0 items-start gap-2">
                           <UserRoundCog
                             size={15}
                           />
@@ -196,7 +196,7 @@ function TrainingSessionsPage() {
                             "Unknown Coach"}
                         </span>
 
-                        <span className="flex items-center gap-2">
+                        <span className="flex min-w-0 items-start gap-2">
                           <MapPin
                             size={15}
                           />
@@ -208,7 +208,7 @@ function TrainingSessionsPage() {
                       </div>
                     </div>
 
-                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                    <div className="flex w-full flex-col gap-4 sm:w-auto sm:flex-row sm:items-center">
                       <div className="text-sm">
                         <div className="flex items-center gap-2 font-semibold text-slate-700">
                           <CalendarDays
@@ -244,7 +244,7 @@ function TrainingSessionsPage() {
 
                       <Link
                         to={`/admin/sessions/${session.id}/attendance`}
-                        className="rounded-lg bg-green-600 px-4 py-2.5 text-center text-sm font-semibold text-white hover:bg-green-700"
+                        className="inline-flex w-full items-center justify-center rounded-lg bg-green-600 px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-green-700 sm:w-auto"
                       >
                         Take Attendance
                       </Link>
@@ -270,12 +270,12 @@ function SessionStat({
   value,
 }: SessionStatProps) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
       <p className="text-sm text-slate-500">
         {title}
       </p>
 
-      <p className="mt-2 text-3xl font-bold text-slate-900">
+      <p className="mt-2 text-2xl font-bold text-slate-900 sm:text-3xl">
         {value}
       </p>
     </div>

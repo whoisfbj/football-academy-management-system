@@ -56,7 +56,7 @@ function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100 lg:grid lg:grid-cols-2">
+    <div className="min-h-dvh w-full overflow-x-hidden bg-slate-100 lg:grid lg:grid-cols-2">
       {/* LEFT SIDE */}
 
       <section className="hidden bg-slate-950 p-12 text-white lg:flex lg:flex-col lg:justify-between">
@@ -99,7 +99,7 @@ function LoginPage() {
 
       {/* LOGIN */}
 
-      <section className="flex min-h-screen items-center justify-center p-6">
+      <section className="flex min-h-dvh items-center justify-center px-4 py-6 sm:p-6">
         <div className="w-full max-w-md">
           <div className="mb-8 lg:hidden">
             <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-green-600 text-white">
@@ -111,7 +111,7 @@ function LoginPage() {
             </h1>
           </div>
 
-          <div className="rounded-2xl bg-white p-8 shadow-sm">
+          <div className="rounded-2xl bg-white p-5 shadow-sm sm:p-8">
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-slate-900">
                 Welcome back
@@ -141,7 +141,7 @@ function LoginPage() {
                   onChange={(event) =>
                     setEmail(event.target.value)
                   }
-                  className="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100"
+                  className="w-full min-w-0 rounded-lg border border-slate-300 bg-white px-4 py-3 text-base outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100"
                   required
                 />
               </div>
@@ -161,7 +161,7 @@ function LoginPage() {
                   onChange={(event) =>
                     setPassword(event.target.value)
                   }
-                  className="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100"
+                  className="w-full min-w-0 rounded-lg border border-slate-300 bg-white px-4 py-3 text-base outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100"
                   required
                 />
               </div>

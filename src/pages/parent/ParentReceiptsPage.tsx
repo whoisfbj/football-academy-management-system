@@ -18,9 +18,9 @@ function ParentReceiptsPage() {
 
   if (!linkedPlayer) {
     return (
-      <div className="p-5 lg:p-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center shadow-sm">
+      <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+        <div className="mx-auto w-full max-w-7xl min-w-0">
+          <div className="rounded-2xl border border-slate-200 bg-white px-4 py-8 text-center shadow-sm sm:p-12">
             <ReceiptText
               size={34}
               className="mx-auto text-slate-300"
@@ -198,8 +198,8 @@ function ParentReceiptsPage() {
   }
 
   return (
-    <div className="p-5 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
         <div>
           <p className="text-sm font-semibold text-green-600">
             Parent / Guardian Portal
@@ -215,7 +215,7 @@ function ParentReceiptsPage() {
           </p>
         </div>
 
-        <section className="mt-6 rounded-2xl bg-slate-950 p-6 text-white">
+        <section className="mt-6 rounded-2xl bg-slate-950 p-4 sm:p-6 text-white">
           <p className="text-sm text-slate-400">
             Receipts for
           </p>
@@ -296,7 +296,7 @@ function ParentReceiptsPage() {
               )}
             </div>
           ) : (
-            <div className="p-12 text-center">
+            <div className="px-4 py-10 text-center sm:p-12">
               <ReceiptText
                 size={34}
                 className="mx-auto text-slate-300"

@@ -46,17 +46,17 @@ function CommunicationPage() {
       .reverse();
 
   return (
-    <div>
-      <p className="text-sm font-semibold text-green-600">
+    <div className="w-full min-w-0">
+      <p className="text-xs font-semibold uppercase tracking-wide text-green-600 sm:text-sm">
         Communication
       </p>
 
-      <h1 className="mt-1 text-3xl font-bold text-slate-900">
+      <h1 className="mt-1 break-words text-2xl font-bold leading-tight text-slate-900 sm:text-3xl">
         Communication & Announcements
       </h1>
 
-      <div className="mt-7 grid gap-6 xl:grid-cols-3">
-        <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="mt-6 grid min-w-0 grid-cols-1 gap-6 sm:mt-7 xl:grid-cols-3">
+        <section className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
           <Megaphone className="text-green-600" />
 
           <h2 className="mt-4 font-bold text-slate-900">
@@ -149,7 +149,7 @@ function CommunicationPage() {
                     value + 1,
                 );
               }}
-              className="flex w-full items-center justify-center gap-2 rounded-lg bg-green-600 py-2.5 text-sm font-semibold text-white"
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-green-700"
             >
               <Send size={17} />
               Send Message
@@ -157,8 +157,8 @@ function CommunicationPage() {
           </div>
         </section>
 
-        <section className="rounded-xl border border-slate-200 bg-white shadow-sm xl:col-span-2">
-          <div className="border-b border-slate-200 p-6">
+        <section className="min-w-0 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm xl:col-span-2">
+          <div className="border-b border-slate-200 p-4 sm:p-6">
             <h2 className="font-bold text-slate-900">
               Messages & Notices
             </h2>
@@ -169,20 +169,20 @@ function CommunicationPage() {
               (item) => (
                 <div
                   key={item.id}
-                  className="p-5"
+                  className="min-w-0 p-4 sm:p-5"
                 >
-                  <div className="flex items-start gap-3">
+                  <div className="flex min-w-0 items-start gap-3">
                     <Mail
                       size={18}
-                      className="mt-1 text-green-600"
+                      className="mt-1 shrink-0 text-green-600"
                     />
 
-                    <div>
-                      <h3 className="font-bold text-slate-800">
+                    <div className="min-w-0">
+                      <h3 className="break-words font-bold text-slate-800">
                         {item.title}
                       </h3>
 
-                      <p className="mt-2 text-sm text-slate-600">
+                      <p className="mt-2 break-words text-sm leading-6 text-slate-600">
                         {item.message}
                       </p>
 
@@ -208,6 +208,6 @@ function CommunicationPage() {
 }
 
 const inputClass =
-  "w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-green-500";
+  "w-full min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-base outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100 sm:text-sm";
 
 export default CommunicationPage;

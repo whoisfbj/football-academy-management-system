@@ -51,24 +51,24 @@ function CoachesPage() {
     ).length;
 
   return (
-    <div>
-      <div>
-        <p className="text-sm font-semibold text-green-600">
+    <div className="w-full min-w-0">
+      <div className="min-w-0">
+        <p className="text-xs font-semibold uppercase tracking-wide text-green-600 sm:text-sm">
           Staff Management
         </p>
 
-        <h1 className="mt-1 text-3xl font-bold text-slate-900">
+        <h1 className="mt-1 break-words text-2xl font-bold leading-tight text-slate-900 sm:text-3xl">
           Coaches
         </h1>
 
-        <p className="mt-2 text-slate-500">
+        <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-500 sm:text-base">
           Manage academy coaches,
           qualifications and team
           assignments.
         </p>
       </div>
 
-      <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-6 grid grid-cols-1 gap-4 sm:mt-7 sm:grid-cols-2 lg:grid-cols-3">
         <CoachStat
           title="Total Coaches"
           value={coaches.length}
@@ -93,8 +93,8 @@ function CoachesPage() {
       </div>
 
       <section className="mt-6 rounded-xl border border-slate-200 bg-white shadow-sm">
-        <div className="border-b border-slate-200 p-5">
-          <div className="relative max-w-md">
+        <div className="border-b border-slate-200 p-4 sm:p-5">
+          <div className="relative w-full max-w-md">
             <Search
               size={17}
               className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
@@ -108,12 +108,12 @@ function CoachesPage() {
                 )
               }
               placeholder="Search coaches..."
-              className="w-full rounded-lg border border-slate-200 py-2.5 pl-10 pr-4 text-sm outline-none focus:border-green-500"
+              className="w-full min-w-0 rounded-lg border border-slate-200 bg-white py-2.5 pl-10 pr-4 text-base outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100 sm:text-sm"
             />
           </div>
         </div>
 
-        <div className="grid gap-5 p-5 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid min-w-0 grid-cols-1 gap-4 bg-slate-50/40 p-3 sm:p-5 md:grid-cols-2 xl:grid-cols-3">
           {filteredCoaches.map(
             (coach) => {
               const assignedTeams =
@@ -127,10 +127,10 @@ function CoachesPage() {
               return (
                 <div
                   key={coach.id}
-                  className="rounded-xl border border-slate-200 p-5"
+                  className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5"
                 >
-                  <div className="flex items-start justify-between">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-100">
+                  <div className="flex min-w-0 items-start justify-between gap-3">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-slate-100">
                       <UserRoundCog
                         size={22}
                         className="text-slate-500"
@@ -144,7 +144,7 @@ function CoachesPage() {
                     </span>
                   </div>
 
-                  <h2 className="mt-4 font-bold text-slate-900">
+                  <h2 className="mt-4 break-words font-bold text-slate-900">
                     {coach.fullName}
                   </h2>
 
@@ -153,10 +153,10 @@ function CoachesPage() {
                   </p>
 
                   <div className="mt-5 space-y-3 text-sm text-slate-600">
-                    <div className="flex gap-2">
+                    <div className="flex min-w-0 items-start gap-2">
                       <Award
                         size={16}
-                        className="text-slate-400"
+                        className="mt-0.5 shrink-0 text-slate-400"
                       />
 
                       {
@@ -164,10 +164,10 @@ function CoachesPage() {
                       }
                     </div>
 
-                    <div className="flex gap-2">
+                    <div className="flex min-w-0 items-start gap-2">
                       <Users
                         size={16}
-                        className="text-slate-400"
+                        className="mt-0.5 shrink-0 text-slate-400"
                       />
 
                       {assignedTeams.length >
@@ -181,10 +181,10 @@ function CoachesPage() {
                         : "No team assigned"}
                     </div>
 
-                    <div className="flex gap-2">
+                    <div className="flex min-w-0 items-start gap-2">
                       <MapPin
                         size={16}
-                        className="text-slate-400"
+                        className="mt-0.5 shrink-0 text-slate-400"
                       />
 
                       {
@@ -198,7 +198,7 @@ function CoachesPage() {
                       Specialization
                     </p>
 
-                    <p className="mt-1 text-sm font-medium text-slate-700">
+                    <p className="mt-1 break-words text-sm font-medium text-slate-700">
                       {
                         coach.specialization
                       }
@@ -224,12 +224,12 @@ function CoachStat({
   value,
 }: CoachStatProps) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
       <p className="text-sm text-slate-500">
         {title}
       </p>
 
-      <p className="mt-2 text-3xl font-bold text-slate-900">
+      <p className="mt-2 text-2xl font-bold text-slate-900 sm:text-3xl">
         {value}
       </p>
     </div>

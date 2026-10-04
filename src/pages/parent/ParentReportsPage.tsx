@@ -19,9 +19,9 @@ function ParentReportsPage() {
 
   if (!linkedPlayer) {
     return (
-      <div className="p-5 lg:p-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center">
+      <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+        <div className="mx-auto w-full max-w-7xl min-w-0">
+          <div className="rounded-2xl border border-slate-200 bg-white px-4 py-8 text-center sm:p-12">
             <UserRound
               size={34}
               className="mx-auto text-slate-300"
@@ -52,8 +52,8 @@ function ParentReportsPage() {
     reports[0];
 
   return (
-    <div className="p-5 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
         <div>
           <p className="text-sm font-semibold text-green-600">
             Parent / Guardian Portal
@@ -70,7 +70,7 @@ function ParentReportsPage() {
           </p>
         </div>
 
-        <section className="mt-6 rounded-2xl bg-slate-950 p-6 text-white">
+        <section className="mt-6 rounded-2xl bg-slate-950 p-4 sm:p-6 text-white">
           <p className="text-sm text-slate-400">
             Development reports for
           </p>
@@ -90,8 +90,8 @@ function ParentReportsPage() {
         </section>
 
         {latestReport && (
-          <section className="mt-6 rounded-2xl border border-green-200 bg-green-50 p-6">
-            <div className="flex justify-between gap-4">
+          <section className="mt-6 rounded-2xl border border-green-200 bg-green-50 p-4 sm:p-6">
+            <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <div>
                 <span className="rounded-full bg-green-600 px-3 py-1 text-xs font-semibold text-white">
                   Latest Report
@@ -134,7 +134,7 @@ function ParentReportsPage() {
         )}
 
         <section className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-          <div className="border-b border-slate-200 p-6">
+          <div className="border-b border-slate-200 p-4 sm:p-6">
             <div className="flex items-center gap-3">
               <ClipboardCheck
                 size={20}
@@ -153,9 +153,9 @@ function ParentReportsPage() {
                 (report) => (
                   <article
                     key={report.id}
-                    className="p-5 lg:p-6"
+                    className="p-4 sm:p-5 lg:p-6"
                   >
-                    <div className="flex justify-between gap-4">
+                    <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                       <div>
                         <h3 className="font-bold text-slate-900">
                           {
@@ -195,7 +195,7 @@ function ParentReportsPage() {
               )}
             </div>
           ) : (
-            <div className="p-12 text-center">
+            <div className="px-4 py-10 text-center sm:p-12">
               <FileText
                 size={34}
                 className="mx-auto text-slate-300"

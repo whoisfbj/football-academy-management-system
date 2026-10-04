@@ -34,7 +34,7 @@ import {
 } from "../../../services/playerService";
 
 const inputClass =
-  "w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100";
+  "w-full min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-base outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100 sm:text-sm";
 
 const labelClass =
   "mb-2 block text-sm font-medium text-slate-700";
@@ -154,7 +154,7 @@ function NewProgressReportPage() {
   };
 
   return (
-    <div>
+    <div className="w-full min-w-0">
       <Link
         to="/admin/development"
         className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-green-600"
@@ -163,16 +163,16 @@ function NewProgressReportPage() {
         Back to Player Development
       </Link>
 
-      <div className="mt-5">
+      <div className="mt-5 min-w-0">
         <p className="text-sm font-semibold text-green-600">
           Player Development
         </p>
 
-        <h1 className="mt-1 text-3xl font-bold text-slate-900">
+        <h1 className="mt-1 break-words text-2xl font-bold leading-tight text-slate-900 sm:text-3xl">
           New Progress Report
         </h1>
 
-        <p className="mt-2 text-slate-500">
+        <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-500 sm:text-base">
           Record a player's development progress
           for a reporting period.
         </p>
@@ -182,7 +182,7 @@ function NewProgressReportPage() {
         onSubmit={handleSubmit}
         className="mt-7 space-y-6"
       >
-        <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+        <section className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
           <div className="grid gap-5 md:grid-cols-2">
             <div>
               <label className={labelClass}>
@@ -276,7 +276,7 @@ function NewProgressReportPage() {
           </div>
         </section>
 
-        <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+        <section className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
           <h2 className="font-bold text-slate-900">
             Development Progress
           </h2>
@@ -318,7 +318,7 @@ function NewProgressReportPage() {
           </div>
         </section>
 
-        <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+        <section className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
           <div>
             <label className={labelClass}>
               Coach Comments
@@ -354,17 +354,17 @@ function NewProgressReportPage() {
           </div>
         </section>
 
-        <div className="flex justify-end gap-3">
+        <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
           <Link
             to="/admin/development"
-            className="rounded-lg border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-700"
+            className="inline-flex w-full items-center justify-center rounded-lg border border-slate-300 bg-white px-5 py-3 text-center text-sm font-semibold text-slate-700 transition hover:bg-slate-50 sm:w-auto"
           >
             Cancel
           </Link>
 
           <button
             type="submit"
-            className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-5 py-3 text-sm font-semibold text-white hover:bg-green-700"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-green-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-green-700 sm:w-auto"
           >
             <Save size={18} />
             Save Progress Report
@@ -389,7 +389,7 @@ function ProgressField({
   onChange,
 }: ProgressFieldProps) {
   return (
-    <div>
+    <div className="w-full min-w-0">
       <label className={labelClass}>
         {label}
       </label>

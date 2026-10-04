@@ -113,16 +113,16 @@ function ReportsPage() {
     );
 
   return (
-    <div>
-      <p className="text-sm font-semibold text-green-600">
+    <div className="w-full min-w-0">
+      <p className="text-xs font-semibold uppercase tracking-wide text-green-600 sm:text-sm">
         Academy Analytics
       </p>
 
-      <h1 className="mt-1 text-3xl font-bold text-slate-900">
+      <h1 className="mt-1 break-words text-2xl font-bold leading-tight text-slate-900 sm:text-3xl">
         Reports
       </h1>
 
-      <div className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="mt-6 grid grid-cols-1 gap-4 sm:mt-7 sm:grid-cols-2 xl:grid-cols-4">
         <ReportCard
           title="Registered Players"
           value={`${registered.length}`}
@@ -153,7 +153,7 @@ function ReportsPage() {
       </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
-        <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+        <section className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
           <h2 className="font-bold text-slate-900">
             Player Report
           </h2>
@@ -193,7 +193,7 @@ function ReportsPage() {
           )}
         </section>
 
-        <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+        <section className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
           <h2 className="font-bold text-slate-900">
             Academy Performance
           </h2>
@@ -226,7 +226,7 @@ function ReportsPage() {
         </section>
       </div>
 
-      <div className="mt-6 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="mt-6 min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
         <Banknote className="text-green-600" />
 
         <h2 className="mt-3 font-bold text-slate-900">
@@ -253,7 +253,7 @@ function ReportCard({
   icon: ReactNode;
 }) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
       <div className="text-green-600">
         {icon}
       </div>

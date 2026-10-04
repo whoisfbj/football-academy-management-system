@@ -1,9 +1,13 @@
-import type { ReactNode } from "react";
+import type {
+  ReactNode,
+} from "react";
+
 import {
   ArrowLeft,
   CalendarDays,
   MapPin,
   Trophy,
+  UserRound,
   UserRoundCog,
   Users,
 } from "lucide-react";
@@ -13,26 +17,52 @@ import {
   useParams,
 } from "react-router";
 
-import { getCoaches } from "../../../services/coachService";
-import { getPlayers } from "../../../services/playerService";
-import { getTeamById } from "../../../services/teamService";
+import {
+  getCoaches,
+} from "../../../services/coachService";
+
+import {
+  getPlayers,
+} from "../../../services/playerService";
+
+import {
+  getTeamById,
+} from "../../../services/teamService";
 
 import PlayerStatusBadge from "../../../components/players/PlayerStatusBadge";
 
+/* =========================================================
+   TEAM PROFILE
+========================================================= */
+
 function TeamProfilePage() {
-  const { teamId } =
-    useParams();
+  const {
+    teamId,
+  } = useParams();
 
   const team = teamId
     ? getTeamById(teamId)
     : undefined;
 
+  /* =======================================================
+     TEAM NOT FOUND
+  ======================================================= */
+
   if (!team) {
     return (
-      <div>
+      <div className="w-full min-w-0">
         <Link
           to="/admin/teams"
-          className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-green-600"
+          className="
+            inline-flex
+            items-center
+            gap-2
+            text-sm
+            font-medium
+            text-slate-500
+            transition
+            hover:text-green-600
+          "
         >
           <ArrowLeft
             size={17}
@@ -41,12 +71,41 @@ function TeamProfilePage() {
           Back to Teams
         </Link>
 
-        <div className="mt-8 rounded-xl border border-slate-200 bg-white p-12 text-center">
-          Team not found.
+        <div
+          className="
+            mt-8
+            rounded-xl
+            border
+            border-slate-200
+            bg-white
+            px-4
+            py-10
+            text-center
+            shadow-sm
+            sm:p-12
+          "
+        >
+          <Trophy
+            size={40}
+            className="mx-auto text-slate-300"
+          />
+
+          <h2 className="mt-4 text-lg font-bold text-slate-900">
+            Team not found
+          </h2>
+
+          <p className="mt-2 text-sm text-slate-500">
+            The requested academy team
+            could not be found.
+          </p>
         </div>
       </div>
     );
   }
+
+  /* =======================================================
+     TEAM DATA
+  ======================================================= */
 
   const players =
     getPlayers().filter(
@@ -68,43 +127,139 @@ function TeamProfilePage() {
       : undefined;
 
   return (
-    <div>
+    <div className="w-full min-w-0">
+      {/* ===================================================
+          BACK
+      ==================================================== */}
+
       <Link
         to="/admin/teams"
-        className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-green-600"
+        className="
+          inline-flex
+          items-center
+          gap-2
+          text-sm
+          font-medium
+          text-slate-500
+          transition
+          hover:text-green-600
+        "
       >
-        <ArrowLeft size={17} />
+        <ArrowLeft
+          size={17}
+        />
 
         Back to Teams
       </Link>
 
-      <section className="mt-5 rounded-xl bg-slate-950 p-7 text-white shadow-sm">
-        <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
-          <div>
-            <p className="text-sm font-semibold text-green-400">
-              {team.ageCategory} •{" "}
+      {/* ===================================================
+          TEAM HERO
+      ==================================================== */}
+
+      <section
+        className="
+          mt-5
+          min-w-0
+          overflow-hidden
+          rounded-xl
+          bg-slate-950
+          p-4
+          text-white
+          shadow-sm
+          sm:p-6
+          lg:p-7
+        "
+      >
+        <div
+          className="
+            flex
+            min-w-0
+            flex-col
+            gap-5
+            sm:flex-row
+            sm:items-start
+            sm:justify-between
+          "
+        >
+          <div className="min-w-0">
+            <p
+              className="
+                break-words
+                text-sm
+                font-semibold
+                text-green-400
+              "
+            >
+              {team.ageCategory}
+              {" • "}
               {team.genderCategory}
             </p>
 
-            <h1 className="mt-2 text-3xl font-bold">
+            <h1
+              className="
+                mt-2
+                break-words
+                text-2xl
+                font-bold
+                leading-tight
+                sm:text-3xl
+              "
+            >
               {team.name}
             </h1>
 
-            <p className="mt-3 text-sm text-slate-300">
+            <p
+              className="
+                mt-3
+                max-w-2xl
+                break-words
+                text-sm
+                leading-6
+                text-slate-300
+              "
+            >
               {team.program}
             </p>
           </div>
 
-          <span className="w-fit rounded-full bg-green-500/10 px-3 py-1.5 text-sm font-semibold text-green-300">
+          <span
+            className="
+              w-fit
+              shrink-0
+              rounded-full
+              bg-green-500/10
+              px-3
+              py-1.5
+              text-sm
+              font-semibold
+              text-green-300
+            "
+          >
             {team.status}
           </span>
         </div>
       </section>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-3">
+      {/* ===================================================
+          TEAM STATISTICS
+      ==================================================== */}
+
+      <div
+        className="
+          mt-6
+          grid
+          grid-cols-1
+          gap-4
+          sm:grid-cols-2
+          lg:grid-cols-3
+          lg:gap-6
+        "
+      >
         <TeamInfoCard
           icon={
-            <Users size={20} />
+            <Users
+              size={20}
+            />
           }
           title="Players"
           value={`${players.length}`}
@@ -125,7 +280,9 @@ function TeamProfilePage() {
 
         <TeamInfoCard
           icon={
-            <MapPin size={20} />
+            <MapPin
+              size={20}
+            />
           }
           title="Training Centre"
           value={
@@ -134,22 +291,273 @@ function TeamProfilePage() {
         />
       </div>
 
-      <div className="mt-6 grid gap-6 xl:grid-cols-3">
-        <section className="rounded-xl border border-slate-200 bg-white shadow-sm xl:col-span-2">
-          <div className="border-b border-slate-200 p-6">
-            <h2 className="text-lg font-bold text-slate-900">
-              Team Players
-            </h2>
+      {/* ===================================================
+          MAIN CONTENT
+      ==================================================== */}
 
-            <p className="mt-1 text-sm text-slate-500">
-              Current player roster.
-            </p>
+      <div
+        className="
+          mt-6
+          grid
+          min-w-0
+          grid-cols-1
+          gap-6
+          xl:grid-cols-3
+        "
+      >
+        {/* =================================================
+            PLAYER ROSTER
+        ================================================== */}
+
+        <section
+          className="
+            min-w-0
+            overflow-hidden
+            rounded-xl
+            border
+            border-slate-200
+            bg-white
+            shadow-sm
+            xl:col-span-2
+          "
+        >
+          <div
+            className="
+              border-b
+              border-slate-200
+              p-4
+              sm:p-6
+            "
+          >
+            <div
+              className="
+                flex
+                min-w-0
+                flex-col
+                gap-2
+                sm:flex-row
+                sm:items-start
+                sm:justify-between
+              "
+            >
+              <div className="min-w-0">
+                <h2 className="text-lg font-bold text-slate-900">
+                  Team Players
+                </h2>
+
+                <p className="mt-1 text-sm text-slate-500">
+                  Current player roster.
+                </p>
+              </div>
+
+              <span
+                className="
+                  w-fit
+                  shrink-0
+                  rounded-full
+                  bg-slate-100
+                  px-3
+                  py-1
+                  text-xs
+                  font-semibold
+                  text-slate-600
+                "
+              >
+                {players.length}{" "}
+                {players.length ===
+                1
+                  ? "Player"
+                  : "Players"}
+              </span>
+            </div>
           </div>
 
-          <div className="overflow-x-auto">
+          {/* ===============================================
+              MOBILE ROSTER
+          ================================================ */}
+
+          <div
+            className="
+              space-y-3
+              bg-slate-50/50
+              p-3
+              md:hidden
+            "
+          >
+            {players.map(
+              (player) => (
+                <article
+                  key={
+                    player.id
+                  }
+                  className="
+                    min-w-0
+                    rounded-xl
+                    border
+                    border-slate-200
+                    bg-white
+                    p-4
+                  "
+                >
+                  <div
+                    className="
+                      flex
+                      min-w-0
+                      items-start
+                      gap-3
+                    "
+                  >
+                    {/* AVATAR */}
+
+                    <div
+                      className="
+                        flex
+                        h-11
+                        w-11
+                        shrink-0
+                        items-center
+                        justify-center
+                        overflow-hidden
+                        rounded-full
+                        bg-slate-100
+                      "
+                    >
+                      {player.passportPhoto ? (
+                        <img
+                          src={
+                            player.passportPhoto
+                          }
+                          alt={
+                            player.fullName
+                          }
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <UserRound
+                          size={19}
+                          className="text-slate-400"
+                        />
+                      )}
+                    </div>
+
+                    {/* PLAYER */}
+
+                    <div className="min-w-0 flex-1">
+                      <Link
+                        to={`/admin/players/${player.id}`}
+                        className="
+                          block
+                          break-words
+                          font-semibold
+                          text-slate-900
+                          transition
+                          hover:text-green-600
+                        "
+                      >
+                        {
+                          player.fullName
+                        }
+                      </Link>
+
+                      <p
+                        className="
+                          mt-0.5
+                          break-all
+                          text-xs
+                          font-semibold
+                          text-green-600
+                        "
+                      >
+                        {
+                          player.playerId
+                        }
+                      </p>
+                    </div>
+
+                    <div className="shrink-0">
+                      <PlayerStatusBadge
+                        status={
+                          player.status
+                        }
+                      />
+                    </div>
+                  </div>
+
+                  {/* PLAYER DETAILS */}
+
+                  <div
+                    className="
+                      mt-4
+                      border-t
+                      border-slate-100
+                      pt-4
+                    "
+                  >
+                    <Detail
+                      label="Position"
+                      value={
+                        player.playingPosition
+                      }
+                    />
+                  </div>
+
+                  <Link
+                    to={`/admin/players/${player.id}`}
+                    className="
+                      mt-4
+                      inline-flex
+                      w-full
+                      items-center
+                      justify-center
+                      rounded-lg
+                      border
+                      border-green-200
+                      bg-green-50
+                      px-4
+                      py-2.5
+                      text-sm
+                      font-semibold
+                      text-green-700
+                      transition
+                      hover:bg-green-100
+                    "
+                  >
+                    View Player Profile
+                  </Link>
+                </article>
+              ),
+            )}
+
+            {players.length ===
+              0 && (
+              <EmptyRoster />
+            )}
+          </div>
+
+          {/* ===============================================
+              TABLET / DESKTOP ROSTER
+          ================================================ */}
+
+          <div
+            className="
+              hidden
+              w-full
+              overflow-x-auto
+              md:block
+            "
+          >
             <table className="w-full min-w-[700px]">
               <thead className="bg-slate-50">
-                <tr className="text-left text-xs uppercase tracking-wide text-slate-500">
+                <tr
+                  className="
+                    text-left
+                    text-xs
+                    font-semibold
+                    uppercase
+                    tracking-wide
+                    text-slate-500
+                  "
+                >
                   <th className="px-5 py-4">
                     Player
                   </th>
@@ -175,19 +583,74 @@ function TeamProfilePage() {
                       key={
                         player.id
                       }
+                      className="
+                        transition
+                        hover:bg-slate-50
+                      "
                     >
                       <td className="px-5 py-4">
-                        <p className="font-semibold text-slate-800">
-                          {
-                            player.fullName
-                          }
-                        </p>
+                        <div
+                          className="
+                            flex
+                            min-w-0
+                            items-center
+                            gap-3
+                          "
+                        >
+                          <div
+                            className="
+                              flex
+                              h-10
+                              w-10
+                              shrink-0
+                              items-center
+                              justify-center
+                              overflow-hidden
+                              rounded-full
+                              bg-slate-100
+                            "
+                          >
+                            {player.passportPhoto ? (
+                              <img
+                                src={
+                                  player.passportPhoto
+                                }
+                                alt={
+                                  player.fullName
+                                }
+                                className="h-full w-full object-cover"
+                              />
+                            ) : (
+                              <UserRound
+                                size={
+                                  18
+                                }
+                                className="text-slate-400"
+                              />
+                            )}
+                          </div>
 
-                        <p className="text-xs text-green-600">
-                          {
-                            player.playerId
-                          }
-                        </p>
+                          <div className="min-w-0">
+                            <p
+                              className="
+                                max-w-[220px]
+                                truncate
+                                font-semibold
+                                text-slate-800
+                              "
+                            >
+                              {
+                                player.fullName
+                              }
+                            </p>
+
+                            <p className="mt-0.5 text-xs text-green-600">
+                              {
+                                player.playerId
+                              }
+                            </p>
+                          </div>
+                        </div>
                       </td>
 
                       <td className="px-5 py-4 text-sm text-slate-600">
@@ -207,7 +670,15 @@ function TeamProfilePage() {
                       <td className="px-5 py-4">
                         <Link
                           to={`/admin/players/${player.id}`}
-                          className="text-sm font-semibold text-green-600"
+                          className="
+                            whitespace-nowrap
+                            text-sm
+                            font-semibold
+                            text-green-600
+                            transition
+                            hover:text-green-700
+                            hover:underline
+                          "
                         >
                           View
                         </Link>
@@ -220,16 +691,30 @@ function TeamProfilePage() {
 
             {players.length ===
               0 && (
-              <div className="p-10 text-center text-sm text-slate-500">
-                No players have been
-                assigned to this team.
-              </div>
+              <EmptyRoster />
             )}
           </div>
         </section>
 
-        <div className="space-y-6">
-          <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+        {/* =================================================
+            SIDEBAR INFORMATION
+        ================================================== */}
+
+        <div className="min-w-0 space-y-6">
+          {/* TEAM INFORMATION */}
+
+          <section
+            className="
+              min-w-0
+              rounded-xl
+              border
+              border-slate-200
+              bg-white
+              p-4
+              shadow-sm
+              sm:p-6
+            "
+          >
             <Trophy className="text-green-600" />
 
             <h2 className="mt-4 font-bold text-slate-900">
@@ -260,48 +745,55 @@ function TeamProfilePage() {
 
               <Detail
                 label="Program"
-                value={team.program}
+                value={
+                  team.program
+                }
+              />
+
+              <Detail
+                label="Training Centre"
+                value={
+                  team.centre
+                }
               />
             </div>
           </section>
 
-          <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+          {/* TRAINING */}
+
+          <section
+            className="
+              min-w-0
+              rounded-xl
+              border
+              border-slate-200
+              bg-white
+              p-4
+              shadow-sm
+              sm:p-6
+            "
+          >
             <CalendarDays className="text-green-600" />
 
             <h2 className="mt-4 font-bold text-slate-900">
               Training Schedule
             </h2>
 
-            <div className="mt-5 space-y-4 text-sm">
-              <div>
-                <p className="font-semibold text-slate-700">
-                  Tuesday
-                </p>
+            <div className="mt-5 space-y-4">
+              <ScheduleItem
+                day="Tuesday"
+                time="4:00 PM – 6:00 PM"
+              />
 
-                <p className="text-slate-500">
-                  4:00 PM – 6:00 PM
-                </p>
-              </div>
+              <ScheduleItem
+                day="Thursday"
+                time="4:00 PM – 6:00 PM"
+              />
 
-              <div>
-                <p className="font-semibold text-slate-700">
-                  Thursday
-                </p>
-
-                <p className="text-slate-500">
-                  4:00 PM – 6:00 PM
-                </p>
-              </div>
-
-              <div>
-                <p className="font-semibold text-slate-700">
-                  Saturday
-                </p>
-
-                <p className="text-slate-500">
-                  9:00 AM – 11:00 AM
-                </p>
-              </div>
+              <ScheduleItem
+                day="Saturday"
+                time="9:00 AM – 11:00 AM"
+              />
             </div>
           </section>
         </div>
@@ -309,6 +801,10 @@ function TeamProfilePage() {
     </div>
   );
 }
+
+/* =========================================================
+   TEAM INFO CARD
+========================================================= */
 
 interface TeamInfoCardProps {
   icon: ReactNode;
@@ -322,8 +818,30 @@ function TeamInfoCard({
   value,
 }: TeamInfoCardProps) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-50 text-green-600">
+    <div
+      className="
+        min-w-0
+        rounded-xl
+        border
+        border-slate-200
+        bg-white
+        p-4
+        shadow-sm
+        sm:p-5
+      "
+    >
+      <div
+        className="
+          flex
+          h-10
+          w-10
+          items-center
+          justify-center
+          rounded-lg
+          bg-green-50
+          text-green-600
+        "
+      >
         {icon}
       </div>
 
@@ -331,12 +849,16 @@ function TeamInfoCard({
         {title}
       </p>
 
-      <p className="mt-1 font-bold text-slate-900">
+      <p className="mt-1 break-words font-bold text-slate-900">
         {value}
       </p>
     </div>
   );
 }
+
+/* =========================================================
+   DETAIL
+========================================================= */
 
 interface DetailProps {
   label: string;
@@ -348,13 +870,91 @@ function Detail({
   value,
 }: DetailProps) {
   return (
-    <div>
-      <p className="text-xs uppercase tracking-wide text-slate-400">
+    <div className="min-w-0">
+      <p
+        className="
+          text-xs
+          font-semibold
+          uppercase
+          tracking-wide
+          text-slate-400
+        "
+      >
         {label}
       </p>
 
-      <p className="mt-1 text-sm font-semibold text-slate-700">
-        {value}
+      <p
+        className="
+          mt-1
+          break-words
+          text-sm
+          font-semibold
+          text-slate-700
+        "
+      >
+        {value || "—"}
+      </p>
+    </div>
+  );
+}
+
+/* =========================================================
+   SCHEDULE
+========================================================= */
+
+function ScheduleItem({
+  day,
+  time,
+}: {
+  day: string;
+  time: string;
+}) {
+  return (
+    <div
+      className="
+        min-w-0
+        rounded-lg
+        bg-slate-50
+        p-3
+      "
+    >
+      <p className="font-semibold text-slate-700">
+        {day}
+      </p>
+
+      <p className="mt-1 break-words text-sm text-slate-500">
+        {time}
+      </p>
+    </div>
+  );
+}
+
+/* =========================================================
+   EMPTY ROSTER
+========================================================= */
+
+function EmptyRoster() {
+  return (
+    <div
+      className="
+        px-4
+        py-10
+        text-center
+        sm:p-12
+      "
+    >
+      <Users
+        size={36}
+        className="mx-auto text-slate-300"
+      />
+
+      <p className="mt-4 font-medium text-slate-700">
+        No players assigned
+      </p>
+
+      <p className="mt-1 text-sm text-slate-500">
+        No players have been assigned
+        to this team.
       </p>
     </div>
   );

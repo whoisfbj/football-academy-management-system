@@ -24,9 +24,9 @@ function ParentAttendancePage() {
 
   if (!linkedPlayer) {
     return (
-      <div className="p-5 lg:p-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center">
+      <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+        <div className="mx-auto w-full max-w-7xl min-w-0">
+          <div className="rounded-2xl border border-slate-200 bg-white px-4 py-8 text-center sm:p-12">
             <UserRound
               size={34}
               className="mx-auto text-slate-300"
@@ -91,8 +91,8 @@ function ParentAttendancePage() {
       );
 
   return (
-    <div className="p-5 lg:p-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full min-w-0 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
         <div>
           <p className="text-sm font-semibold text-green-600">
             Parent / Guardian Portal
@@ -109,13 +109,13 @@ function ParentAttendancePage() {
           </p>
         </div>
 
-        <section className="mt-6 rounded-2xl bg-slate-950 p-6 text-white">
+        <section className="mt-6 rounded-2xl bg-slate-950 p-4 sm:p-6 text-white">
           <p className="text-sm text-slate-400">
             Overall Attendance
           </p>
 
           <div className="mt-2 flex items-end gap-2">
-            <p className="text-4xl font-bold text-green-400">
+            <p className="text-3xl font-bold text-green-400 sm:text-4xl">
               {percentage}%
             </p>
 
@@ -147,7 +147,7 @@ function ParentAttendancePage() {
         </div>
 
         <section className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-          <div className="border-b border-slate-200 p-6">
+          <div className="border-b border-slate-200 p-4 sm:p-6">
             <h2 className="font-bold text-slate-900">
               Attendance History
             </h2>
@@ -197,7 +197,7 @@ function ParentAttendancePage() {
               )}
             </div>
           ) : (
-            <div className="p-12 text-center">
+            <div className="px-4 py-10 text-center sm:p-12">
               <CalendarCheck
                 size={34}
                 className="mx-auto text-slate-300"
@@ -224,7 +224,7 @@ function StatCard({
   icon: React.ReactNode;
 }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="min-w-0 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
       <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-50 text-green-600">
         {icon}
       </div>
